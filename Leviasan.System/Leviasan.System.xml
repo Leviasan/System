@@ -179,6 +179,7 @@
             <summary>
             Sets how a command string is interpreted. By default is <see cref="F:System.Data.CommandType.Text"/>
             </summary>
+            <param name="commandType">Specifies how a command string is interpreted.</param>
         </member>
         <member name="T:System.Data.Common.ISqlStatementDirector`5">
             <summary>
@@ -313,7 +314,7 @@
         </member>
         <member name="M:System.Data.Common.SqlPackage`2.OnInitializeSqlStatements(System.Data.Common.ISqlPackageBuilder)">
             <summary>
-            The registration of <see cref="!:ISqlStatement&lt;TRequest, TResponse&gt;"/>.
+            The registration of <see cref="T:System.Data.Common.ISqlStatement`4"/>.
             </summary>
             <param name="builder">The SQL package builder.</param>
         </member>
@@ -376,6 +377,38 @@
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
             <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
         </member>
+        <member name="P:System.Data.Common.SqlStatement`4.CommandText">
+            <summary>
+            Command string.
+            </summary>
+        </member>
+        <member name="P:System.Data.Common.SqlStatement`4.CommandType">
+            <summary>
+            Specifies how a command string is interpreted.
+            </summary>
+        </member>
+        <member name="P:System.Data.Common.SqlStatement`4.Parameters">
+            <summary>
+            The delegate to add command parameters.
+            </summary>
+        </member>
+        <member name="P:System.Data.Common.SqlStatement`4.Reader">
+            <summary>
+            The delegate to reading the data from the result.
+            </summary>
+        </member>
+        <member name="P:System.Data.Common.SqlStatement`4.ReaderAsync">
+            <summary>
+            The delegate to asynchronously reading the data from the result.
+            </summary>
+        </member>
+        <member name="M:System.Data.Common.SqlStatement`4.CreateDbCommand(System.Data.Common.DbConnection,`2)">
+            <summary>
+            Creates, configured and returns a <see cref="T:System.Data.Common.DbCommand"/> object associated with the specified connection.
+            </summary>
+            <param name="connection">The specified connection.</param>
+            <param name="request">The request data.</param>
+        </member>
         <member name="T:System.Data.Common.SqlStatementBuilder`4">
             <summary>
             Represents an Oracle SQL statement builder.
@@ -428,6 +461,17 @@
             </summary>
             <exception cref="T:System.ArgumentException">The specified string can not be null, empty, or consists only of white-space characters.</exception>
         </member>
+        <member name="M:System.Data.Common.SqlStatementBuilder`4.SetCommandType(System.Data.CommandType)">
+            <summary>
+            Sets how a command string is interpreted. By default is <see cref="F:System.Data.CommandType.Text"/>
+            </summary>
+            <param name="commandType">Specifies how a command string is interpreted.</param>
+        </member>
+        <member name="T:System.Data.Common.DbDataReaderExtensions">
+            <summary>
+            The database data reader extensions.
+            </summary>
+        </member>
         <member name="M:System.Data.Common.DbDataReaderExtensions.GetFieldValue``2(``1,System.String,``0,System.IFormatProvider)">
             <summary>
             Gets the value of the specified column as the requested type.
@@ -441,7 +485,7 @@
             <exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
             <exception cref="T:System.InvalidOperationException">The connection drops or is closed during the data retrieval.The System.Data.Common.DbDataReader is closed during the data retrieval.There is no data ready to be read. Tried to read a previously-read column in sequential mode. There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
             <exception cref="T:System.OverflowException">When converting to Enum: value is outside the range of the underlying type of enumType.</exception>
-            <typeparam name="TData">Type of data received.</typeparam>
+            <typeparam name="TReceive">Type of data received.</typeparam>
             <typeparam name="TDataReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
         </member>
         <member name="M:System.Data.Common.DbDataReaderExtensions.GetFieldValue``2(``1,System.Int32,``0,System.IFormatProvider)">
@@ -457,7 +501,7 @@
             <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
             <exception cref="T:System.InvalidOperationException">The connection drops or is closed during the data retrieval.The System.Data.Common.DbDataReader is closed during the data retrieval.There is no data ready to be read. Tried to read a previously-read column in sequential mode. There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
             <exception cref="T:System.OverflowException">When converting to Enum: value is outside the range of the underlying type of enumType.</exception>
-            <typeparam name="TData">Type of data received.</typeparam>
+            <typeparam name="TReceive">Type of data received.</typeparam>
             <typeparam name="TDataReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
         </member>
         <member name="M:System.Data.Common.DbDataReaderExtensions.GetFieldValueAsync``2(``1,System.String,``0,System.IFormatProvider,System.Threading.CancellationToken)">
@@ -474,7 +518,7 @@
             <exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
             <exception cref="T:System.InvalidOperationException">The connection drops or is closed during the data retrieval.The System.Data.Common.DbDataReader is closed during the data retrieval.There is no data ready to be read. Tried to read a previously-read column in sequential mode. There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
             <exception cref="T:System.OverflowException">When converting to Enum: value is outside the range of the underlying type of enumType.</exception>
-            <typeparam name="TData">Type of data received.</typeparam>
+            <typeparam name="TReceive">Type of data received.</typeparam>
             <typeparam name="TDataReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
         </member>
         <member name="M:System.Data.Common.DbDataReaderExtensions.GetFieldValueAsync``2(``1,System.Int32,``0,System.IFormatProvider,System.Threading.CancellationToken)">
@@ -530,116 +574,172 @@
               Looks up a localized string similar to The specified string can not be null, empty, or consists only of white-space characters..
             </summary>
         </member>
-        <member name="T:System.Security.Authentication.AuthenticationEventArgs">
+        <member name="T:System.Security.Claims.ClaimsStoreManager">
             <summary>
-            Provides data for <see cref="E:System.Security.Authentication.IAuthenticationProvider.Authentication"/> event.
+            Represents the APIs for generating claims identity from specified stores.
             </summary>
         </member>
-        <member name="M:System.Security.Authentication.AuthenticationEventArgs.#ctor(System.String,System.String,System.Boolean)">
+        <member name="F:System.Security.Claims.ClaimsStoreManager._disposedValue">
             <summary>
-            Initializes a new instance of <see cref="T:System.Security.Authentication.AuthenticationEventArgs"/> class.
-            </summary>
-            <param name="provider">The authentication provider name.</param>
-            <param name="userIdentifier">The username or id.</param>
-            <param name="isAuthentication">The authentication result.</param>
-            <exception cref="T:System.ArgumentNullException">The provider or userIdentifier is null.</exception>
-        </member>
-        <member name="P:System.Security.Authentication.AuthenticationEventArgs.Provider">
-            <summary>
-            The authentication provider name.
+            To detect redundant calls <see cref="M:System.Security.Claims.ClaimsStoreManager.Dispose"/> method.
             </summary>
         </member>
-        <member name="P:System.Security.Authentication.AuthenticationEventArgs.UserIdentifier">
+        <member name="M:System.Security.Claims.ClaimsStoreManager.#ctor(System.Collections.Generic.IEnumerable{System.Security.Claims.IClaimsStore})">
             <summary>
-            Username, user id, etc.
+            Initializes a new instance of <see cref="T:System.Security.Claims.ClaimsStoreManager"/> class with a specified claim stores.
+            </summary>
+            <param name="stores">The claim stores.</param>
+        </member>
+        <member name="P:System.Security.Claims.ClaimsStoreManager.Stores">
+            <summary>
+            The claim stores.
             </summary>
         </member>
-        <member name="P:System.Security.Authentication.AuthenticationEventArgs.IsAuthentication">
+        <member name="P:System.Security.Claims.ClaimsStoreManager.Issuer">
             <summary>
-            The authentication result.
+            The claim store name.
             </summary>
         </member>
-        <member name="T:System.Security.Authentication.AuthenticationService">
+        <member name="M:System.Security.Claims.ClaimsStoreManager.Dispose">
             <summary>
-            Represents an authentication service with providers collection for authentication.
+            Releases the unmanaged resources and releases the managed resources.
             </summary>
         </member>
-        <member name="F:System.Security.Authentication.AuthenticationService._disposedValue">
+        <member name="M:System.Security.Claims.ClaimsStoreManager.FindById(System.String,System.String)">
             <summary>
-            To detect redundant calls <see cref="M:System.Security.Authentication.AuthenticationService.Dispose"/> method.
+            Finds and returns the claims, if any, who has the specified userId from external claim store.
             </summary>
+            <param name="provider">The external claim store name.</param>
+            <param name="userId">The user ID to search for.</param>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">Provider not found.</exception>
         </member>
-        <member name="M:System.Security.Authentication.AuthenticationService.#ctor(System.Collections.Generic.IEnumerable{System.Security.Authentication.IAuthenticationProvider})">
+        <member name="M:System.Security.Claims.ClaimsStoreManager.FindById(System.String)">
             <summary>
-            Initializes a new instance of <see cref="T:System.Security.Authentication.AuthenticationService"/> class with a specified providers for user authentivation.
+            Finds and returns the claims identity, if any, who has the specified userId.
             </summary>
-            <param name="providers">The collection of authentication provider.</param>
+            <param name="userId">The user ID to search for.</param>
         </member>
-        <member name="M:System.Security.Authentication.AuthenticationService.Dispose(System.Boolean)">
+        <member name="M:System.Security.Claims.ClaimsStoreManager.FindByName(System.String,System.String)">
             <summary>
-            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources. Protected implementation of Dispose pattern.
+            Finds and returns the claims identity, if any, who has the specified normalized user name from external claim store.
             </summary>
-            <param name="disposing">This indicates whether the method call comes from a <see cref="M:System.Security.Authentication.AuthenticationService.Dispose"/> method (its value is true) or from a finalizer (its value is false).</param>
+            <param name="provider">The external claim store name.</param>
+            <param name="username">The normalized user name to search for.</param>
         </member>
-        <member name="T:System.Security.Authentication.IAuthenticationProvider">
+        <member name="M:System.Security.Claims.ClaimsStoreManager.FindByName(System.String)">
             <summary>
-            Provides the mechanism for user authentication.
+            Finds and returns the claims identity, if any, who has the specified normalized user name.
             </summary>
+            <param name="username">The normalized user name to search for.</param>
         </member>
-        <member name="E:System.Security.Authentication.IAuthenticationProvider.Authentication">
+        <member name="M:System.Security.Claims.ClaimsStoreManager.IsLockedOut(System.String,System.String)">
             <summary>
-            Notification after calling <see cref="M:System.Security.Authentication.IAuthenticationProvider.ValidateCredentials(System.String,System.String)"/>.
+            Checks is account locked out from external claim store.
             </summary>
+            <param name="provider">The external claim store name.</param>
+            <param name="username">The normalized user name to search for.</param>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">Provider not found.</exception>
         </member>
-        <member name="P:System.Security.Authentication.IAuthenticationProvider.Issuer">
-            <summary>
-            The unique name of the provider.
-            </summary>
-        </member>
-        <member name="M:System.Security.Authentication.IAuthenticationProvider.FindById(System.String,System.String)">
-            <summary>
-            Finds the user by identifier.
-            </summary>
-            <param name="userId">The unique user identifier.</param>
-            <param name="password">The password.</param>
-        </member>
-        <member name="M:System.Security.Authentication.IAuthenticationProvider.FindByUsername(System.String,System.String)">
-            <summary>
-            Finds the user by username.
-            </summary>
-            <param name="username">The username.</param>
-            <param name="password">The password.</param>
-        </member>
-        <member name="M:System.Security.Authentication.IAuthenticationProvider.IsAccountLockedOut(System.String)">
+        <member name="M:System.Security.Claims.ClaimsStoreManager.IsLockedOut(System.String)">
             <summary>
             Checks is account locked out.
             </summary>
-            <param name="username">The username.</param>
+            <param name="username">The normalized user name to search for.</param>
         </member>
-        <member name="M:System.Security.Authentication.IAuthenticationProvider.ValidateCredentials(System.String,System.String)">
+        <member name="M:System.Security.Claims.ClaimsStoreManager.IsValidate(System.String,System.String,System.String)">
+            <summary>
+            Validates the credentials from external claim store.
+            </summary>
+            <param name="provider">The external claim store name.</param>
+            <param name="username">The normalized user name to search for.</param>
+            <param name="password">The account password.</param>
+        </member>
+        <member name="M:System.Security.Claims.ClaimsStoreManager.IsValidate(System.String,System.String)">
             <summary>
             Validates the credentials.
             </summary>
-            <param name="username">The username.</param>
-            <param name="password">The password.</param>
+            <param name="username">The normalized user name to search for.</param>
+            <param name="password">The account password.</param>
         </member>
-        <member name="T:System.Security.Authentication.IAuthenticationService">
+        <member name="M:System.Security.Claims.ClaimsStoreManager.Dispose(System.Boolean)">
             <summary>
-            Provides the providers collection for user authentication.
+            Releases the unmanaged resources and optionally releases the managed resources.
+            </summary>
+            <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        </member>
+        <member name="T:System.Security.Claims.IClaimsStore">
+            <summary>
+            Provides the APIs for generate claims identity.
             </summary>
         </member>
-        <member name="P:System.Security.Authentication.IAuthenticationService.Providers">
+        <member name="P:System.Security.Claims.IClaimsStore.Issuer">
             <summary>
-            The authentication providers.
+            The claim store name.
             </summary>
         </member>
-        <member name="M:System.Security.Authentication.IAuthenticationService.FindByExternalProvider(System.String,System.String,System.String)">
+        <member name="M:System.Security.Claims.IClaimsStore.FindById(System.String)">
             <summary>
-            Finds the user by external provider.
+            Finds and returns the claims identity, if any, who has the specified userId.
             </summary>
-            <param name="provider">The provider name.</param>
-            <param name="userId">The unique user identifier.</param>
-            <param name="password">The password.</param>
+            <param name="userId">The user ID to search for.</param>
+        </member>
+        <member name="M:System.Security.Claims.IClaimsStore.FindByName(System.String)">
+            <summary>
+            Finds and returns the claims identity, if any, who has the specified normalized user name.
+            </summary>
+            <param name="username">The normalized user name to search for.</param>
+        </member>
+        <member name="M:System.Security.Claims.IClaimsStore.IsLockedOut(System.String)">
+            <summary>
+            Checks is account locked out.
+            </summary>
+            <param name="username">The normalized user name to search for.</param>
+        </member>
+        <member name="M:System.Security.Claims.IClaimsStore.IsValidate(System.String,System.String)">
+            <summary>
+            Validates the credentials.
+            </summary>
+            <param name="username">The normalized user name to search for.</param>
+            <param name="password">The account password.</param>
+        </member>
+        <member name="T:System.Security.Claims.IClaimsStoreManager">
+            <summary>
+            Provides the APIs for generating claims identity from specified stores.
+            </summary>
+        </member>
+        <member name="P:System.Security.Claims.IClaimsStoreManager.Stores">
+            <summary>
+            The claim stores.
+            </summary>
+        </member>
+        <member name="M:System.Security.Claims.IClaimsStoreManager.FindById(System.String,System.String)">
+            <summary>
+            Finds and returns the claims, if any, who has the specified userId from external claim store.
+            </summary>
+            <param name="provider">The external claim store name.</param>
+            <param name="userId">The user ID to search for.</param>
+        </member>
+        <member name="M:System.Security.Claims.IClaimsStoreManager.FindByName(System.String,System.String)">
+            <summary>
+            Finds and returns the claims identity, if any, who has the specified normalized user name from external claim store.
+            </summary>
+            <param name="provider">The external claim store name.</param>
+            <param name="username">The normalized user name to search for.</param>
+        </member>
+        <member name="M:System.Security.Claims.IClaimsStoreManager.IsLockedOut(System.String,System.String)">
+            <summary>
+            Checks is account locked out from external claim store.
+            </summary>
+            <param name="provider">The external claim store name.</param>
+            <param name="username">The normalized user name to search for.</param>
+        </member>
+        <member name="M:System.Security.Claims.IClaimsStoreManager.IsValidate(System.String,System.String,System.String)">
+            <summary>
+            Validates the credentials from external claim store.
+            </summary>
+            <param name="provider">The external claim store name.</param>
+            <param name="username">The normalized user name to search for.</param>
+            <param name="password">The account password.</param>
         </member>
     </members>
 </doc>
