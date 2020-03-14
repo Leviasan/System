@@ -3,10 +3,15 @@
 namespace System.DirectoryServices.AccountManagement
 {
     /// <summary>
-    /// Represents the validation class for <see cref="PrincipalContextOptions"/>
+    /// Represents the validation class for <see cref="PrincipalContextOptions"/>.
     /// </summary>
     public sealed class PrincipalContextValidateOptions : IValidateOptions<PrincipalContextOptions>
     {
+        /// <summary>
+        /// Validates a specific named options instance (or all when name is null).
+        /// </summary>
+        /// <param name="name">The name of the options instance being validated.</param>
+        /// <param name="options">The options instance.</param>
         public ValidateOptionsResult Validate(string name, PrincipalContextOptions options)
         {
             if (options == null)
@@ -22,7 +27,9 @@ namespace System.DirectoryServices.AccountManagement
                 options.Username == null && options.Password != null ||
                 options.Username != null && !string.IsNullOrWhiteSpace(options.Username) && string.IsNullOrWhiteSpace(options.Password) ||
                 options.Password != null && !string.IsNullOrWhiteSpace(options.Password) && string.IsNullOrWhiteSpace(options.Username))
+            {
                 return ValidateOptionsResult.Fail($"The {nameof(options.Username)} and {nameof(options.Password)} parameters must either be null or contain a value.");
+            }
 
             return ValidateOptionsResult.Success;
         }
