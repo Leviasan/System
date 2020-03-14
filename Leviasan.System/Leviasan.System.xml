@@ -1,0 +1,645 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Leviasan.System</name>
+    </assembly>
+    <members>
+        <member name="T:System.Data.Common.ISqlPackage`2">
+            <summary>
+            Represents an SQL package.
+            </summary>
+            <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
+            <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
+        </member>
+        <member name="P:System.Data.Common.ISqlPackage`2.Connection">
+            <summary>
+            The database connection.
+            </summary>
+        </member>
+        <member name="M:System.Data.Common.ISqlPackage`2.Execute(System.String)">
+            <summary>
+            Executes SQL statements.
+            </summary>
+            <param name="key">The key of the SQL statement.</param>
+        </member>
+        <member name="M:System.Data.Common.ISqlPackage`2.Execute``1(System.String,``0)">
+            <summary>
+            Executes SQL statements.
+            </summary>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <param name="key">The key of the SQL statement.</param>
+            <param name="request">The request data.</param>
+        </member>
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously executes SQL statements.
+            </summary>
+            <param name="key">The key of the SQL statement.</param>
+            <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        </member>
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteAsync``1(System.String,``0,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously executes SQL statements.
+            </summary>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <param name="key">The key of the SQL statement.</param>
+            <param name="request">The request data.</param>
+            <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        </member>
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReader``1(System.String)">
+            <summary>
+            Executes SQL statements and reading the result data.
+            </summary>
+            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+            <param name="key">The key of the SQL statement.</param>
+        </member>
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReader``2(System.String,``0)">
+            <summary>
+            Executes SQL statements and reading the result data.
+            </summary>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+            <param name="key">The key of the SQL statement.</param>
+            <param name="request">The request data.</param>
+        </member>
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReaderAsync``2(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously executes SQL statements and reading the result data.
+            </summary>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+            <param name="key">The key of the SQL statement.</param>
+            <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        </member>
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReaderAsync``2(System.String,``0,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously executes SQL statements and reading the result data.
+            </summary>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+            <param name="key">The key of the SQL statement.</param>
+            <param name="request">The request data.</param>
+            <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        </member>
+        <member name="T:System.Data.Common.ISqlPackageBuilder">
+            <summary>
+            Represents an SQL package builder.
+            </summary>
+        </member>
+        <member name="M:System.Data.Common.ISqlPackageBuilder.ApplyConfiguration``5(System.Data.Common.ISqlStatementDirector{``0,``1,``2,``3,``4})">
+            <summary>
+            Applies configuration that is defined in an <see cref="T:System.Data.Common.ISqlStatementDirector`5"/> instance.
+            </summary>
+            <param name="configuration">The configuration for an SQL statement.</param>
+            <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
+            <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
+            <typeparam name="TBuilder">The type of SQL statement builder.</typeparam>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+        </member>
+        <member name="T:System.Data.Common.ISqlStatement`4">
+            <summary>
+            Represents an SQL statement that is executed while connected to a data source.
+            </summary>
+            <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
+            <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+        </member>
+        <member name="P:System.Data.Common.ISqlStatement`4.CommandText">
+            <summary>
+            Command string.
+            </summary>
+        </member>
+        <member name="P:System.Data.Common.ISqlStatement`4.CommandType">
+            <summary>
+            Specifies how a command string is interpreted.
+            </summary>
+        </member>
+        <member name="P:System.Data.Common.ISqlStatement`4.Parameters">
+            <summary>
+            The delegate to add command parameters.
+            </summary>
+        </member>
+        <member name="P:System.Data.Common.ISqlStatement`4.Reader">
+            <summary>
+            The delegate to reading the data from the result.
+            </summary>
+        </member>
+        <member name="P:System.Data.Common.ISqlStatement`4.ReaderAsync">
+            <summary>
+            The delegate to asynchronously reading the data from the result.
+            </summary>
+        </member>
+        <member name="M:System.Data.Common.ISqlStatement`4.CreateDbCommand(System.Data.Common.DbConnection,`2)">
+            <summary>
+            Creates, configured and returns a <see cref="T:System.Data.Common.DbCommand"/> object associated with the specified connection.
+            </summary>
+            <param name="connection">The specified connection.</param>
+            <param name="request">The request data.</param>
+        </member>
+        <member name="T:System.Data.Common.ISqlStatementBuilder`4">
+            <summary>
+            Represents an SQL statement builder.
+            </summary>
+            <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
+            <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+        </member>
+        <member name="M:System.Data.Common.ISqlStatementBuilder`4.AddParameters(System.Action{`0,`2})">
+            <summary>
+            Adds the delegate to add command parameters.
+            </summary>
+            <param name="parameters">The delegate to add command parameters.</param>
+        </member>
+        <member name="M:System.Data.Common.ISqlStatementBuilder`4.AddReader(System.Func{`1,`3})">
+            <summary>
+            Adds the delegate to read the data from the result.
+            </summary>
+            <param name="reader">The delegate to reading the data from result.</param>
+        </member>
+        <member name="M:System.Data.Common.ISqlStatementBuilder`4.AddReaderAsync(System.Func{`1,System.Threading.CancellationToken,System.Threading.Tasks.Task{`3}})">
+            <summary>
+            Adds the delegate to asynchronously reading the data from the result.
+            </summary>
+            <param name="reader">The delegate to asynchronously reading the data from result.</param>
+        </member>
+        <member name="M:System.Data.Common.ISqlStatementBuilder`4.Build">
+            <summary>
+            Returns the SQL statement.
+            </summary>
+        </member>
+        <member name="M:System.Data.Common.ISqlStatementBuilder`4.SetCommandText(System.String)">
+            <summary>
+            Sets the command string.
+            </summary>
+        </member>
+        <member name="M:System.Data.Common.ISqlStatementBuilder`4.SetCommandType(System.Data.CommandType)">
+            <summary>
+            Sets how a command string is interpreted. By default is <see cref="F:System.Data.CommandType.Text"/>
+            </summary>
+        </member>
+        <member name="T:System.Data.Common.ISqlStatementDirector`5">
+            <summary>
+            Allows configuration for an SQL statement to be factored into a separate class.
+            Implement this interface, applying configuration for the SQL statement in the <see cref="M:System.Data.Common.ISqlStatementDirector`5.Configure(`2)"/> method,
+            and then apply the configuration using <see cref="M:System.Data.Common.ISqlPackageBuilder.ApplyConfiguration``5(System.Data.Common.ISqlStatementDirector{``0,``1,``2,``3,``4})"/>.
+            </summary>
+            <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
+            <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
+            <typeparam name="TBuilder">The type of SQL statement builder.</typeparam>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+        </member>
+        <member name="P:System.Data.Common.ISqlStatementDirector`5.Key">
+            <summary>
+            The unique key.
+            </summary>
+        </member>
+        <member name="M:System.Data.Common.ISqlStatementDirector`5.Configure(`2)">
+            <summary>
+            Configures an SQL statement.
+            </summary>
+        </member>
+        <member name="T:System.Data.Common.SqlPackage`2">
+            <summary>
+            Represents an SQL package.
+            </summary>
+            <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
+            <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
+        </member>
+        <member name="F:System.Data.Common.SqlPackage`2._disposedValue">
+            <summary>
+            To detect redundant calls <see cref="M:System.Data.Common.SqlPackage`2.Dispose"/> method.
+            </summary>
+        </member>
+        <member name="F:System.Data.Common.SqlPackage`2._statements">
+            <summary>
+            Dictionary in which contains registered SQL statements.
+            </summary>
+        </member>
+        <member name="E:System.Data.Common.SqlPackage`2.InitializeSqlStatements">
+            <summary>
+            The event reports that registration of SQL statements has begun.
+            </summary>
+        </member>
+        <member name="M:System.Data.Common.SqlPackage`2.#ctor(System.Data.Common.DbConnection)">
+            <summary>
+            Initializes a new  instance <see cref="T:System.Data.Common.SqlPackage`2"/> class.
+            </summary>
+            <exception cref="T:System.ArgumentNullException">The connection in null.</exception>
+        </member>
+        <member name="P:System.Data.Common.SqlPackage`2.Connection">
+            <summary>
+            The database connection.
+            </summary>
+        </member>
+        <member name="M:System.Data.Common.SqlPackage`2.Dispose">
+            <summary>
+            Releases the unmanaged resources and releases the managed resources.
+            </summary>
+        </member>
+        <member name="M:System.Data.Common.SqlPackage`2.Execute(System.String)">
+            <summary>
+            Executes SQL statements.
+            </summary>
+            <param name="key">The key of the SQL statement.</param>
+        </member>
+        <member name="M:System.Data.Common.SqlPackage`2.Execute``1(System.String,``0)">
+            <summary>
+            Executes SQL statements.
+            </summary>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <param name="key">The key of the SQL statement.</param>
+            <param name="request">The request data.</param>
+        </member>
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously executes SQL statements.
+            </summary>
+            <param name="key">The key of the SQL statement.</param>
+            <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        </member>
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteAsync``1(System.String,``0,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously executes SQL statements.
+            </summary>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <param name="key">The key of the SQL statement.</param>
+            <param name="request">The request data.</param>
+            <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        </member>
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReader``1(System.String)">
+            <summary>
+            Executes SQL statements and reading the result data.
+            </summary>
+            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+            <param name="key">The key of the SQL statement.</param>
+        </member>
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReader``2(System.String,``0)">
+            <summary>
+            Executes SQL statements and reading the result data.
+            </summary>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+            <param name="key">The key of the SQL statement.</param>
+            <param name="request">The request data.</param>
+        </member>
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReaderAsync``2(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously executes SQL statements and reading the result data.
+            </summary>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+            <param name="key">The key of the SQL statement.</param>
+            <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        </member>
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReaderAsync``2(System.String,``0,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously executes SQL statements and reading the result data.
+            </summary>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+            <param name="key">The key of the SQL statement.</param>
+            <param name="request">The request data.</param>
+            <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        </member>
+        <member name="M:System.Data.Common.SqlPackage`2.Dispose(System.Boolean)">
+            <summary>
+            Releases the unmanaged resources and optionally releases the managed resources.
+            </summary>
+            <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        </member>
+        <member name="M:System.Data.Common.SqlPackage`2.OnInitializeSqlStatements(System.Data.Common.ISqlPackageBuilder)">
+            <summary>
+            The registration of <see cref="!:ISqlStatement&lt;TRequest, TResponse&gt;"/>.
+            </summary>
+            <param name="builder">The SQL package builder.</param>
+        </member>
+        <member name="M:System.Data.Common.SqlPackage`2.GetSqlStatement``2(System.String)">
+            <summary>
+            Gets the SQL statement.
+            </summary>
+            <param name="key">The key.</param>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">The key is not found in dictionary which contains collects of SQL statements.</exception>
+        </member>
+        <member name="M:System.Data.Common.SqlPackage`2.OpenConnection">
+            <summary>
+            Opens connection to the database if it closed.
+            </summary>
+        </member>
+        <member name="M:System.Data.Common.SqlPackage`2.OpenConnectionAsync(System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously opens connection to the database if it closed.
+            </summary>
+            <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        </member>
+        <member name="T:System.Data.Common.SqlPackageBuilder">
+            <summary>
+            Represents an SQL package builder.
+            </summary>
+        </member>
+        <member name="F:System.Data.Common.SqlPackageBuilder._statements">
+            <summary>
+            Dictionary in which contains registered SQL statements.
+            </summary>
+        </member>
+        <member name="M:System.Data.Common.SqlPackageBuilder.#ctor(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Initializes a new <see cref="T:System.Data.Common.SqlPackageBuilder"/> with a specified dictionary in which registered SQL statements will be placed.
+            </summary>
+            <param name="statements">Dictionary in which contains registered SQL statements.</param>
+            <exception cref="T:System.ArgumentNullException">Dictionary is null.</exception>
+        </member>
+        <member name="M:System.Data.Common.SqlPackageBuilder.ApplyConfiguration``5(System.Data.Common.ISqlStatementDirector{``0,``1,``2,``3,``4})">
+            <summary>
+            Applies configuration that is defined in an <see cref="T:System.Data.Common.ISqlStatementDirector`5"/> instance.
+            </summary>
+            <param name="configuration">The configuration for an SQL statement.</param>
+            <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
+            <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
+            <typeparam name="TBuilder">The type of SQL statement builder.</typeparam>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+            <exception cref="T:System.ArgumentNullException">The configuration is null.</exception>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">The key of SQL statement configuration is null, empty, or consists only of white-space characters.</exception>
+        </member>
+        <member name="T:System.Data.Common.SqlStatement`4">
+            <summary>
+            Represents an SQL statement that is executed while connected to a data source.
+            </summary>
+            <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
+            <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+        </member>
+        <member name="T:System.Data.Common.SqlStatementBuilder`4">
+            <summary>
+            Represents an Oracle SQL statement builder.
+            </summary>
+            <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
+            <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
+            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+        </member>
+        <member name="F:System.Data.Common.SqlStatementBuilder`4._statement">
+            <summary>
+            Object to construction.
+            </summary>
+        </member>
+        <member name="M:System.Data.Common.SqlStatementBuilder`4.#ctor">
+            <summary>
+            Initializes a new instance of <see cref="T:System.Data.Common.SqlStatementBuilder`4"/> class.
+            </summary>
+        </member>
+        <member name="M:System.Data.Common.SqlStatementBuilder`4.AddParameters(System.Action{`0,`2})">
+            <summary>
+            Adds the delegate to add command parameters.
+            </summary>
+            <param name="parameters">The delegate to add command parameters.</param>
+            <exception cref="T:System.ArgumentNullException">Delegate is null.</exception>
+        </member>
+        <member name="M:System.Data.Common.SqlStatementBuilder`4.AddReader(System.Func{`1,`3})">
+            <summary>
+            Adds the delegate to reading the data from result.
+            </summary>
+            <param name="reader">The delegate to reading the data from result.</param>
+            <exception cref="T:System.ArgumentNullException">Delegate is null.</exception>
+        </member>
+        <member name="M:System.Data.Common.SqlStatementBuilder`4.AddReaderAsync(System.Func{`1,System.Threading.CancellationToken,System.Threading.Tasks.Task{`3}})">
+            <summary>
+            Adds the delegate to asynchronously reading the data from result.
+            </summary>
+            <param name="reader">The delegate to asynchronously reading the data from result.</param>
+            <exception cref="T:System.ArgumentNullException">Delegate is null.</exception>
+        </member>
+        <member name="M:System.Data.Common.SqlStatementBuilder`4.Build">
+            <summary>
+            Returns the SQL statement.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">One of the next methods is not called: <see cref="M:System.Data.Common.SqlStatementBuilder`4.SetCommandText(System.String)"/>.</exception>
+        </member>
+        <member name="M:System.Data.Common.SqlStatementBuilder`4.SetCommandText(System.String)">
+            <summary>
+            Sets the command string.
+            </summary>
+            <exception cref="T:System.ArgumentException">The specified string can not be null, empty, or consists only of white-space characters.</exception>
+        </member>
+        <member name="M:System.Data.Common.DbDataReaderExtensions.GetFieldValue``2(``1,System.String,``0,System.IFormatProvider)">
+            <summary>
+            Gets the value of the specified column as the requested type.
+            </summary>
+            <param name="reader">Database data reader.</param>
+            <param name="name">The name of the column.</param>
+            <param name="defaultValue">Return value if the column contains non-existent or missing values.</param>
+            <param name="provider">An object that supplies culture-specific formatting information.</param>
+            <exception cref="T:System.ArgumentException">When converting to Enum: return value from the database is either an empty string or only contains white space. -or- Value is a name, but not one of the named constants defined for the enumeration.</exception>
+            <exception cref="T:System.ArgumentNullException">Reader is null.</exception>
+            <exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
+            <exception cref="T:System.InvalidOperationException">The connection drops or is closed during the data retrieval.The System.Data.Common.DbDataReader is closed during the data retrieval.There is no data ready to be read. Tried to read a previously-read column in sequential mode. There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
+            <exception cref="T:System.OverflowException">When converting to Enum: value is outside the range of the underlying type of enumType.</exception>
+            <typeparam name="TData">Type of data received.</typeparam>
+            <typeparam name="TDataReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
+        </member>
+        <member name="M:System.Data.Common.DbDataReaderExtensions.GetFieldValue``2(``1,System.Int32,``0,System.IFormatProvider)">
+            <summary>
+            Gets the value of the specified column as the requested type.
+            </summary>
+            <param name="reader">Database data reader.</param>
+            <param name="ordinal">The zero-based column ordinal.</param>
+            <param name="defaultValue">Return value if the column contains non-existent or missing values.</param>
+            <param name="provider">An object that supplies culture-specific formatting information.</param>
+            <exception cref="T:System.ArgumentException">When converting to Enum: return value from the database is either an empty string or only contains white space. -or- Value is a name, but not one of the named constants defined for the enumeration.</exception>
+            <exception cref="T:System.ArgumentNullException">Reader is null.</exception>
+            <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
+            <exception cref="T:System.InvalidOperationException">The connection drops or is closed during the data retrieval.The System.Data.Common.DbDataReader is closed during the data retrieval.There is no data ready to be read. Tried to read a previously-read column in sequential mode. There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
+            <exception cref="T:System.OverflowException">When converting to Enum: value is outside the range of the underlying type of enumType.</exception>
+            <typeparam name="TData">Type of data received.</typeparam>
+            <typeparam name="TDataReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
+        </member>
+        <member name="M:System.Data.Common.DbDataReaderExtensions.GetFieldValueAsync``2(``1,System.String,``0,System.IFormatProvider,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously gets the value of the specified column as the requested type.
+            </summary>
+            <param name="reader">Database data reader.</param>
+            <param name="name">The name of the column.</param>
+            <param name="defaultValue">Return value if the column contains non-existent or missing values.</param>
+            <param name="provider">An object that supplies culture-specific formatting information.</param>
+            <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+            <exception cref="T:System.ArgumentException">When converting to Enum: return value from the database is either an empty string or only contains white space. -or- Value is a name, but not one of the named constants defined for the enumeration.</exception>
+            <exception cref="T:System.ArgumentNullException">Reader is null.</exception>
+            <exception cref="T:System.IndexOutOfRangeException">The name specified is not a valid column name.</exception>
+            <exception cref="T:System.InvalidOperationException">The connection drops or is closed during the data retrieval.The System.Data.Common.DbDataReader is closed during the data retrieval.There is no data ready to be read. Tried to read a previously-read column in sequential mode. There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
+            <exception cref="T:System.OverflowException">When converting to Enum: value is outside the range of the underlying type of enumType.</exception>
+            <typeparam name="TData">Type of data received.</typeparam>
+            <typeparam name="TDataReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
+        </member>
+        <member name="M:System.Data.Common.DbDataReaderExtensions.GetFieldValueAsync``2(``1,System.Int32,``0,System.IFormatProvider,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously gets the value of the specified column as the requested type.
+            </summary>
+            <param name="reader">Database data reader.</param>
+            <param name="ordinal">The zero-based column ordinal.</param>
+            <param name="defaultValue">Return value if the column contains non-existent or missing values.</param>
+            <param name="provider">An object that supplies culture-specific formatting information.</param>
+            <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+            <exception cref="T:System.ArgumentException">When converting to Enum: return value from the database is either an empty string or only contains white space. -or- Value is a name, but not one of the named constants defined for the enumeration.</exception>
+            <exception cref="T:System.ArgumentNullException">Reader is null.</exception>
+            <exception cref="T:System.IndexOutOfRangeException">The column index is out of range.</exception>
+            <exception cref="T:System.InvalidOperationException">The connection drops or is closed during the data retrieval.The System.Data.Common.DbDataReader is closed during the data retrieval.There is no data ready to be read. Tried to read a previously-read column in sequential mode. There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
+            <exception cref="T:System.OverflowException">When converting to Enum: value is outside the range of the underlying type of enumType.</exception>
+            <typeparam name="TReceive">Type of data received.</typeparam>
+            <typeparam name="TDataReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
+        </member>
+        <member name="T:System.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:System.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:System.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:System.Properties.Resources.BuilderException">
+            <summary>
+              Looks up a localized string similar to One of the next required methods is not called: {0}.
+            </summary>
+        </member>
+        <member name="P:System.Properties.Resources.KeyNotFoundException">
+            <summary>
+              Looks up a localized string similar to Key: {0} is not found..
+            </summary>
+        </member>
+        <member name="P:System.Properties.Resources.SqlStatementInvalidState">
+            <summary>
+              Looks up a localized string similar to The SQL statement is not fully configured. Invalid property state: {0}..
+            </summary>
+        </member>
+        <member name="P:System.Properties.Resources.StringIsMissing">
+            <summary>
+              Looks up a localized string similar to The specified string can not be null, empty, or consists only of white-space characters..
+            </summary>
+        </member>
+        <member name="T:System.Security.Authentication.AuthenticationEventArgs">
+            <summary>
+            Provides data for <see cref="E:System.Security.Authentication.IAuthenticationProvider.Authentication"/> event.
+            </summary>
+        </member>
+        <member name="M:System.Security.Authentication.AuthenticationEventArgs.#ctor(System.String,System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of <see cref="T:System.Security.Authentication.AuthenticationEventArgs"/> class.
+            </summary>
+            <param name="provider">The authentication provider name.</param>
+            <param name="userIdentifier">The username or id.</param>
+            <param name="isAuthentication">The authentication result.</param>
+            <exception cref="T:System.ArgumentNullException">The provider or userIdentifier is null.</exception>
+        </member>
+        <member name="P:System.Security.Authentication.AuthenticationEventArgs.Provider">
+            <summary>
+            The authentication provider name.
+            </summary>
+        </member>
+        <member name="P:System.Security.Authentication.AuthenticationEventArgs.UserIdentifier">
+            <summary>
+            Username, user id, etc.
+            </summary>
+        </member>
+        <member name="P:System.Security.Authentication.AuthenticationEventArgs.IsAuthentication">
+            <summary>
+            The authentication result.
+            </summary>
+        </member>
+        <member name="T:System.Security.Authentication.AuthenticationService">
+            <summary>
+            Represents an authentication service with providers collection for authentication.
+            </summary>
+        </member>
+        <member name="F:System.Security.Authentication.AuthenticationService._disposedValue">
+            <summary>
+            To detect redundant calls <see cref="M:System.Security.Authentication.AuthenticationService.Dispose"/> method.
+            </summary>
+        </member>
+        <member name="M:System.Security.Authentication.AuthenticationService.#ctor(System.Collections.Generic.IEnumerable{System.Security.Authentication.IAuthenticationProvider})">
+            <summary>
+            Initializes a new instance of <see cref="T:System.Security.Authentication.AuthenticationService"/> class with a specified providers for user authentivation.
+            </summary>
+            <param name="providers">The collection of authentication provider.</param>
+        </member>
+        <member name="M:System.Security.Authentication.AuthenticationService.Dispose(System.Boolean)">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources. Protected implementation of Dispose pattern.
+            </summary>
+            <param name="disposing">This indicates whether the method call comes from a <see cref="M:System.Security.Authentication.AuthenticationService.Dispose"/> method (its value is true) or from a finalizer (its value is false).</param>
+        </member>
+        <member name="T:System.Security.Authentication.IAuthenticationProvider">
+            <summary>
+            Provides the mechanism for user authentication.
+            </summary>
+        </member>
+        <member name="E:System.Security.Authentication.IAuthenticationProvider.Authentication">
+            <summary>
+            Notification after calling <see cref="M:System.Security.Authentication.IAuthenticationProvider.ValidateCredentials(System.String,System.String)"/>.
+            </summary>
+        </member>
+        <member name="P:System.Security.Authentication.IAuthenticationProvider.Issuer">
+            <summary>
+            The unique name of the provider.
+            </summary>
+        </member>
+        <member name="M:System.Security.Authentication.IAuthenticationProvider.FindById(System.String,System.String)">
+            <summary>
+            Finds the user by identifier.
+            </summary>
+            <param name="userId">The unique user identifier.</param>
+            <param name="password">The password.</param>
+        </member>
+        <member name="M:System.Security.Authentication.IAuthenticationProvider.FindByUsername(System.String,System.String)">
+            <summary>
+            Finds the user by username.
+            </summary>
+            <param name="username">The username.</param>
+            <param name="password">The password.</param>
+        </member>
+        <member name="M:System.Security.Authentication.IAuthenticationProvider.IsAccountLockedOut(System.String)">
+            <summary>
+            Checks is account locked out.
+            </summary>
+            <param name="username">The username.</param>
+        </member>
+        <member name="M:System.Security.Authentication.IAuthenticationProvider.ValidateCredentials(System.String,System.String)">
+            <summary>
+            Validates the credentials.
+            </summary>
+            <param name="username">The username.</param>
+            <param name="password">The password.</param>
+        </member>
+        <member name="T:System.Security.Authentication.IAuthenticationService">
+            <summary>
+            Provides the providers collection for user authentication.
+            </summary>
+        </member>
+        <member name="P:System.Security.Authentication.IAuthenticationService.Providers">
+            <summary>
+            The authentication providers.
+            </summary>
+        </member>
+        <member name="M:System.Security.Authentication.IAuthenticationService.FindByExternalProvider(System.String,System.String,System.String)">
+            <summary>
+            Finds the user by external provider.
+            </summary>
+            <param name="provider">The provider name.</param>
+            <param name="userId">The unique user identifier.</param>
+            <param name="password">The password.</param>
+        </member>
+    </members>
+</doc>

@@ -14,12 +14,32 @@ namespace System.Data.Common
         where TCollection : DbParameterCollection
         where TReader : DbDataReader
     {
+        /// <summary>
+        /// Command string.
+        /// </summary>
         public string CommandText { get; set; }
+        /// <summary>
+        /// Specifies how a command string is interpreted.
+        /// </summary>
         public CommandType CommandType { get; set; }
+        /// <summary>
+        /// The delegate to add command parameters.
+        /// </summary>
         public Action<TCollection, TRequest> Parameters { get; set; }
+        /// <summary>
+        /// The delegate to reading the data from the result.
+        /// </summary>
         public Func<TReader, TResponse> Reader { get; set; }
+        /// <summary>
+        /// The delegate to asynchronously reading the data from the result.
+        /// </summary>
         public Func<TReader, CancellationToken, Task<TResponse>> ReaderAsync { get; set; }
 
+        /// <summary>
+        /// Creates, configured and returns a <see cref="DbCommand"/> object associated with the specified connection.
+        /// </summary>
+        /// <param name="connection">The specified connection.</param>
+        /// <param name="request">The request data.</param>
         public virtual DbCommand CreateDbCommand(DbConnection connection, TRequest request)
         {
             if (connection == null)

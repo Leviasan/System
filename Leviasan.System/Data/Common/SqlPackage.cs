@@ -15,9 +15,9 @@ namespace System.Data.Common
         where TReader : DbDataReader
     {
         /// <summary>
-        /// To detect redundant calls <see cref="Dispose"/> method.
+        /// To detect redundant calls <see cref="Dispose()"/> method.
         /// </summary>
-        private bool _disposedValue = false;
+        private bool _disposedValue;
         /// <summary>
         /// Dictionary in which contains registered SQL statements.
         /// </summary>
@@ -40,59 +40,87 @@ namespace System.Data.Common
             InitializeSqlStatements.Invoke(new SqlPackageBuilder(_statements));
         }
 
-        public event EventHandler<DbCommandEventArgs> Executing;
-
+        /// <summary>
+        /// The database connection.
+        /// </summary>
         public virtual DbConnection Connection { get; }
 
+        /// <summary>
+        /// Releases the unmanaged resources and releases the managed resources.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+        /// <summary>
+        /// Executes SQL statements.
+        /// </summary>
+        /// <param name="key">The key of the SQL statement.</param>
         public int Execute(string key)
         {
             return Execute<object>(key, null);
         }
+        /// <summary>
+        /// Executes SQL statements.
+        /// </summary>
+        /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+        /// <param name="key">The key of the SQL statement.</param>
+        /// <param name="request">The request data.</param>
         public int Execute<TRequest>(string key, TRequest request)
         {
             // Get SQL statement
             var statement = GetSqlStatement<TRequest, object>(key);
-
             // Open connection
-            if (Connection.State == ConnectionState.Closed)
-                Connection.Open();
-
+            OpenConnection();
             // Create and configured command
             using var command = statement.CreateDbCommand(Connection, request);
-            // Notify before executing command
-            Executing?.Invoke(this, new DbCommandEventArgs(command));
             // Execute
             return command.ExecuteNonQuery();
         }
+        /// <summary>
+        /// Asynchronously executes SQL statements.
+        /// </summary>
+        /// <param name="key">The key of the SQL statement.</param>
+        /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         public Task<int> ExecuteAsync(string key, CancellationToken cancellationToken = default)
         {
             return ExecuteAsync<object>(key, null, cancellationToken);
         }
+        /// <summary>
+        /// Asynchronously executes SQL statements.
+        /// </summary>
+        /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+        /// <param name="key">The key of the SQL statement.</param>
+        /// <param name="request">The request data.</param>
+        /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         public async Task<int> ExecuteAsync<TRequest>(string key, TRequest request, CancellationToken cancellationToken = default)
         {
             // Get SQL statement
             var statement = GetSqlStatement<TRequest, object>(key);
-
             // Open connection
-            if (Connection.State == ConnectionState.Closed)
-                await Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
-
+            await OpenConnectionAsync(cancellationToken).ConfigureAwait(false);
             // Create and configured command
             using var command = statement.CreateDbCommand(Connection, request);
-            // Notify before executing command
-            Executing?.Invoke(this, new DbCommandEventArgs(command));
             // Execute
             return await command.ExecuteNonQueryAsync(cancellationToken).ConfigureAwait(false);
         }
+        /// <summary>
+        /// Executes SQL statements and reading the result data.
+        /// </summary>
+        /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+        /// <param name="key">The key of the SQL statement.</param>
         public TResponse ExecuteReader<TResponse>(string key)
         {
             return ExecuteReader<object, TResponse>(key, null);
         }
+        /// <summary>
+        /// Executes SQL statements and reading the result data.
+        /// </summary>
+        /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+        /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+        /// <param name="key">The key of the SQL statement.</param>
+        /// <param name="request">The request data.</param>
         public TResponse ExecuteReader<TRequest, TResponse>(string key, TRequest request)
         {
             // Get SQL statement
@@ -102,16 +130,12 @@ namespace System.Data.Common
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.SqlStatementInvalidState, nameof(statement.Reader)));
 
             // Open connection
-            if (Connection.State == ConnectionState.Closed)
-                Connection.Open();
-
+            OpenConnection();
             // Response value
             TResponse response = default;
             // Create and configured command
             using (var command = statement.CreateDbCommand(Connection, request))
             {
-                // Notify before executing command
-                Executing?.Invoke(this, new DbCommandEventArgs(command));
                 // Execute
                 using (var reader = command.ExecuteReader())
                 {
@@ -120,10 +144,25 @@ namespace System.Data.Common
             }
             return response;
         }
+        /// <summary>
+        /// Asynchronously executes SQL statements and reading the result data.
+        /// </summary>
+        /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+        /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+        /// <param name="key">The key of the SQL statement.</param>
+        /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         public Task<TResponse> ExecuteReaderAsync<TRequest, TResponse>(string key, CancellationToken cancellationToken = default)
         {
             return ExecuteReaderAsync<object, TResponse>(key, null, cancellationToken);
         }
+        /// <summary>
+        /// Asynchronously executes SQL statements and reading the result data.
+        /// </summary>
+        /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
+        /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+        /// <param name="key">The key of the SQL statement.</param>
+        /// <param name="request">The request data.</param>
+        /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         public async Task<TResponse> ExecuteReaderAsync<TRequest, TResponse>(string key, TRequest request, CancellationToken cancellationToken = default)
         {
             // Get SQL statement
@@ -133,16 +172,12 @@ namespace System.Data.Common
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.SqlStatementInvalidState, nameof(statement.ReaderAsync)));
 
             // Open connection
-            if (Connection.State == ConnectionState.Closed)
-                await Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
-
+            await OpenConnectionAsync(cancellationToken).ConfigureAwait(false);
             // Response value
             TResponse response = default;
             // Create and configured command
             using (var command = statement.CreateDbCommand(Connection, request))
             {
-                // Notify before executing command
-                Executing?.Invoke(this, new DbCommandEventArgs(command));
                 // Execute
                 using (var reader = await command.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false))
                 {
@@ -153,9 +188,9 @@ namespace System.Data.Common
         }
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources. Protected implementation of Dispose pattern.
+        /// Releases the unmanaged resources and optionally releases the managed resources.
         /// </summary>
-        /// <param name="disposing">This indicates whether the method call comes from a <see cref="Dispose"/> method (its value is true) or from a finalizer (its value is false).</param>
+        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)
@@ -168,7 +203,7 @@ namespace System.Data.Common
             }
         }
         /// <summary>
-        /// The registration of <see cref="ISqlStatement{TRequest, TResponse}"/>.
+        /// The registration of <see cref="ISqlStatement{TCollection, TReader, TRequest, TResponse}"/>.
         /// </summary>
         /// <param name="builder">The SQL package builder.</param>
         protected abstract void OnInitializeSqlStatements(ISqlPackageBuilder builder);
@@ -186,6 +221,23 @@ namespace System.Data.Common
                 throw new KeyNotFoundException();
 
             return statement;
+        }
+        /// <summary>
+        /// Opens connection to the database if it closed.
+        /// </summary>
+        private void OpenConnection()
+        {
+            if (Connection.State == ConnectionState.Closed)
+                Connection.Open();
+        }
+        /// <summary>
+        /// Asynchronously opens connection to the database if it closed.
+        /// </summary>
+        /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        private async Task OpenConnectionAsync(CancellationToken cancellationToken)
+        {
+            if (Connection.State == ConnectionState.Closed)
+                await Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
         }
     }
 }

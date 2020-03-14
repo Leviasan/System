@@ -70,7 +70,7 @@ namespace System.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} is not found..
+        ///   Looks up a localized string similar to Key: {0} is not found..
         /// </summary>
         internal static string KeyNotFoundException {
             get {

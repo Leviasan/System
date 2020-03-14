@@ -13,10 +13,6 @@ namespace System.Data.Common
         where TReader : DbDataReader
     {
         /// <summary>
-        /// Notification before calling <see cref="IDbCommand"/>.
-        /// </summary>
-        event EventHandler<DbCommandEventArgs> Executing;
-        /// <summary>
         /// The database connection.
         /// </summary>
         DbConnection Connection { get; }
@@ -24,26 +20,26 @@ namespace System.Data.Common
         /// <summary>
         /// Executes SQL statements.
         /// </summary>
-        /// <param name="key">The key of the SQL statement in the package.</param>
+        /// <param name="key">The key of the SQL statement.</param>
         int Execute(string key);
         /// <summary>
         /// Executes SQL statements.
         /// </summary>
         /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-        /// <param name="key">The key of the SQL statement in the package.</param>
+        /// <param name="key">The key of the SQL statement.</param>
         /// <param name="request">The request data.</param>
         int Execute<TRequest>(string key, TRequest request);
         /// <summary>
         /// Asynchronously executes SQL statements.
         /// </summary>
-        /// <param name="key">The key of the SQL statement in the package.</param>
+        /// <param name="key">The key of the SQL statement.</param>
         /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         Task<int> ExecuteAsync(string key, CancellationToken cancellationToken);
         /// <summary>
         /// Asynchronously executes SQL statements.
         /// </summary>
         /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-        /// <param name="key">The key of the SQL statement in the package.</param>
+        /// <param name="key">The key of the SQL statement.</param>
         /// <param name="request">The request data.</param>
         /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         Task<int> ExecuteAsync<TRequest>(string key, TRequest request, CancellationToken cancellationToken);
@@ -51,14 +47,14 @@ namespace System.Data.Common
         /// Executes SQL statements and reading the result data.
         /// </summary>
         /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-        /// <param name="key">The key of the SQL statement in the package.</param>
+        /// <param name="key">The key of the SQL statement.</param>
         TResponse ExecuteReader<TResponse>(string key);
         /// <summary>
         /// Executes SQL statements and reading the result data.
         /// </summary>
         /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
         /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-        /// <param name="key">The key of the SQL statement in the package.</param>
+        /// <param name="key">The key of the SQL statement.</param>
         /// <param name="request">The request data.</param>
         TResponse ExecuteReader<TRequest, TResponse>(string key, TRequest request);
         /// <summary>
@@ -66,7 +62,7 @@ namespace System.Data.Common
         /// </summary>
         /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
         /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-        /// <param name="key">The key of the SQL statement in the package.</param>
+        /// <param name="key">The key of the SQL statement.</param>
         /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         Task<TResponse> ExecuteReaderAsync<TRequest, TResponse>(string key, CancellationToken cancellationToken);
         /// <summary>
@@ -74,7 +70,7 @@ namespace System.Data.Common
         /// </summary>
         /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
         /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-        /// <param name="key">The key of the SQL statement in the package.</param>
+        /// <param name="key">The key of the SQL statement.</param>
         /// <param name="request">The request data.</param>
         /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         Task<TResponse> ExecuteReaderAsync<TRequest, TResponse>(string key, TRequest request, CancellationToken cancellationToken);

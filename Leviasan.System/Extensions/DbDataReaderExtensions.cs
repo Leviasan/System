@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 
 namespace System.Data.Common
 {
+    /// <summary>
+    /// The database data reader extensions.
+    /// </summary>
     public static class DbDataReaderExtensions
     {
         /// <summary>
@@ -17,10 +20,10 @@ namespace System.Data.Common
         /// <exception cref="IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         /// <exception cref="InvalidOperationException">The connection drops or is closed during the data retrieval.The System.Data.Common.DbDataReader is closed during the data retrieval.There is no data ready to be read. Tried to read a previously-read column in sequential mode. There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
         /// <exception cref="OverflowException">When converting to Enum: value is outside the range of the underlying type of enumType.</exception>
-        /// <typeparam name="TData">Type of data received.</typeparam>
+        /// <typeparam name="TReceive">Type of data received.</typeparam>
         /// <typeparam name="TDataReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
-        public static TData GetFieldValue<TData, TDataReader>(this TDataReader reader, string name, TData defaultValue, IFormatProvider provider = null)
-            where TData : IConvertible
+        public static TReceive GetFieldValue<TReceive, TDataReader>(this TDataReader reader, string name, TReceive defaultValue, IFormatProvider provider = null)
+            where TReceive : IConvertible
             where TDataReader : DbDataReader
         {
             if (reader == null)
@@ -41,10 +44,10 @@ namespace System.Data.Common
         /// <exception cref="IndexOutOfRangeException">The column index is out of range.</exception>
         /// <exception cref="InvalidOperationException">The connection drops or is closed during the data retrieval.The System.Data.Common.DbDataReader is closed during the data retrieval.There is no data ready to be read. Tried to read a previously-read column in sequential mode. There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
         /// <exception cref="OverflowException">When converting to Enum: value is outside the range of the underlying type of enumType.</exception>
-        /// <typeparam name="TData">Type of data received.</typeparam>
+        /// <typeparam name="TReceive">Type of data received.</typeparam>
         /// <typeparam name="TDataReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
-        public static TData GetFieldValue<TData, TDataReader>(this TDataReader reader, int ordinal, TData defaultValue, IFormatProvider provider = null)
-            where TData : IConvertible
+        public static TReceive GetFieldValue<TReceive, TDataReader>(this TDataReader reader, int ordinal, TReceive defaultValue, IFormatProvider provider = null)
+            where TReceive : IConvertible
             where TDataReader : DbDataReader
         {
             if (reader == null)
@@ -54,9 +57,9 @@ namespace System.Data.Common
 
             return reader.IsDBNull(ordinal)
                 ? defaultValue
-                : typeof(TData).IsEnum
-                    ? (TData)Enum.Parse(typeof(TData), value.ToString())
-                    : (TData)Convert.ChangeType(value, typeof(TData), provider);
+                : typeof(TReceive).IsEnum
+                    ? (TReceive)Enum.Parse(typeof(TReceive), value.ToString())
+                    : (TReceive)Convert.ChangeType(value, typeof(TReceive), provider);
         }
         /// <summary>
         /// Asynchronously gets the value of the specified column as the requested type.
@@ -71,10 +74,10 @@ namespace System.Data.Common
         /// <exception cref="IndexOutOfRangeException">The name specified is not a valid column name.</exception>
         /// <exception cref="InvalidOperationException">The connection drops or is closed during the data retrieval.The System.Data.Common.DbDataReader is closed during the data retrieval.There is no data ready to be read. Tried to read a previously-read column in sequential mode. There was an asynchronous operation in progress. This applies to all Get* methods when running in sequential mode, as they could be called while reading a stream.</exception>
         /// <exception cref="OverflowException">When converting to Enum: value is outside the range of the underlying type of enumType.</exception>
-        /// <typeparam name="TData">Type of data received.</typeparam>
+        /// <typeparam name="TReceive">Type of data received.</typeparam>
         /// <typeparam name="TDataReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
-        public static Task<TData> GetFieldValueAsync<TData, TDataReader>(this TDataReader reader, string name, TData defaultValue, IFormatProvider provider = null, CancellationToken cancellationToken = default)
-            where TData : IConvertible
+        public static Task<TReceive> GetFieldValueAsync<TReceive, TDataReader>(this TDataReader reader, string name, TReceive defaultValue, IFormatProvider provider = null, CancellationToken cancellationToken = default)
+            where TReceive : IConvertible
             where TDataReader : DbDataReader
         {
             if (reader == null)

@@ -121,7 +121,7 @@
     <value>One of the next required methods is not called: {0}</value>
   </data>
   <data name="KeyNotFoundException" xml:space="preserve">
-    <value>{0} is not found.</value>
+    <value>Key: {0} is not found.</value>
   </data>
   <data name="SqlStatementInvalidState" xml:space="preserve">
     <value>The SQL statement is not fully configured. Invalid property state: {0}.</value>

@@ -81,6 +81,10 @@ namespace System.Data.Common
             _statement.CommandText = commandText;
             return this;
         }
+        /// <summary>
+        /// Sets how a command string is interpreted. By default is <see cref="CommandType.Text"/>
+        /// </summary>
+        /// <param name="commandType">Specifies how a command string is interpreted.</param>
         public ISqlStatementBuilder<TCollection, TReader, TRequest, TResponse> SetCommandType(CommandType commandType)
         {
             _statement.CommandType = commandType;
