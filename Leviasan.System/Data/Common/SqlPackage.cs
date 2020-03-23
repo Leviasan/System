@@ -227,7 +227,7 @@ namespace System.Data.Common
         /// </summary>
         private void OpenConnection()
         {
-            if (Connection.State == ConnectionState.Closed)
+            if (Connection.State != ConnectionState.Open)
                 Connection.Open();
         }
         /// <summary>
@@ -236,7 +236,7 @@ namespace System.Data.Common
         /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         private async Task OpenConnectionAsync(CancellationToken cancellationToken)
         {
-            if (Connection.State == ConnectionState.Closed)
+            if (Connection.State != ConnectionState.Open)
                 await Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
         }
     }
