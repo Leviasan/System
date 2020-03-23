@@ -6,12 +6,20 @@
     <AssemblyName>Leviasan.System</AssemblyName>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <NeutralLanguage>en</NeutralLanguage>
+    <Authors>Leviasan</Authors>
+    <Description>Optimization of storage and executing SQL statements.</Description>
+    <RepositoryType>github</RepositoryType>
+    <RepositoryUrl>https://github.com/Leviasan/Extensions</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>.\Leviasan.System.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\User\source\repos\Extensions\Leviasan.System\Leviasan.System.xml</DocumentationFile>
+    <DocumentationFile>.\Leviasan.System.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
