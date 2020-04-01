@@ -11,7 +11,7 @@
     /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
     /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
     public interface ISqlStatementDirector<TCollection, TReader, TBuilder, TRequest, TResponse>
-        where TBuilder : ISqlStatementBuilder<TCollection, TReader, TRequest, TResponse>
+        where TBuilder : ISqlStatementBuilder<TCollection, TReader, TRequest, TResponse>, new()
         where TCollection : DbParameterCollection
         where TReader : DbDataReader
     {
