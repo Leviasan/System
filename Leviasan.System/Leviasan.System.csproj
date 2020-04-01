@@ -6,7 +6,7 @@
     <AssemblyName>Leviasan.System</AssemblyName>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <NeutralLanguage>en</NeutralLanguage>
     <Authors>Leviasan</Authors>
     <Description>Optimization of storage and executing SQL statements.</Description>
