@@ -20,7 +20,7 @@
         /// </summary>
         string Key { get; }
         /// <summary>
-        /// Configures an SQL statement.
+        /// Configures a SQL statement.
         /// </summary>
         void Configure(TBuilder builder);
     }
