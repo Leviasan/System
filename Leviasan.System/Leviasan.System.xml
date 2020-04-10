@@ -200,7 +200,7 @@
         </member>
         <member name="M:System.Data.Common.ISqlStatementDirector`5.Configure(`2)">
             <summary>
-            Configures an SQL statement.
+            Configures a SQL statement.
             </summary>
         </member>
         <member name="T:System.Data.Common.SqlPackage`2">
