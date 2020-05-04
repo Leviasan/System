@@ -5,15 +5,15 @@
     <RootNamespace>System</RootNamespace>
     <AssemblyName>Leviasan.System</AssemblyName>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>1.0.6</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.7</Version>
     <NeutralLanguage>en</NeutralLanguage>
     <Authors>Leviasan</Authors>
     <Description>Optimization of storage and executing SQL statements.</Description>
     <RepositoryType>github</RepositoryType>
     <RepositoryUrl>https://github.com/Leviasan/Extensions</RepositoryUrl>
-    <AssemblyVersion>1.0.6.0</AssemblyVersion>
-    <FileVersion>1.0.6.0</FileVersion>
+    <AssemblyVersion>1.0.7.0</AssemblyVersion>
+    <FileVersion>1.0.7.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

@@ -584,32 +584,28 @@
             The profile store name.
             </summary>
         </member>
-        <member name="M:System.Security.Claims.IProfileStore.FindById(System.String)">
+        <member name="M:System.Security.Claims.IProfileStore.FindById(System.String,System.Boolean)">
             <summary>
-            Gets claims identity if any.
+            Gets claims identity.
             </summary>
             <param name="userId">The user ID.</param>
+            <param name="includeClaims">If true in result will be added user's claims.</param>
             <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
         </member>
-        <member name="M:System.Security.Claims.IProfileStore.FindByName(System.String)">
+        <member name="M:System.Security.Claims.IProfileStore.FindByName(System.String,System.Boolean)">
             <summary>
-            Gets claims identity if any.
+            Gets claims identity.
             </summary>
             <param name="username">The account name.</param>
+            <param name="includeClaims">If true in result will be added user's claims.</param>
             <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
-        </member>
-        <member name="M:System.Security.Claims.IProfileStore.FindUserIdByName(System.String)">
-            <summary>
-            Gets account identifier if any.
-            </summary>
-            <param name="username">The account name.</param>
-            <returns>The user identifier if any otherwise null.</returns>
         </member>
         <member name="M:System.Security.Claims.IProfileStore.IsLockedOut(System.String)">
             <summary>
             Checks is account locked out.
             </summary>
             <param name="username">The account name.</param>
+            <returns>True if account locked out, otherwise false.</returns>
         </member>
         <member name="M:System.Security.Claims.IProfileStore.IsValidate(System.String,System.String)">
             <summary>
@@ -617,6 +613,7 @@
             </summary>
             <param name="username">The account name.</param>
             <param name="password">The account password.</param>
+            <returns>True if the credential is valid, otherwise false.</returns>
         </member>
         <member name="T:System.Security.Claims.IProfileStoreManager">
             <summary>
@@ -628,29 +625,23 @@
             The profile stores.
             </summary>
         </member>
-        <member name="M:System.Security.Claims.IProfileStoreManager.FindById(System.String,System.String)">
+        <member name="M:System.Security.Claims.IProfileStoreManager.FindById(System.String,System.String,System.Boolean)">
             <summary>
             Gets claims identity if any from a specified profile store.
             </summary>
             <param name="provider">The profile store name.</param>
             <param name="userId">The user ID.</param>
+            <param name="includeClaims">If true in result will be added user's claims.</param>
             <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
         </member>
-        <member name="M:System.Security.Claims.IProfileStoreManager.FindByName(System.String,System.String)">
+        <member name="M:System.Security.Claims.IProfileStoreManager.FindByName(System.String,System.String,System.Boolean)">
             <summary>
             Gets claims identity if any from a specified profile store.
             </summary>
             <param name="provider">The profile store name.</param>
             <param name="username">The account name.</param>
+            <param name="includeClaims">If true in result will be added user's claims.</param>
             <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
-        </member>
-        <member name="M:System.Security.Claims.IProfileStoreManager.FindUserIdByName(System.String,System.String)">
-            <summary>
-            Gets account identifier if any from a specified profile store.
-            </summary>
-            <param name="provider">The profile store name.</param>
-            <param name="username">The account name.</param>
-            <returns>The user identifier, if any, otherwise null.</returns>
         </member>
         <member name="M:System.Security.Claims.IProfileStoreManager.IsLockedOut(System.String,System.String)">
             <summary>
@@ -698,47 +689,40 @@
             Releases the unmanaged resources and releases the managed resources.
             </summary>
         </member>
-        <member name="M:System.Security.Claims.ProfileStoreManager.FindById(System.String,System.String)">
+        <member name="M:System.Security.Claims.ProfileStoreManager.FindById(System.String,System.String,System.Boolean)">
             <summary>
             Finds and returns the claims, if any, who has the specified userId from external claim store.
             </summary>
             <param name="provider">The external claim store name.</param>
             <param name="userId">The user ID to search for.</param>
+            <param name="includeClaims">If true in result will be added user's claims.</param>
             <exception cref="T:System.Collections.Generic.KeyNotFoundException">Provider not found.</exception>
+            <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
         </member>
-        <member name="M:System.Security.Claims.ProfileStoreManager.FindById(System.String)">
+        <member name="M:System.Security.Claims.ProfileStoreManager.FindById(System.String,System.Boolean)">
             <summary>
             Finds and returns the claims identity, if any, who has the specified userId.
             </summary>
             <param name="userId">The user ID to search for.</param>
+            <param name="includeClaims">If true in result will be added user's claims.</param>
+            <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
         </member>
-        <member name="M:System.Security.Claims.ProfileStoreManager.FindByName(System.String,System.String)">
+        <member name="M:System.Security.Claims.ProfileStoreManager.FindByName(System.String,System.String,System.Boolean)">
             <summary>
             Finds and returns the claims identity, if any, who has the specified normalized user name from external claim store.
             </summary>
             <param name="provider">The external claim store name.</param>
             <param name="username">The normalized user name to search for.</param>
+            <param name="includeClaims">If true in result will be added user's claims.</param>
+            <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
         </member>
-        <member name="M:System.Security.Claims.ProfileStoreManager.FindByName(System.String)">
+        <member name="M:System.Security.Claims.ProfileStoreManager.FindByName(System.String,System.Boolean)">
             <summary>
             Finds and returns the claims identity, if any, who has the specified normalized user name.
             </summary>
             <param name="username">The normalized user name to search for.</param>
-        </member>
-        <member name="M:System.Security.Claims.ProfileStoreManager.FindUserIdByName(System.String,System.String)">
-            <summary>
-            Gets account identifier if any from a specified profile store.
-            </summary>
-            <param name="provider">The profile store name.</param>
-            <param name="username">The account name.</param>
-            <returns>The user identifier, if any, otherwise null.</returns>
-        </member>
-        <member name="M:System.Security.Claims.ProfileStoreManager.FindUserIdByName(System.String)">
-            <summary>
-            Gets account identifier if any.
-            </summary>
-            <param name="username">The account name.</param>
-            <returns>The user identifier if any otherwise null.</returns>
+            <param name="includeClaims">If true in result will be added user's claims.</param>
+            <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
         </member>
         <member name="M:System.Security.Claims.ProfileStoreManager.IsLockedOut(System.String,System.String)">
             <summary>
@@ -747,12 +731,14 @@
             <param name="provider">The external claim store name.</param>
             <param name="username">The normalized user name to search for.</param>
             <exception cref="T:System.Collections.Generic.KeyNotFoundException">Provider not found.</exception>
+            <returns>True if account locked out, otherwise false.</returns>
         </member>
         <member name="M:System.Security.Claims.ProfileStoreManager.IsLockedOut(System.String)">
             <summary>
             Checks is account locked out.
             </summary>
             <param name="username">The normalized user name to search for.</param>
+            <returns>True if account locked out, otherwise false.</returns>
         </member>
         <member name="M:System.Security.Claims.ProfileStoreManager.IsValidate(System.String,System.String,System.String)">
             <summary>
@@ -761,6 +747,7 @@
             <param name="provider">The external claim store name.</param>
             <param name="username">The normalized user name to search for.</param>
             <param name="password">The account password.</param>
+            <returns>True if the credential is valid, otherwise false.</returns>
         </member>
         <member name="M:System.Security.Claims.ProfileStoreManager.IsValidate(System.String,System.String)">
             <summary>
@@ -768,6 +755,7 @@
             </summary>
             <param name="username">The normalized user name to search for.</param>
             <param name="password">The account password.</param>
+            <returns>True if the credential is valid, otherwise false.</returns>
         </member>
         <member name="M:System.Security.Claims.ProfileStoreManager.Dispose(System.Boolean)">
             <summary>

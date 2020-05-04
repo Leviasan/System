@@ -48,24 +48,28 @@ namespace System.Security.Claims
         /// </summary>
         /// <param name="provider">The external claim store name.</param>
         /// <param name="userId">The user ID to search for.</param>
+        /// <param name="includeClaims">If true in result will be added user's claims.</param>
         /// <exception cref="KeyNotFoundException">Provider not found.</exception>
-        public ClaimsIdentity FindById(string provider, string userId)
+        /// <returns>If user authentication is success, the property <see cref="ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
+        public ClaimsIdentity FindById(string provider, string userId, bool includeClaims)
         {
             if (!Stores.ContainsKey(provider))
                 throw new KeyNotFoundException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.KeyNotFoundException, provider));
 
-            return Stores[provider].FindById(userId);
+            return Stores[provider].FindById(userId, includeClaims);
         }
         /// <summary>
         /// Finds and returns the claims identity, if any, who has the specified userId.
         /// </summary>
         /// <param name="userId">The user ID to search for.</param>
-        public ClaimsIdentity FindById(string userId)
+        /// <param name="includeClaims">If true in result will be added user's claims.</param>
+        /// <returns>If user authentication is success, the property <see cref="ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
+        public ClaimsIdentity FindById(string userId, bool includeClaims)
         {
             ClaimsIdentity claimsIdentity = null;
             foreach (var store in Stores.Values)
             {
-                claimsIdentity = store.FindById(userId);
+                claimsIdentity = store.FindById(userId, includeClaims);
                 if (claimsIdentity != null)
                     break;
             }
@@ -76,56 +80,31 @@ namespace System.Security.Claims
         /// </summary>
         /// <param name="provider">The external claim store name.</param>
         /// <param name="username">The normalized user name to search for.</param>
-        public ClaimsIdentity FindByName(string provider, string username)
+        /// <param name="includeClaims">If true in result will be added user's claims.</param>
+        /// <returns>If user authentication is success, the property <see cref="ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
+        public ClaimsIdentity FindByName(string provider, string username, bool includeClaims)
         {
             if (!Stores.ContainsKey(provider))
                 throw new KeyNotFoundException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.KeyNotFoundException, provider));
 
-            return Stores[provider].FindByName(username);
+            return Stores[provider].FindByName(username, includeClaims);
         }
         /// <summary>
         /// Finds and returns the claims identity, if any, who has the specified normalized user name.
         /// </summary>
         /// <param name="username">The normalized user name to search for.</param>
-        public ClaimsIdentity FindByName(string username)
+        /// <param name="includeClaims">If true in result will be added user's claims.</param>
+        /// <returns>If user authentication is success, the property <see cref="ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
+        public ClaimsIdentity FindByName(string username, bool includeClaims)
         {
             ClaimsIdentity claimsIdentity = null;
             foreach (var store in Stores.Values)
             {
-                claimsIdentity = store.FindByName(username);
+                claimsIdentity = store.FindByName(username, includeClaims);
                 if (claimsIdentity != null)
                     break;
             }
             return claimsIdentity;
-        }
-        /// <summary>
-        /// Gets account identifier if any from a specified profile store.
-        /// </summary>
-        /// <param name="provider">The profile store name.</param>
-        /// <param name="username">The account name.</param>
-        /// <returns>The user identifier, if any, otherwise null.</returns>
-        public string FindUserIdByName(string provider, string username)
-        {
-            if (!Stores.ContainsKey(provider))
-                throw new KeyNotFoundException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.KeyNotFoundException, provider));
-
-            return Stores[provider].FindUserIdByName(username);
-        }
-        /// <summary>
-        /// Gets account identifier if any.
-        /// </summary>
-        /// <param name="username">The account name.</param>
-        /// <returns>The user identifier if any otherwise null.</returns>
-        public string FindUserIdByName(string username)
-        {
-            string userId = null;
-            foreach (var store in Stores.Values)
-            {
-                userId = store.FindUserIdByName(username);
-                if (userId != null)
-                    break;
-            }
-            return userId;
         }
         /// <summary>
         /// Checks is account locked out from external claim store.
@@ -133,6 +112,7 @@ namespace System.Security.Claims
         /// <param name="provider">The external claim store name.</param>
         /// <param name="username">The normalized user name to search for.</param>
         /// <exception cref="KeyNotFoundException">Provider not found.</exception>
+        /// <returns>True if account locked out, otherwise false.</returns>
         public bool IsLockedOut(string provider, string username)
         {
             if (!Stores.ContainsKey(provider))
@@ -144,6 +124,7 @@ namespace System.Security.Claims
         /// Checks is account locked out.
         /// </summary>
         /// <param name="username">The normalized user name to search for.</param>
+        /// <returns>True if account locked out, otherwise false.</returns>
         public bool IsLockedOut(string username)
         {
             foreach (var store in Stores.Values)
@@ -159,6 +140,7 @@ namespace System.Security.Claims
         /// <param name="provider">The external claim store name.</param>
         /// <param name="username">The normalized user name to search for.</param>
         /// <param name="password">The account password.</param>
+        /// <returns>True if the credential is valid, otherwise false.</returns>
         public bool IsValidate(string provider, string username, string password)
         {
             if (!Stores.ContainsKey(provider))
@@ -171,6 +153,7 @@ namespace System.Security.Claims
         /// </summary>
         /// <param name="username">The normalized user name to search for.</param>
         /// <param name="password">The account password.</param>
+        /// <returns>True if the credential is valid, otherwise false.</returns>
         public bool IsValidate(string username, string password)
         {
             foreach (var store in Stores.Values)

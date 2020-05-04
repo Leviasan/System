@@ -11,33 +11,31 @@
         string Issuer { get; }
 
         /// <summary>
-        /// Gets claims identity if any.
+        /// Gets claims identity.
         /// </summary>
         /// <param name="userId">The user ID.</param>
+        /// <param name="includeClaims">If true in result will be added user's claims.</param>
         /// <returns>If user authentication is success, the property <see cref="ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
-        ClaimsIdentity FindById(string userId);
+        ClaimsIdentity FindById(string userId, bool includeClaims);
         /// <summary>
-        /// Gets claims identity if any.
+        /// Gets claims identity.
         /// </summary>
         /// <param name="username">The account name.</param>
+        /// <param name="includeClaims">If true in result will be added user's claims.</param>
         /// <returns>If user authentication is success, the property <see cref="ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
-        ClaimsIdentity FindByName(string username);
-        /// <summary>
-        /// Gets account identifier if any.
-        /// </summary>
-        /// <param name="username">The account name.</param>
-        /// <returns>The user identifier if any otherwise null.</returns>
-        string FindUserIdByName(string username);
+        ClaimsIdentity FindByName(string username, bool includeClaims);
         /// <summary>
         /// Checks is account locked out.
         /// </summary>
         /// <param name="username">The account name.</param>
+        /// <returns>True if account locked out, otherwise false.</returns>
         bool IsLockedOut(string username);
         /// <summary>
         /// Validates the credentials.
         /// </summary>
         /// <param name="username">The account name.</param>
         /// <param name="password">The account password.</param>
+        /// <returns>True if the credential is valid, otherwise false.</returns>
         bool IsValidate(string username, string password);
     }
 }
