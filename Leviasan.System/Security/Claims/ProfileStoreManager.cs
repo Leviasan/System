@@ -7,7 +7,7 @@ namespace System.Security.Claims
     /// <summary>
     /// Represents the APIs for generating claims identity from specified stores.
     /// </summary>
-    public sealed class ClaimsStoreManager : IClaimsStoreManager
+    public sealed class ProfileStoreManager : IProfileStoreManager
     {
         /// <summary>
         /// To detect redundant calls <see cref="Dispose()"/> method.
@@ -15,10 +15,10 @@ namespace System.Security.Claims
         private bool _disposedValue;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="ClaimsStoreManager"/> class with a specified claim stores.
+        /// Initializes a new instance of <see cref="ProfileStoreManager"/> class with a specified claim stores.
         /// </summary>
         /// <param name="stores">The claim stores.</param>
-        public ClaimsStoreManager(IEnumerable<IClaimsStore> stores)
+        public ProfileStoreManager(IEnumerable<IProfileStore> stores)
         {
             if (stores == null)
                 throw new ArgumentNullException(nameof(stores));
@@ -27,9 +27,9 @@ namespace System.Security.Claims
         }
 
         /// <summary>
-        /// The claim stores.
+        /// The profile stores.
         /// </summary>
-        public IReadOnlyDictionary<string, IClaimsStore> Stores { get; }
+        public IReadOnlyDictionary<string, IProfileStore> Stores { get; }
         /// <summary>
         /// The claim store name.
         /// </summary>
@@ -97,6 +97,35 @@ namespace System.Security.Claims
                     break;
             }
             return claimsIdentity;
+        }
+        /// <summary>
+        /// Gets account identifier if any from a specified profile store.
+        /// </summary>
+        /// <param name="provider">The profile store name.</param>
+        /// <param name="username">The account name.</param>
+        /// <returns>The user identifier, if any, otherwise null.</returns>
+        public string FindUserIdByName(string provider, string username)
+        {
+            if (!Stores.ContainsKey(provider))
+                throw new KeyNotFoundException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.KeyNotFoundException, provider));
+
+            return Stores[provider].FindUserIdByName(username);
+        }
+        /// <summary>
+        /// Gets account identifier if any.
+        /// </summary>
+        /// <param name="username">The account name.</param>
+        /// <returns>The user identifier if any otherwise null.</returns>
+        public string FindUserIdByName(string username)
+        {
+            string userId = null;
+            foreach (var store in Stores.Values)
+            {
+                userId = store.FindUserIdByName(username);
+                if (userId != null)
+                    break;
+            }
+            return userId;
         }
         /// <summary>
         /// Checks is account locked out from external claim store.

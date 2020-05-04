@@ -40,6 +40,7 @@ namespace System.Data.Common
         /// </summary>
         /// <param name="connection">The specified connection.</param>
         /// <param name="request">The request data.</param>
+        [Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "Using a parameterized command string")]
         public virtual DbCommand CreateDbCommand(DbConnection connection, TRequest request)
         {
             if (connection == null)
