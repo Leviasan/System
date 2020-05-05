@@ -175,7 +175,8 @@ namespace System.Security.Claims
                 if (disposing)
                 {
                     foreach (var store in Stores.Values)
-                        store.Dispose();
+                        if (store is IDisposable)
+                            ((IDisposable)store).Dispose();
                 }
                 _disposedValue = true;
             }

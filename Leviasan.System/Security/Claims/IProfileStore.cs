@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents the service for authenticating users.
     /// </summary>
-    public interface IProfileStore : IDisposable
+    public interface IProfileStore
     {
         /// <summary>
         /// The profile store name.

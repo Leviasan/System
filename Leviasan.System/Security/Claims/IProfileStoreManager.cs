@@ -5,7 +5,7 @@ namespace System.Security.Claims
     /// <summary>
     /// Represents the service for authenticating users through registered profile stores.
     /// </summary>
-    public interface IProfileStoreManager : IProfileStore
+    public interface IProfileStoreManager : IProfileStore, IDisposable
     {
         /// <summary>
         /// The profile stores.
