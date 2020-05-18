@@ -538,6 +538,18 @@
             <typeparam name="TReceive">Type of data received.</typeparam>
             <typeparam name="TDataReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
         </member>
+        <member name="T:System.TypeExtensions">
+            <summary>
+            Type class extensions.
+            </summary>
+        </member>
+        <member name="M:System.TypeExtensions.GetConfigurePath(System.Type)">
+            <summary>
+            Gets the path to the section in appsettings.json based on the full name of the type.
+            </summary>
+            <param name="type"></param>
+            <returns>The path to the section.</returns>
+        </member>
         <member name="T:System.Properties.Resources">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
