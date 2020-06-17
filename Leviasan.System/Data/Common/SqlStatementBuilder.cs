@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace System.Data.Common
 {
     /// <summary>
-    /// Represents an Oracle SQL statement builder.
+    /// Represents an SQL statement builder.
     /// </summary>
     /// <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
     /// <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
