@@ -225,11 +225,10 @@
             The event reports that registration of SQL statements has begun.
             </summary>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.#ctor(System.Data.Common.DbConnection)">
+        <member name="M:System.Data.Common.SqlPackage`2.#ctor">
             <summary>
             Initializes a new  instance <see cref="T:System.Data.Common.SqlPackage`2"/> class.
             </summary>
-            <exception cref="T:System.ArgumentNullException">The connection in null.</exception>
         </member>
         <member name="P:System.Data.Common.SqlPackage`2.Connection">
             <summary>
