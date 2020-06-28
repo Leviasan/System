@@ -45,10 +45,23 @@ Prepare:
     public abstract class OracleSqlPackage : SqlPackage<OracleParameterCollection, OracleDataReader>
     {
         /// <summary>
+        /// The database context.
+        /// </summary>
+        private readonly DbContext _context;
+
+        /// <summary>
         /// Initializes a new instance of <see cref="OracleSqlPackage"/> class with specified database connection.
         /// </summary>
-        /// <param name="connection">The database connection.</param>
-        public OracleSqlPackage(DbConnection connection) : base(connection) { }
+        /// <param name="context"></param>
+        public OracleSqlPackage(DbContext context)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+        }
+
+        /// <summary>
+        /// The database connection.
+        /// </summary>
+        public override DbConnection Connection => _context?.Database.GetDbConnection();
     }
     /// <summary>
     /// Represents an Oracle SQL statement that is executed while connected to a data source.

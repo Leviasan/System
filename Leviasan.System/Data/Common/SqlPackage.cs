@@ -30,11 +30,8 @@ namespace System.Data.Common
         /// <summary>
         /// Initializes a new  instance <see cref="SqlPackage{TCollection, TReader}"/> class.
         /// </summary>
-        /// <exception cref="ArgumentNullException">The connection in null.</exception>
-        public SqlPackage(DbConnection connection)
+        public SqlPackage()
         {
-            Connection = connection ?? throw new ArgumentNullException(nameof(connection));
-
             _statements = new Dictionary<string, object>();
             InitializeSqlStatements += OnInitializeSqlStatements;
             InitializeSqlStatements.Invoke(new SqlPackageBuilder(_statements));
@@ -43,7 +40,7 @@ namespace System.Data.Common
         /// <summary>
         /// The database connection.
         /// </summary>
-        public virtual DbConnection Connection { get; }
+        public abstract DbConnection Connection { get; }
 
         /// <summary>
         /// Releases the unmanaged resources and releases the managed resources.
