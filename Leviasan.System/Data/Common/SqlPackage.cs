@@ -194,7 +194,7 @@ namespace System.Data.Common
             {
                 if (disposing)
                 {
-                    Connection.Dispose();
+                    Connection?.Dispose();
                 }
                 _disposedValue = true;
             }
