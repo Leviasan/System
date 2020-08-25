@@ -3,7 +3,7 @@ Optimization of storage and executing SQL statements.
 
 #### How using with Oracle database:
 Prepare:
-```
+```csharp
    
     public interface IOracleSqlStatement<TRequest, TResponse> : ISqlStatement<OracleParameterCollection, OracleDataReader, TRequest, TResponse>
     {
@@ -66,7 +66,7 @@ Prepare:
     }
 ```
 Implementation:
-```
+```csharp
     public sealed class GetUsernameSqlStatement : IOracleSqlStatementDirector<int, string>
     {
         public string Key => nameof(GetUsernameSqlStatement);
@@ -125,7 +125,7 @@ Implementation:
     }
 ```
 If using the .NET Core web project, you need to register in the "startup" class "ApplicationDbContext". And get it in the controller.
-```
+```csharp
     [ApiController]
     [Route("api/[controller]")]
     public sealed class ExampleController : ControllerBase 
