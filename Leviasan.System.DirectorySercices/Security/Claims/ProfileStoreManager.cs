@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 
 namespace System.Security.Claims
@@ -7,7 +6,7 @@ namespace System.Security.Claims
     /// <summary>
     /// Represents the APIs for generating claims identity from specified stores.
     /// </summary>
-    public sealed class ProfileStoreManager : IProfileStoreManager
+    public sealed class ProfileStoreManager : IProfileStoreManager, IDisposable
     {
         /// <summary>
         /// To detect redundant calls <see cref="Dispose()"/> method.
@@ -31,12 +30,12 @@ namespace System.Security.Claims
         /// </summary>
         public IReadOnlyDictionary<string, IProfileStore> Stores { get; }
         /// <summary>
-        /// The claim store name.
+        /// The claim store issuer.
         /// </summary>
         public string Issuer => ClaimsIdentity.DefaultIssuer;
 
         /// <summary>
-        /// Releases the unmanaged resources and releases the managed resources.
+        /// Releases the unmanaged resources and releases the managed resources. Disposes all <see cref="IProfileStore"/> stores.
         /// </summary>
         public void Dispose()
         {
@@ -48,28 +47,26 @@ namespace System.Security.Claims
         /// </summary>
         /// <param name="provider">The external claim store name.</param>
         /// <param name="userId">The user ID to search for.</param>
-        /// <param name="includeClaims">If true in result will be added user's claims.</param>
         /// <exception cref="KeyNotFoundException">Provider not found.</exception>
         /// <returns>If user authentication is success, the property <see cref="ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
-        public ClaimsIdentity FindById(string provider, string userId, bool includeClaims)
+        public ClaimsIdentity FindById(string provider, string userId)
         {
             if (!Stores.ContainsKey(provider))
-                throw new KeyNotFoundException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.KeyNotFoundException, provider));
+                throw new KeyNotFoundException(provider);
 
-            return Stores[provider].FindById(userId, includeClaims);
+            return Stores[provider].FindById(userId);
         }
         /// <summary>
         /// Finds and returns the claims identity, if any, who has the specified userId.
         /// </summary>
         /// <param name="userId">The user ID to search for.</param>
-        /// <param name="includeClaims">If true in result will be added user's claims.</param>
         /// <returns>If user authentication is success, the property <see cref="ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
-        public ClaimsIdentity FindById(string userId, bool includeClaims)
+        public ClaimsIdentity FindById(string userId)
         {
             ClaimsIdentity claimsIdentity = null;
             foreach (var store in Stores.Values)
             {
-                claimsIdentity = store.FindById(userId, includeClaims);
+                claimsIdentity = store.FindById(userId);
                 if (claimsIdentity != null)
                     break;
             }
@@ -80,27 +77,25 @@ namespace System.Security.Claims
         /// </summary>
         /// <param name="provider">The external claim store name.</param>
         /// <param name="username">The normalized user name to search for.</param>
-        /// <param name="includeClaims">If true in result will be added user's claims.</param>
         /// <returns>If user authentication is success, the property <see cref="ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
-        public ClaimsIdentity FindByName(string provider, string username, bool includeClaims)
+        public ClaimsIdentity FindByName(string provider, string username)
         {
             if (!Stores.ContainsKey(provider))
-                throw new KeyNotFoundException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.KeyNotFoundException, provider));
+                throw new KeyNotFoundException(provider);
 
-            return Stores[provider].FindByName(username, includeClaims);
+            return Stores[provider].FindByName(username);
         }
         /// <summary>
         /// Finds and returns the claims identity, if any, who has the specified normalized user name.
         /// </summary>
         /// <param name="username">The normalized user name to search for.</param>
-        /// <param name="includeClaims">If true in result will be added user's claims.</param>
         /// <returns>If user authentication is success, the property <see cref="ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
-        public ClaimsIdentity FindByName(string username, bool includeClaims)
+        public ClaimsIdentity FindByName(string username)
         {
             ClaimsIdentity claimsIdentity = null;
             foreach (var store in Stores.Values)
             {
-                claimsIdentity = store.FindByName(username, includeClaims);
+                claimsIdentity = store.FindByName(username);
                 if (claimsIdentity != null)
                     break;
             }
@@ -116,7 +111,7 @@ namespace System.Security.Claims
         public bool IsLockedOut(string provider, string username)
         {
             if (!Stores.ContainsKey(provider))
-                throw new KeyNotFoundException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.KeyNotFoundException, provider));
+                throw new KeyNotFoundException(provider);
 
             return Stores[provider].IsLockedOut(username);
         }
@@ -144,7 +139,7 @@ namespace System.Security.Claims
         public bool IsValidate(string provider, string username, string password)
         {
             if (!Stores.ContainsKey(provider))
-                throw new KeyNotFoundException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.KeyNotFoundException, provider));
+                throw new KeyNotFoundException(provider);
 
             return Stores[provider].IsValidate(username, password);
         }
@@ -175,8 +170,10 @@ namespace System.Security.Claims
                 if (disposing)
                 {
                     foreach (var store in Stores.Values)
+                    {
                         if (store is IDisposable)
                             ((IDisposable)store).Dispose();
+                    }
                 }
                 _disposedValue = true;
             }

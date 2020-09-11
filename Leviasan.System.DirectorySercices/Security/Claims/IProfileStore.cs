@@ -14,16 +14,14 @@
         /// Gets claims identity.
         /// </summary>
         /// <param name="userId">The user ID.</param>
-        /// <param name="includeClaims">If true in result will be added user's claims.</param>
         /// <returns>If user authentication is success, the property <see cref="ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
-        ClaimsIdentity FindById(string userId, bool includeClaims);
+        ClaimsIdentity FindById(string userId);
         /// <summary>
         /// Gets claims identity.
         /// </summary>
         /// <param name="username">The account name.</param>
-        /// <param name="includeClaims">If true in result will be added user's claims.</param>
         /// <returns>If user authentication is success, the property <see cref="ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
-        ClaimsIdentity FindByName(string username, bool includeClaims);
+        ClaimsIdentity FindByName(string username);
         /// <summary>
         /// Checks is account locked out.
         /// </summary>

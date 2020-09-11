@@ -5,7 +5,7 @@ namespace System.Security.Claims
     /// <summary>
     /// Represents the service for authenticating users through registered profile stores.
     /// </summary>
-    public interface IProfileStoreManager : IProfileStore, IDisposable
+    public interface IProfileStoreManager : IProfileStore
     {
         /// <summary>
         /// The profile stores.
@@ -17,17 +17,15 @@ namespace System.Security.Claims
         /// </summary>
         /// <param name="provider">The profile store name.</param>
         /// <param name="userId">The user ID.</param>
-        /// <param name="includeClaims">If true in result will be added user's claims.</param>
         /// <returns>If user authentication is success, the property <see cref="ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
-        ClaimsIdentity FindById(string provider, string userId, bool includeClaims);
+        ClaimsIdentity FindById(string provider, string userId);
         /// <summary>
         /// Gets claims identity if any from a specified profile store.
         /// </summary>
         /// <param name="provider">The profile store name.</param>
         /// <param name="username">The account name.</param>
-        /// <param name="includeClaims">If true in result will be added user's claims.</param>
         /// <returns>If user authentication is success, the property <see cref="ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
-        ClaimsIdentity FindByName(string provider, string username, bool includeClaims);
+        ClaimsIdentity FindByName(string provider, string username);
         /// <summary>
         /// Checks is account locked out from a specified profile store.
         /// </summary>

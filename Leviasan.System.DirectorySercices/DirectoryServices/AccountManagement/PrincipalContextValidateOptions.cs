@@ -23,13 +23,8 @@ namespace System.DirectoryServices.AccountManagement
             if (options.ContextType == ContextType.Machine && !string.IsNullOrWhiteSpace(options.Container))
                 return ValidateOptionsResult.Fail($"For {ContextType.Machine} context types, the parameter {nameof(options.Container)} must be set to null.");
 
-            if (options.Username != null && options.Password == null ||
-                options.Username == null && options.Password != null ||
-                options.Username != null && !string.IsNullOrWhiteSpace(options.Username) && string.IsNullOrWhiteSpace(options.Password) ||
-                options.Password != null && !string.IsNullOrWhiteSpace(options.Password) && string.IsNullOrWhiteSpace(options.Username))
-            {
+            if (options.Username != null && options.Password == null || options.Username == null && options.Password != null)
                 return ValidateOptionsResult.Fail($"The {nameof(options.Username)} and {nameof(options.Password)} parameters must either be null or contain a value.");
-            }
 
             return ValidateOptionsResult.Success;
         }

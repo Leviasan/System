@@ -4,74 +4,81 @@
         <name>Leviasan.System.DirectoryServices</name>
     </assembly>
     <members>
-        <member name="T:System.DirectoryServices.AccountManagement.ActiveDirectoryClaimsStore">
+        <member name="T:System.DirectoryServices.AccountManagement.ActiveDirectoryProfileStore">
             <summary>
             Represents an active directory claim store.
             </summary>
         </member>
-        <member name="F:System.DirectoryServices.AccountManagement.ActiveDirectoryClaimsStore.AuthenticationScheme">
+        <member name="F:System.DirectoryServices.AccountManagement.ActiveDirectoryProfileStore._disposedValue">
             <summary>
-            Default authentication scheme.
+            To detect redundant calls <see cref="M:System.DirectoryServices.AccountManagement.ActiveDirectoryProfileStore.Dispose"/> method.
             </summary>
         </member>
-        <member name="F:System.DirectoryServices.AccountManagement.ActiveDirectoryClaimsStore._disposedValue">
-            <summary>
-            To detect redundant calls <see cref="M:System.DirectoryServices.AccountManagement.ActiveDirectoryClaimsStore.Dispose"/> method.
-            </summary>
-        </member>
-        <member name="F:System.DirectoryServices.AccountManagement.ActiveDirectoryClaimsStore._principalContext">
+        <member name="F:System.DirectoryServices.AccountManagement.ActiveDirectoryProfileStore._principalContext">
             <summary>
             The server or domain context.
             </summary>
         </member>
-        <member name="M:System.DirectoryServices.AccountManagement.ActiveDirectoryClaimsStore.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{System.DirectoryServices.AccountManagement.PrincipalContextOptions})">
+        <member name="M:System.DirectoryServices.AccountManagement.ActiveDirectoryProfileStore.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{System.DirectoryServices.AccountManagement.PrincipalContextOptions})">
             <summary>
-            Initializes a new instance of <see cref="T:System.DirectoryServices.AccountManagement.ActiveDirectoryClaimsStore"/> class.
+            Initializes a new instance of <see cref="T:System.DirectoryServices.AccountManagement.ActiveDirectoryProfileStore"/> class.
             </summary>
             <param name="principalContextOptions">The principal context options.</param>
         </member>
-        <member name="P:System.DirectoryServices.AccountManagement.ActiveDirectoryClaimsStore.Issuer">
+        <member name="P:System.DirectoryServices.AccountManagement.ActiveDirectoryProfileStore.Issuer">
             <summary>
             The claim store name.
             </summary>
         </member>
-        <member name="M:System.DirectoryServices.AccountManagement.ActiveDirectoryClaimsStore.Dispose">
+        <member name="M:System.DirectoryServices.AccountManagement.ActiveDirectoryProfileStore.Dispose">
             <summary>
             Releases the unmanaged resources and releases the managed resources.
             </summary>
         </member>
-        <member name="M:System.DirectoryServices.AccountManagement.ActiveDirectoryClaimsStore.FindById(System.String)">
+        <member name="M:System.DirectoryServices.AccountManagement.ActiveDirectoryProfileStore.FindById(System.String)">
             <summary>
-            Finds and returns the claims identity, if any, who has the specified userId.
+            Gets claims identity.
             </summary>
-            <param name="userId">The user ID to search for.</param>
+            <param name="userId">The user ID.</param>
+            <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
         </member>
-        <member name="M:System.DirectoryServices.AccountManagement.ActiveDirectoryClaimsStore.FindByName(System.String)">
+        <member name="M:System.DirectoryServices.AccountManagement.ActiveDirectoryProfileStore.FindByName(System.String)">
             <summary>
-            Finds and returns the claims identity, if any, who has the specified normalized user name.
+            Gets claims identity.
             </summary>
-            <param name="username">The normalized user name to search for.</param>
+            <param name="username">The account name.</param>
+            <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
         </member>
-        <member name="M:System.DirectoryServices.AccountManagement.ActiveDirectoryClaimsStore.IsLockedOut(System.String)">
+        <member name="M:System.DirectoryServices.AccountManagement.ActiveDirectoryProfileStore.IsLockedOut(System.String)">
             <summary>
             Checks is account locked out.
             </summary>
-            <param name="username">The normalized user name to search for.</param>
+            <param name="username">The account name.</param>
+            <returns>True if account locked out, otherwise false.</returns>
         </member>
-        <member name="M:System.DirectoryServices.AccountManagement.ActiveDirectoryClaimsStore.IsValidate(System.String,System.String)">
+        <member name="M:System.DirectoryServices.AccountManagement.ActiveDirectoryProfileStore.IsValidate(System.String,System.String)">
             <summary>
             Validates the credentials.
             </summary>
-            <param name="username">The normalized user name to search for.</param>
+            <param name="username">The account name.</param>
             <param name="password">The account password.</param>
+            <returns>True if the credential is valid, otherwise false.</returns>
         </member>
-        <member name="M:System.DirectoryServices.AccountManagement.ActiveDirectoryClaimsStore.CreateIdentityClaims(System.String)">
+        <member name="M:System.DirectoryServices.AccountManagement.ActiveDirectoryProfileStore.GetUserId(System.String)">
             <summary>
-            Finds user. If authentication is success creates a claims-based identity.
+            Gets user identifier if any.
+            </summary>
+            <param name="identityValue"></param>
+            <returns>Return user identifier if any, otherwise null.</returns>
+        </member>
+        <member name="M:System.DirectoryServices.AccountManagement.ActiveDirectoryProfileStore.CreateClaimsIdentity(System.String)">
+            <summary>
+            Gets the authentication result. 
+            Specifications: https://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims
             </summary>
             <param name="identityValue">The identity of the user principal. This parameter can be any format that is contained in the <see cref="T:System.DirectoryServices.AccountManagement.IdentityType"/> enumeration.</param>
         </member>
-        <member name="M:System.DirectoryServices.AccountManagement.ActiveDirectoryClaimsStore.Dispose(System.Boolean)">
+        <member name="M:System.DirectoryServices.AccountManagement.ActiveDirectoryProfileStore.Dispose(System.Boolean)">
             <summary>
             Releases the unmanaged resources and optionally releases the managed resources.
             </summary>
@@ -164,21 +171,209 @@
               Looks up a localized string similar to Invalid username or password..
             </summary>
         </member>
-        <member name="T:Microsoft.Extensions.DependencyInjection.ActiveDirectoryClaimsStoreExtensions">
+        <member name="T:System.Security.Claims.IProfileStore">
+            <summary>
+            Represents the service for authenticating users.
+            </summary>
+        </member>
+        <member name="P:System.Security.Claims.IProfileStore.Issuer">
+            <summary>
+            The profile store name.
+            </summary>
+        </member>
+        <member name="M:System.Security.Claims.IProfileStore.FindById(System.String)">
+            <summary>
+            Gets claims identity.
+            </summary>
+            <param name="userId">The user ID.</param>
+            <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
+        </member>
+        <member name="M:System.Security.Claims.IProfileStore.FindByName(System.String)">
+            <summary>
+            Gets claims identity.
+            </summary>
+            <param name="username">The account name.</param>
+            <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
+        </member>
+        <member name="M:System.Security.Claims.IProfileStore.IsLockedOut(System.String)">
+            <summary>
+            Checks is account locked out.
+            </summary>
+            <param name="username">The account name.</param>
+            <returns>True if account locked out, otherwise false.</returns>
+        </member>
+        <member name="M:System.Security.Claims.IProfileStore.IsValidate(System.String,System.String)">
+            <summary>
+            Validates the credentials.
+            </summary>
+            <param name="username">The account name.</param>
+            <param name="password">The account password.</param>
+            <returns>True if the credential is valid, otherwise false.</returns>
+        </member>
+        <member name="T:System.Security.Claims.IProfileStoreManager">
+            <summary>
+            Represents the service for authenticating users through registered profile stores.
+            </summary>
+        </member>
+        <member name="P:System.Security.Claims.IProfileStoreManager.Stores">
+            <summary>
+            The profile stores.
+            </summary>
+        </member>
+        <member name="M:System.Security.Claims.IProfileStoreManager.FindById(System.String,System.String)">
+            <summary>
+            Gets claims identity if any from a specified profile store.
+            </summary>
+            <param name="provider">The profile store name.</param>
+            <param name="userId">The user ID.</param>
+            <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
+        </member>
+        <member name="M:System.Security.Claims.IProfileStoreManager.FindByName(System.String,System.String)">
+            <summary>
+            Gets claims identity if any from a specified profile store.
+            </summary>
+            <param name="provider">The profile store name.</param>
+            <param name="username">The account name.</param>
+            <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
+        </member>
+        <member name="M:System.Security.Claims.IProfileStoreManager.IsLockedOut(System.String,System.String)">
+            <summary>
+            Checks is account locked out from a specified profile store.
+            </summary>
+            <param name="provider">The profile store name.</param>
+            <param name="username">The account name.</param>
+        </member>
+        <member name="M:System.Security.Claims.IProfileStoreManager.IsValidate(System.String,System.String,System.String)">
+            <summary>
+            Validates the credentials from a specified profile store.
+            </summary>
+            <param name="provider">The profile store name.</param>
+            <param name="username">The account name.</param>
+            <param name="password">The account password.</param>
+        </member>
+        <member name="T:System.Security.Claims.ProfileStoreManager">
+            <summary>
+            Represents the APIs for generating claims identity from specified stores.
+            </summary>
+        </member>
+        <member name="F:System.Security.Claims.ProfileStoreManager._disposedValue">
+            <summary>
+            To detect redundant calls <see cref="M:System.Security.Claims.ProfileStoreManager.Dispose"/> method.
+            </summary>
+        </member>
+        <member name="M:System.Security.Claims.ProfileStoreManager.#ctor(System.Collections.Generic.IEnumerable{System.Security.Claims.IProfileStore})">
+            <summary>
+            Initializes a new instance of <see cref="T:System.Security.Claims.ProfileStoreManager"/> class with a specified claim stores.
+            </summary>
+            <param name="stores">The claim stores.</param>
+        </member>
+        <member name="P:System.Security.Claims.ProfileStoreManager.Stores">
+            <summary>
+            The profile stores.
+            </summary>
+        </member>
+        <member name="P:System.Security.Claims.ProfileStoreManager.Issuer">
+            <summary>
+            The claim store issuer.
+            </summary>
+        </member>
+        <member name="M:System.Security.Claims.ProfileStoreManager.Dispose">
+            <summary>
+            Releases the unmanaged resources and releases the managed resources. Disposes all <see cref="T:System.Security.Claims.IProfileStore"/> stores.
+            </summary>
+        </member>
+        <member name="M:System.Security.Claims.ProfileStoreManager.FindById(System.String,System.String)">
+            <summary>
+            Finds and returns the claims, if any, who has the specified userId from external claim store.
+            </summary>
+            <param name="provider">The external claim store name.</param>
+            <param name="userId">The user ID to search for.</param>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">Provider not found.</exception>
+            <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
+        </member>
+        <member name="M:System.Security.Claims.ProfileStoreManager.FindById(System.String)">
+            <summary>
+            Finds and returns the claims identity, if any, who has the specified userId.
+            </summary>
+            <param name="userId">The user ID to search for.</param>
+            <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
+        </member>
+        <member name="M:System.Security.Claims.ProfileStoreManager.FindByName(System.String,System.String)">
+            <summary>
+            Finds and returns the claims identity, if any, who has the specified normalized user name from external claim store.
+            </summary>
+            <param name="provider">The external claim store name.</param>
+            <param name="username">The normalized user name to search for.</param>
+            <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
+        </member>
+        <member name="M:System.Security.Claims.ProfileStoreManager.FindByName(System.String)">
+            <summary>
+            Finds and returns the claims identity, if any, who has the specified normalized user name.
+            </summary>
+            <param name="username">The normalized user name to search for.</param>
+            <returns>If user authentication is success, the property <see cref="P:System.Security.Claims.ClaimsIdentity.IsAuthenticated"/> will be true.</returns>
+        </member>
+        <member name="M:System.Security.Claims.ProfileStoreManager.IsLockedOut(System.String,System.String)">
+            <summary>
+            Checks is account locked out from external claim store.
+            </summary>
+            <param name="provider">The external claim store name.</param>
+            <param name="username">The normalized user name to search for.</param>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">Provider not found.</exception>
+            <returns>True if account locked out, otherwise false.</returns>
+        </member>
+        <member name="M:System.Security.Claims.ProfileStoreManager.IsLockedOut(System.String)">
+            <summary>
+            Checks is account locked out.
+            </summary>
+            <param name="username">The normalized user name to search for.</param>
+            <returns>True if account locked out, otherwise false.</returns>
+        </member>
+        <member name="M:System.Security.Claims.ProfileStoreManager.IsValidate(System.String,System.String,System.String)">
+            <summary>
+            Validates the credentials from external claim store.
+            </summary>
+            <param name="provider">The external claim store name.</param>
+            <param name="username">The normalized user name to search for.</param>
+            <param name="password">The account password.</param>
+            <returns>True if the credential is valid, otherwise false.</returns>
+        </member>
+        <member name="M:System.Security.Claims.ProfileStoreManager.IsValidate(System.String,System.String)">
+            <summary>
+            Validates the credentials.
+            </summary>
+            <param name="username">The normalized user name to search for.</param>
+            <param name="password">The account password.</param>
+            <returns>True if the credential is valid, otherwise false.</returns>
+        </member>
+        <member name="M:System.Security.Claims.ProfileStoreManager.Dispose(System.Boolean)">
+            <summary>
+            Releases the unmanaged resources and optionally releases the managed resources.
+            </summary>
+            <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.ActiveDirectoryProfileStoreExtensions">
             <summary>
             ASP.NET Core extensions for active directory claims store.
             </summary>
         </member>
-        <member name="F:Microsoft.Extensions.DependencyInjection.ActiveDirectoryClaimsStoreExtensions.PrincipalContextOptionsSection">
+        <member name="M:Microsoft.Extensions.DependencyInjection.ActiveDirectoryProfileStoreExtensions.AddActiveDirectoryProfileStore(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
             <summary>
-            Appsettings.json section
+            Adds service <see cref="T:System.Security.Claims.IProfileStore"/> with implementation <see cref="T:System.DirectoryServices.AccountManagement.ActiveDirectoryProfileStore"/>.
+            </summary>
+            <param name="services"></param>
+            <param name="section"></param>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.ProfileStoreManagerExtensions">
+            <summary>
+            ASP.NET Core extensions for adds profile store manager in services.
             </summary>
         </member>
-        <member name="M:Microsoft.Extensions.DependencyInjection.ActiveDirectoryClaimsStoreExtensions.AddActiveDirectoryClaimsStore(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:Microsoft.Extensions.DependencyInjection.ProfileStoreManagerExtensions.AddProfileStoreManager(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Adds scoped service <see cref="T:System.Security.Claims.IClaimsStore"/> with implementation <see cref="T:System.DirectoryServices.AccountManagement.ActiveDirectoryClaimsStore"/>.
+            Adds the service <see cref="T:System.Security.Claims.IProfileStoreManager"/> with implementation <see cref="T:System.Security.Claims.ProfileStoreManager"/>.
             </summary>
-            <param name="services">The collection of service descriptors.</param>
+            <param name="services"></param>
         </member>
     </members>
 </doc>

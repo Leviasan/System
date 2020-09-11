@@ -29,11 +29,11 @@
         /// </summary>
         public string Container { get; set; }
         /// <summary>
-        /// A combination of one or more <see cref="System.DirectoryServices.AccountManagement.ContextOptions"/>
+        /// A combination of one or more <see cref="AccountManagement.ContextOptions"/>
         /// enumeration values the options used to bind to the server. If this parameter
         /// is null, the default options are <see cref="ContextOptions.Negotiate"/> | <see cref="ContextOptions.Signing"/> | <see cref="ContextOptions.Sealing"/>.
         /// </summary>
-        public ContextOptions ContextOptions { get; set; }
+        public ContextOptions ContextOptions { get; set; } = ContextOptions.Negotiate | ContextOptions.Signing | ContextOptions.Sealing;
         /// <summary>
         /// The username used to connect to the store. If the username and password parameters
         /// are both null, the default credentials of the current principal are used. Otherwise,
