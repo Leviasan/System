@@ -16,68 +16,68 @@
             The database connection.
             </summary>
         </member>
-        <member name="M:System.Data.Common.ISqlPackage`2.Execute(System.String)">
+        <member name="M:System.Data.Common.ISqlPackage`2.Execute(System.Type)">
             <summary>
             Executes SQL statements.
             </summary>
-            <param name="key">The key of the SQL statement.</param>
+            <param name="type">The type of the SQL statement.</param>
         </member>
-        <member name="M:System.Data.Common.ISqlPackage`2.Execute``1(System.String,``0)">
+        <member name="M:System.Data.Common.ISqlPackage`2.Execute``1(System.Type,``0)">
             <summary>
             Executes SQL statements.
             </summary>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <param name="key">The key of the SQL statement.</param>
+            <param name="type">The type of the SQL statement.</param>
             <param name="request">The request data.</param>
         </member>
-        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteAsync(System.String,System.Threading.CancellationToken)">
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteAsync(System.Type,System.Threading.CancellationToken)">
             <summary>
             Asynchronously executes SQL statements.
             </summary>
-            <param name="key">The key of the SQL statement.</param>
+            <param name="type">The type of the SQL statement.</param>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         </member>
-        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteAsync``1(System.String,``0,System.Threading.CancellationToken)">
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteAsync``1(System.Type,``0,System.Threading.CancellationToken)">
             <summary>
             Asynchronously executes SQL statements.
             </summary>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <param name="key">The key of the SQL statement.</param>
+            <param name="type">The type of the SQL statement.</param>
             <param name="request">The request data.</param>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         </member>
-        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReader``1(System.String)">
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReader``1(System.Type)">
             <summary>
             Executes SQL statements and reading the result data.
             </summary>
             <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <param name="key">The key of the SQL statement.</param>
+            <param name="type">The type of the SQL statement.</param>
         </member>
-        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReader``2(System.String,``0)">
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReader``2(System.Type,``0)">
             <summary>
             Executes SQL statements and reading the result data.
             </summary>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
             <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <param name="key">The key of the SQL statement.</param>
+            <param name="type">The type of the SQL statement.</param>
             <param name="request">The request data.</param>
         </member>
-        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReaderAsync``2(System.String,System.Threading.CancellationToken)">
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReaderAsync``2(System.Type,System.Threading.CancellationToken)">
             <summary>
             Asynchronously executes SQL statements and reading the result data.
             </summary>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
             <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <param name="key">The key of the SQL statement.</param>
+            <param name="type">The type of the SQL statement.</param>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         </member>
-        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReaderAsync``2(System.String,``0,System.Threading.CancellationToken)">
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReaderAsync``2(System.Type,``0,System.Threading.CancellationToken)">
             <summary>
             Asynchronously executes SQL statements and reading the result data.
             </summary>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
             <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <param name="key">The key of the SQL statement.</param>
+            <param name="type">The type of the SQL statement.</param>
             <param name="request">The request data.</param>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         </member>
@@ -193,11 +193,6 @@
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
             <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
         </member>
-        <member name="P:System.Data.Common.ISqlStatementDirector`5.Key">
-            <summary>
-            The unique key.
-            </summary>
-        </member>
         <member name="M:System.Data.Common.ISqlStatementDirector`5.Configure(`2)">
             <summary>
             Configures a SQL statement.
@@ -240,68 +235,68 @@
             Releases the unmanaged resources and releases the managed resources.
             </summary>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.Execute(System.String)">
+        <member name="M:System.Data.Common.SqlPackage`2.Execute(System.Type)">
             <summary>
             Executes SQL statements.
             </summary>
-            <param name="key">The key of the SQL statement.</param>
+            <param name="type">The type of the SQL statement.</param>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.Execute``1(System.String,``0)">
+        <member name="M:System.Data.Common.SqlPackage`2.Execute``1(System.Type,``0)">
             <summary>
             Executes SQL statements.
             </summary>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <param name="key">The key of the SQL statement.</param>
+            <param name="type">The type of the SQL statement.</param>
             <param name="request">The request data.</param>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.ExecuteAsync(System.String,System.Threading.CancellationToken)">
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteAsync(System.Type,System.Threading.CancellationToken)">
             <summary>
             Asynchronously executes SQL statements.
             </summary>
-            <param name="key">The key of the SQL statement.</param>
+            <param name="type">The type of the SQL statement.</param>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.ExecuteAsync``1(System.String,``0,System.Threading.CancellationToken)">
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteAsync``1(System.Type,``0,System.Threading.CancellationToken)">
             <summary>
             Asynchronously executes SQL statements.
             </summary>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <param name="key">The key of the SQL statement.</param>
+            <param name="type">The type of the SQL statement.</param>
             <param name="request">The request data.</param>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReader``1(System.String)">
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReader``1(System.Type)">
             <summary>
             Executes SQL statements and reading the result data.
             </summary>
             <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <param name="key">The key of the SQL statement.</param>
+            <param name="type">The type of the SQL statement.</param>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReader``2(System.String,``0)">
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReader``2(System.Type,``0)">
             <summary>
             Executes SQL statements and reading the result data.
             </summary>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
             <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <param name="key">The key of the SQL statement.</param>
+            <param name="type">The type of the SQL statement.</param>
             <param name="request">The request data.</param>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReaderAsync``2(System.String,System.Threading.CancellationToken)">
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReaderAsync``2(System.Type,System.Threading.CancellationToken)">
             <summary>
             Asynchronously executes SQL statements and reading the result data.
             </summary>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
             <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <param name="key">The key of the SQL statement.</param>
+            <param name="type">The type of the SQL statement.</param>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReaderAsync``2(System.String,``0,System.Threading.CancellationToken)">
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReaderAsync``2(System.Type,``0,System.Threading.CancellationToken)">
             <summary>
             Asynchronously executes SQL statements and reading the result data.
             </summary>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
             <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <param name="key">The key of the SQL statement.</param>
+            <param name="type">The type of the SQL statement.</param>
             <param name="request">The request data.</param>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         </member>
@@ -317,11 +312,11 @@
             </summary>
             <param name="builder">The SQL package builder.</param>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.GetSqlStatement``2(System.String)">
+        <member name="M:System.Data.Common.SqlPackage`2.GetSqlStatement``2(System.Type)">
             <summary>
             Gets the SQL statement.
             </summary>
-            <param name="key">The key.</param>
+            <param name="type">The type.</param>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
             <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
             <exception cref="T:System.Collections.Generic.KeyNotFoundException">The key is not found in dictionary which contains collects of SQL statements.</exception>
@@ -347,7 +342,7 @@
             Dictionary in which contains registered SQL statements.
             </summary>
         </member>
-        <member name="M:System.Data.Common.SqlPackageBuilder.#ctor(System.Collections.Generic.IDictionary{System.String,System.Object})">
+        <member name="M:System.Data.Common.SqlPackageBuilder.#ctor(System.Collections.Generic.IDictionary{System.Type,System.Object})">
             <summary>
             Initializes a new <see cref="T:System.Data.Common.SqlPackageBuilder"/> with a specified dictionary in which registered SQL statements will be placed.
             </summary>

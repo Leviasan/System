@@ -16,10 +16,6 @@
         where TReader : DbDataReader
     {
         /// <summary>
-        /// The unique key.
-        /// </summary>
-        string Key { get; }
-        /// <summary>
         /// Configures a SQL statement.
         /// </summary>
         void Configure(TBuilder builder);

@@ -10,14 +10,14 @@ namespace System.Data.Common
         /// <summary>
         /// Dictionary in which contains registered SQL statements.
         /// </summary>
-        private readonly IDictionary<string, object> _statements;
+        private readonly IDictionary<Type, object> _statements;
 
         /// <summary>
         /// Initializes a new <see cref="SqlPackageBuilder"/> with a specified dictionary in which registered SQL statements will be placed.
         /// </summary>
         /// <param name="statements">Dictionary in which contains registered SQL statements.</param>
         /// <exception cref="ArgumentNullException">Dictionary is null.</exception>
-        public SqlPackageBuilder(IDictionary<string, object> statements)
+        public SqlPackageBuilder(IDictionary<Type, object> statements)
         {
             _statements = statements ?? throw new ArgumentNullException(nameof(statements));
         }
@@ -40,13 +40,11 @@ namespace System.Data.Common
         {
             if (configuration == null)
                 throw new ArgumentNullException(nameof(configuration));
-            if (string.IsNullOrWhiteSpace(configuration.Key))
-                throw new KeyNotFoundException(Properties.Resources.StringIsMissing);
 
             var builder = Activator.CreateInstance<TBuilder>();
             configuration.Configure(builder);
             var statement = builder.Build();
-            _statements.Add(configuration.Key, statement);
+            _statements.Add(configuration.GetType(), statement);
 
             return this;
         }

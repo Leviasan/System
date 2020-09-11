@@ -21,7 +21,7 @@ namespace System.Data.Common
         /// <summary>
         /// Dictionary in which contains registered SQL statements.
         /// </summary>
-        private readonly IDictionary<string, object> _statements;
+        private readonly IDictionary<Type, object> _statements;
         /// <summary>
         /// The event reports that registration of SQL statements has begun.
         /// </summary>
@@ -32,7 +32,7 @@ namespace System.Data.Common
         /// </summary>
         public SqlPackage()
         {
-            _statements = new Dictionary<string, object>();
+            _statements = new Dictionary<Type, object>();
             InitializeSqlStatements += OnInitializeSqlStatements;
             InitializeSqlStatements.Invoke(new SqlPackageBuilder(_statements));
         }
@@ -53,21 +53,21 @@ namespace System.Data.Common
         /// <summary>
         /// Executes SQL statements.
         /// </summary>
-        /// <param name="key">The key of the SQL statement.</param>
-        public int Execute(string key)
+        /// <param name="type">The type of the SQL statement.</param>
+        public int Execute(Type type)
         {
-            return Execute<object>(key, null);
+            return Execute<object>(type, null);
         }
         /// <summary>
         /// Executes SQL statements.
         /// </summary>
         /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-        /// <param name="key">The key of the SQL statement.</param>
+        /// <param name="type">The type of the SQL statement.</param>
         /// <param name="request">The request data.</param>
-        public int Execute<TRequest>(string key, TRequest request)
+        public int Execute<TRequest>(Type type, TRequest request)
         {
             // Get SQL statement
-            var statement = GetSqlStatement<TRequest, object>(key);
+            var statement = GetSqlStatement<TRequest, object>(type);
             // Open connection
             OpenConnection();
             // Create and configured command
@@ -78,23 +78,23 @@ namespace System.Data.Common
         /// <summary>
         /// Asynchronously executes SQL statements.
         /// </summary>
-        /// <param name="key">The key of the SQL statement.</param>
+        /// <param name="type">The type of the SQL statement.</param>
         /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
-        public Task<int> ExecuteAsync(string key, CancellationToken cancellationToken = default)
+        public Task<int> ExecuteAsync(Type type, CancellationToken cancellationToken = default)
         {
-            return ExecuteAsync<object>(key, null, cancellationToken);
+            return ExecuteAsync<object>(type, null, cancellationToken);
         }
         /// <summary>
         /// Asynchronously executes SQL statements.
         /// </summary>
         /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-        /// <param name="key">The key of the SQL statement.</param>
+        /// <param name="type">The type of the SQL statement.</param>
         /// <param name="request">The request data.</param>
         /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
-        public async Task<int> ExecuteAsync<TRequest>(string key, TRequest request, CancellationToken cancellationToken = default)
+        public async Task<int> ExecuteAsync<TRequest>(Type type, TRequest request, CancellationToken cancellationToken = default)
         {
             // Get SQL statement
-            var statement = GetSqlStatement<TRequest, object>(key);
+            var statement = GetSqlStatement<TRequest, object>(type);
             // Open connection
             await OpenConnectionAsync(cancellationToken).ConfigureAwait(false);
             // Create and configured command
@@ -106,22 +106,22 @@ namespace System.Data.Common
         /// Executes SQL statements and reading the result data.
         /// </summary>
         /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-        /// <param name="key">The key of the SQL statement.</param>
-        public TResponse ExecuteReader<TResponse>(string key)
+        /// <param name="type">The type of the SQL statement.</param>
+        public TResponse ExecuteReader<TResponse>(Type type)
         {
-            return ExecuteReader<object, TResponse>(key, null);
+            return ExecuteReader<object, TResponse>(type, null);
         }
         /// <summary>
         /// Executes SQL statements and reading the result data.
         /// </summary>
         /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
         /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-        /// <param name="key">The key of the SQL statement.</param>
+        /// <param name="type">The type of the SQL statement.</param>
         /// <param name="request">The request data.</param>
-        public TResponse ExecuteReader<TRequest, TResponse>(string key, TRequest request)
+        public TResponse ExecuteReader<TRequest, TResponse>(Type type, TRequest request)
         {
             // Get SQL statement
-            var statement = GetSqlStatement<TRequest, TResponse>(key);
+            var statement = GetSqlStatement<TRequest, TResponse>(type);
             // Checks the SQL statement is fully configured
             if (statement.Reader == null)
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.SqlStatementInvalidState, nameof(statement.Reader)));
@@ -146,24 +146,24 @@ namespace System.Data.Common
         /// </summary>
         /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
         /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-        /// <param name="key">The key of the SQL statement.</param>
+        /// <param name="type">The type of the SQL statement.</param>
         /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
-        public Task<TResponse> ExecuteReaderAsync<TRequest, TResponse>(string key, CancellationToken cancellationToken = default)
+        public Task<TResponse> ExecuteReaderAsync<TRequest, TResponse>(Type type, CancellationToken cancellationToken = default)
         {
-            return ExecuteReaderAsync<object, TResponse>(key, null, cancellationToken);
+            return ExecuteReaderAsync<object, TResponse>(type, null, cancellationToken);
         }
         /// <summary>
         /// Asynchronously executes SQL statements and reading the result data.
         /// </summary>
         /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
         /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-        /// <param name="key">The key of the SQL statement.</param>
+        /// <param name="type">The type of the SQL statement.</param>
         /// <param name="request">The request data.</param>
         /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
-        public async Task<TResponse> ExecuteReaderAsync<TRequest, TResponse>(string key, TRequest request, CancellationToken cancellationToken = default)
+        public async Task<TResponse> ExecuteReaderAsync<TRequest, TResponse>(Type type, TRequest request, CancellationToken cancellationToken = default)
         {
             // Get SQL statement
-            var statement = GetSqlStatement<TRequest, TResponse>(key);
+            var statement = GetSqlStatement<TRequest, TResponse>(type);
             // Checks the SQL statement is fully configured
             if (statement.ReaderAsync == null)
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.SqlStatementInvalidState, nameof(statement.ReaderAsync)));
@@ -208,13 +208,13 @@ namespace System.Data.Common
         /// <summary>
         /// Gets the SQL statement.
         /// </summary>
-        /// <param name="key">The key.</param>
+        /// <param name="type">The type.</param>
         /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
         /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
         /// <exception cref="KeyNotFoundException">The key is not found in dictionary which contains collects of SQL statements.</exception>
-        private ISqlStatement<TCollection, TReader, TRequest, TResponse> GetSqlStatement<TRequest, TResponse>(string key)
+        private ISqlStatement<TCollection, TReader, TRequest, TResponse> GetSqlStatement<TRequest, TResponse>(Type type)
         {
-            if (!(_statements[key] is ISqlStatement<TCollection, TReader, TRequest, TResponse> statement))
+            if (!(_statements[type] is ISqlStatement<TCollection, TReader, TRequest, TResponse> statement))
                 throw new KeyNotFoundException();
 
             return statement;

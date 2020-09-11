@@ -69,8 +69,6 @@ Implementation:
 ```csharp
     public sealed class GetUsernameSqlStatement : IOracleSqlStatementDirector<int, string>
     {
-        public string Key => nameof(GetUsernameSqlStatement);
-
         public void Configure(OracleSqlStatementBuilder<int, string> builder)
         {
             if (builder == null)
@@ -99,10 +97,7 @@ Implementation:
 
         public string GetUsername(int id)
         {
-            var response = ExecuteReader<int, string>(
-                key: nameof(GetUsernameSqlStatement),
-                request: id);
-
+            var response = ExecuteReader<int, string>(typeof(GetUsernameSqlStatement), id);
             return response;
         }
 
