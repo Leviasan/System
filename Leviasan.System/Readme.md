@@ -80,7 +80,7 @@ Implementation:
                 .SetCommandType(CommandType.Text)
                 .AddParameters((parameters, request) =>
                 {
-                    parameters.Add("id", OracleDbType.Decimal).Value = 1;
+                    parameters.Add("id", OracleDbType.Decimal).Value = request;
                 })
                 .AddReader(reader =>
                 {
