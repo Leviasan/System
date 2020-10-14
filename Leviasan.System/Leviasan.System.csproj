@@ -6,14 +6,18 @@
     <AssemblyName>Leviasan.System</AssemblyName>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <NeutralLanguage>en</NeutralLanguage>
     <Authors>Leviasan</Authors>
     <Description>Optimization of storage and executing SQL statements.</Description>
     <RepositoryType>github</RepositoryType>
     <RepositoryUrl>https://github.com/Leviasan/System</RepositoryUrl>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <AssemblyVersion>1.1.1.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
+    <PackageProjectUrl>https://github.com/Leviasan/System</PackageProjectUrl>
+    <PackageTags>Database</PackageTags>
+    <SignAssembly>false</SignAssembly>
+    <DelaySign>true</DelaySign>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -22,10 +26,11 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>.\Properties\Leviasan.System.xml</DocumentationFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

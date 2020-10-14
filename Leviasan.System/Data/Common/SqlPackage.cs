@@ -54,6 +54,7 @@ namespace System.Data.Common
         /// Executes SQL statements.
         /// </summary>
         /// <param name="type">The type of the SQL statement.</param>
+        /// <exception cref="ArgumentNullException">The parameter "type" is null.</exception>
         public int Execute(Type type)
         {
             return Execute<object>(type, null);
@@ -64,12 +65,14 @@ namespace System.Data.Common
         /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
         /// <param name="type">The type of the SQL statement.</param>
         /// <param name="request">The request data.</param>
+        /// <exception cref="ArgumentNullException">The parameter "type" is null.</exception>
         public int Execute<TRequest>(Type type, TRequest request)
         {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             // Get SQL statement
             var statement = GetSqlStatement<TRequest, object>(type);
-            // Open connection
-            OpenConnection();
             // Create and configured command
             using var command = statement.CreateDbCommand(Connection, request);
             // Execute
@@ -80,6 +83,7 @@ namespace System.Data.Common
         /// </summary>
         /// <param name="type">The type of the SQL statement.</param>
         /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        /// <exception cref="ArgumentNullException">The parameter "type" is null.</exception>
         public Task<int> ExecuteAsync(Type type, CancellationToken cancellationToken = default)
         {
             return ExecuteAsync<object>(type, null, cancellationToken);
@@ -91,12 +95,14 @@ namespace System.Data.Common
         /// <param name="type">The type of the SQL statement.</param>
         /// <param name="request">The request data.</param>
         /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        /// <exception cref="ArgumentNullException">The parameter "type" is null.</exception>
         public async Task<int> ExecuteAsync<TRequest>(Type type, TRequest request, CancellationToken cancellationToken = default)
         {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             // Get SQL statement
             var statement = GetSqlStatement<TRequest, object>(type);
-            // Open connection
-            await OpenConnectionAsync(cancellationToken).ConfigureAwait(false);
             // Create and configured command
             using var command = statement.CreateDbCommand(Connection, request);
             // Execute
@@ -107,6 +113,7 @@ namespace System.Data.Common
         /// </summary>
         /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
         /// <param name="type">The type of the SQL statement.</param>
+        /// <exception cref="ArgumentNullException">The parameter "type" is null.</exception>
         public TResponse ExecuteReader<TResponse>(Type type)
         {
             return ExecuteReader<object, TResponse>(type, null);
@@ -118,22 +125,24 @@ namespace System.Data.Common
         /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
         /// <param name="type">The type of the SQL statement.</param>
         /// <param name="request">The request data.</param>
+        /// <exception cref="ArgumentNullException">The parameter "type" is null.</exception>
         public TResponse ExecuteReader<TRequest, TResponse>(Type type, TRequest request)
         {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             // Get SQL statement
             var statement = GetSqlStatement<TRequest, TResponse>(type);
             // Checks the SQL statement is fully configured
             if (statement.Reader == null)
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.SqlStatementInvalidState, nameof(statement.Reader)));
 
-            // Open connection
-            OpenConnection();
             // Response value
             TResponse response = default;
             // Create and configured command
             using (var command = statement.CreateDbCommand(Connection, request))
             {
-                // Execute
+                // Execute reader
                 using (var reader = command.ExecuteReader())
                 {
                     response = statement.Reader(reader as TReader);
@@ -148,6 +157,7 @@ namespace System.Data.Common
         /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
         /// <param name="type">The type of the SQL statement.</param>
         /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        /// <exception cref="ArgumentNullException">The parameter "type" is null.</exception>
         public Task<TResponse> ExecuteReaderAsync<TRequest, TResponse>(Type type, CancellationToken cancellationToken = default)
         {
             return ExecuteReaderAsync<object, TResponse>(type, null, cancellationToken);
@@ -160,22 +170,24 @@ namespace System.Data.Common
         /// <param name="type">The type of the SQL statement.</param>
         /// <param name="request">The request data.</param>
         /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        /// <exception cref="ArgumentNullException">The parameter "type" is null.</exception>
         public async Task<TResponse> ExecuteReaderAsync<TRequest, TResponse>(Type type, TRequest request, CancellationToken cancellationToken = default)
         {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             // Get SQL statement
             var statement = GetSqlStatement<TRequest, TResponse>(type);
             // Checks the SQL statement is fully configured
             if (statement.ReaderAsync == null)
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.SqlStatementInvalidState, nameof(statement.ReaderAsync)));
 
-            // Open connection
-            await OpenConnectionAsync(cancellationToken).ConfigureAwait(false);
             // Response value
             TResponse response = default;
             // Create and configured command
             using (var command = statement.CreateDbCommand(Connection, request))
             {
-                // Execute
+                // Execute reader
                 using (var reader = await command.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false))
                 {
                     response = await statement.ReaderAsync(reader as TReader, cancellationToken).ConfigureAwait(false);
@@ -215,26 +227,9 @@ namespace System.Data.Common
         private ISqlStatement<TCollection, TReader, TRequest, TResponse> GetSqlStatement<TRequest, TResponse>(Type type)
         {
             if (!(_statements[type] is ISqlStatement<TCollection, TReader, TRequest, TResponse> statement))
-                throw new KeyNotFoundException();
+                throw new KeyNotFoundException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.KeyNotFoundException, type.FullName));
 
             return statement;
-        }
-        /// <summary>
-        /// Opens connection to the database if it closed.
-        /// </summary>
-        private void OpenConnection()
-        {
-            if (Connection.State != ConnectionState.Open)
-                Connection.Open();
-        }
-        /// <summary>
-        /// Asynchronously opens connection to the database if it closed.
-        /// </summary>
-        /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
-        private async Task OpenConnectionAsync(CancellationToken cancellationToken)
-        {
-            if (Connection.State != ConnectionState.Open)
-                await Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
         }
     }
 }

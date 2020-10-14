@@ -48,6 +48,10 @@ namespace System.Data.Common
             if (request != null && Parameters == null)
                 throw new InvalidOperationException(string.Format(null, Properties.Resources.SqlStatementInvalidState, nameof(Parameters)));
 
+            // Open connection
+            if (connection.State == ConnectionState.Closed)
+                connection.Open();
+
             // Create and set command property
             var command = connection.CreateCommand();
             command.CommandText = CommandText;
