@@ -123,6 +123,9 @@
   <data name="KeyNotFoundException" xml:space="preserve">
     <value>Key: {0} is not found.</value>
   </data>
+  <data name="SqlNullValueException" xml:space="preserve">
+    <value>The value {0} is null.</value>
+  </data>
   <data name="SqlStatementInvalidState" xml:space="preserve">
     <value>The SQL statement is not fully configured. Invalid property state: {0}.</value>
   </data>

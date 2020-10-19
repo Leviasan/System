@@ -6,13 +6,13 @@
     <AssemblyName>Leviasan.System</AssemblyName>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.1</Version>
+    <Version>1.1.2</Version>
     <NeutralLanguage>en</NeutralLanguage>
     <Authors>Leviasan</Authors>
     <Description>Optimization of storage and executing SQL statements.</Description>
     <RepositoryType>github</RepositoryType>
     <RepositoryUrl>https://github.com/Leviasan/System</RepositoryUrl>
-    <AssemblyVersion>1.1.1.0</AssemblyVersion>
+    <AssemblyVersion>1.1.2.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <PackageProjectUrl>https://github.com/Leviasan/System</PackageProjectUrl>
     <PackageTags>Database</PackageTags>

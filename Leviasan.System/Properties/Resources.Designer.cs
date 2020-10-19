@@ -79,6 +79,15 @@ namespace System.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The value {0} is null..
+        /// </summary>
+        internal static string SqlNullValueException {
+            get {
+                return ResourceManager.GetString("SqlNullValueException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The SQL statement is not fully configured. Invalid property state: {0}..
         /// </summary>
         internal static string SqlStatementInvalidState {
