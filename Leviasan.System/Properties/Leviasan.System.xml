@@ -16,7 +16,7 @@
             <param name="reader">Database data reader.</param>
             <param name="name">The name of the column.</param>
             <param name="defaultValue">Return value if the column contains non-existent or missing values.</param>
-            <param name="throwExceptionIfDefault">Thrown exception if response value is <see cref="T:System.DBNull"/>.</param>
+            <param name="throwDbNull">Thrown exception if response value is <see cref="T:System.DBNull"/>.</param>
             <param name="provider">An object that supplies culture-specific formatting information.</param>
             <exception cref="T:System.ArgumentException">When converting to Enum: return value from the database is either an empty string or only contains white space. -or- Value is a name, but not one of the named constants defined for the enumeration.</exception>
             <exception cref="T:System.ArgumentNullException">Reader is null.</exception>
@@ -33,7 +33,7 @@
             <param name="reader">Database data reader.</param>
             <param name="ordinal">The zero-based column ordinal.</param>
             <param name="defaultValue">Return value if the column contains non-existent or missing values.</param>
-            <param name="throwExceptionIfDefault">Thrown exception if response value is <see cref="T:System.DBNull"/>.</param>
+            <param name="throwDbNull">Thrown exception if response value is <see cref="T:System.DBNull"/>.</param>
             <param name="provider">An object that supplies culture-specific formatting information.</param>
             <exception cref="T:System.ArgumentException">When converting to Enum: return value from the database is either an empty string or only contains white space. -or- Value is a name, but not one of the named constants defined for the enumeration.</exception>
             <exception cref="T:System.ArgumentNullException">Reader is null.</exception>
@@ -50,7 +50,7 @@
             <param name="reader">Database data reader.</param>
             <param name="name">The name of the column.</param>
             <param name="defaultValue">Return value if the column contains non-existent or missing values.</param>
-            <param name="throwExceptionIfDefault">Thrown exception if response value is <see cref="T:System.DBNull"/>.</param>
+            <param name="throwDbNull">Thrown exception if response value is <see cref="T:System.DBNull"/>.</param>
             <param name="provider">An object that supplies culture-specific formatting information.</param>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
             <exception cref="T:System.ArgumentException">When converting to Enum: return value from the database is either an empty string or only contains white space. -or- Value is a name, but not one of the named constants defined for the enumeration.</exception>
@@ -68,7 +68,7 @@
             <param name="reader">Database data reader.</param>
             <param name="ordinal">The zero-based column ordinal.</param>
             <param name="defaultValue">Return value if the column contains non-existent or missing values.</param>
-            <param name="throwExceptionIfDefault">Thrown exception if response value is <see cref="T:System.DBNull"/>.</param>
+            <param name="throwDbNull">Thrown exception if response value is <see cref="T:System.DBNull"/>.</param>
             <param name="provider">An object that supplies culture-specific formatting information.</param>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
             <exception cref="T:System.ArgumentException">When converting to Enum: return value from the database is either an empty string or only contains white space. -or- Value is a name, but not one of the named constants defined for the enumeration.</exception>
