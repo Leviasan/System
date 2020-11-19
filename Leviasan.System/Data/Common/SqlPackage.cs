@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace System.Data.Common
 {
     /// <summary>
-    /// Represents an SQL package.
+    /// Represents an SQL package that contains <see cref="ISqlStatementDirector{TCollection, TReader, TRequest, TResponse}"/> and can execute them.
     /// </summary>
     /// <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
     /// <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
@@ -19,31 +19,34 @@ namespace System.Data.Common
         /// </summary>
         private bool _disposedValue;
         /// <summary>
-        /// Dictionary in which contains registered SQL statements.
+        /// The service provider.
         /// </summary>
-        private readonly IDictionary<Type, object> _statements;
+        private readonly IServiceProvider _provider;
         /// <summary>
-        /// The event reports that registration of SQL statements has begun.
+        /// The event reports that the registration of SQL statement directors has begun.
         /// </summary>
-        private event Action<ISqlPackageBuilder> InitializeSqlStatements;
+        private event Action<ISqlPackageBuilder> InitializeSqlStatementDirectors;
 
         /// <summary>
         /// Initializes a new  instance <see cref="SqlPackage{TCollection, TReader}"/> class.
         /// </summary>
         public SqlPackage()
         {
-            _statements = new Dictionary<Type, object>();
-            InitializeSqlStatements += OnInitializeSqlStatements;
-            InitializeSqlStatements.Invoke(new SqlPackageBuilder(_statements));
+            var services = new ServiceCollection();
+            InitializeSqlStatementDirectors += OnInitialize;
+            InitializeSqlStatementDirectors.Invoke(new SqlPackageBuilder(services));
+            var options = new ServiceProviderOptions() { ValidateScopes = true, ValidateOnBuild = true };
+            var builder = new DefaultServiceProviderFactory(options);
+            _provider = builder.CreateServiceProvider(services);
         }
 
         /// <summary>
-        /// The database connection.
+        /// Gets the database connection.
         /// </summary>
         public abstract DbConnection Connection { get; }
 
         /// <summary>
-        /// Releases the unmanaged resources and releases the managed resources.
+        /// Dispose database connection.
         /// </summary>
         public void Dispose()
         {
@@ -51,92 +54,83 @@ namespace System.Data.Common
             GC.SuppressFinalize(this);
         }
         /// <summary>
-        /// Executes SQL statements.
+        /// Executes a SQL statement against a connection object.
         /// </summary>
-        /// <param name="type">The type of the SQL statement.</param>
-        /// <exception cref="ArgumentNullException">The parameter "type" is null.</exception>
-        public int Execute(Type type)
+        /// <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
+        /// <returns>The number of rows affected.</returns>
+        public int Execute<TDirector>()
+            where TDirector : ISqlStatementDirector<TCollection, TReader, object, object>
         {
-            return Execute<object>(type, null);
+            return Execute<TDirector, object>(null);
         }
         /// <summary>
-        /// Executes SQL statements.
+        /// Executes a SQL statement against a connection object.
         /// </summary>
+        /// <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
         /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-        /// <param name="type">The type of the SQL statement.</param>
-        /// <param name="request">The request data.</param>
-        /// <exception cref="ArgumentNullException">The parameter "type" is null.</exception>
-        public int Execute<TRequest>(Type type, TRequest request)
+        /// <returns>The number of rows affected.</returns>
+        public int Execute<TDirector, TRequest>(TRequest request)
+            where TDirector : ISqlStatementDirector<TCollection, TReader, TRequest, object>
         {
-            if (type == null)
-                throw new ArgumentNullException(nameof(type));
-
             // Get SQL statement
-            var statement = GetSqlStatement<TRequest, object>(type);
+            var statement = GetSqlStatement<TRequest, object>(typeof(TDirector));
             // Create and configured command
             using var command = statement.CreateDbCommand(Connection, request);
             // Execute
             return command.ExecuteNonQuery();
         }
         /// <summary>
-        /// Asynchronously executes SQL statements.
+        /// Asynchronously executes a SQL statement against a connection object.
         /// </summary>
-        /// <param name="type">The type of the SQL statement.</param>
+        /// <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
         /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
-        /// <exception cref="ArgumentNullException">The parameter "type" is null.</exception>
-        public Task<int> ExecuteAsync(Type type, CancellationToken cancellationToken = default)
+        public Task<int> ExecuteAsync<TDirector>(CancellationToken cancellationToken)
+            where TDirector : ISqlStatementDirector<TCollection, TReader, object, object>
         {
-            return ExecuteAsync<object>(type, null, cancellationToken);
+            return ExecuteAsync<TDirector, object>(null, cancellationToken);
         }
         /// <summary>
-        /// Asynchronously executes SQL statements.
+        /// Asynchronously executes a SQL statement against a connection object.
         /// </summary>
+        /// <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
         /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-        /// <param name="type">The type of the SQL statement.</param>
         /// <param name="request">The request data.</param>
         /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
-        /// <exception cref="ArgumentNullException">The parameter "type" is null.</exception>
-        public async Task<int> ExecuteAsync<TRequest>(Type type, TRequest request, CancellationToken cancellationToken = default)
+        public async Task<int> ExecuteAsync<TDirector, TRequest>(TRequest request, CancellationToken cancellationToken)
+            where TDirector : ISqlStatementDirector<TCollection, TReader, TRequest, object>
         {
-            if (type == null)
-                throw new ArgumentNullException(nameof(type));
-
             // Get SQL statement
-            var statement = GetSqlStatement<TRequest, object>(type);
+            var statement = GetSqlStatement<TRequest, object>(typeof(TDirector));
             // Create and configured command
             using var command = statement.CreateDbCommand(Connection, request);
             // Execute
             return await command.ExecuteNonQueryAsync(cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Executes SQL statements and reading the result data.
+        /// Executes a SQL statement against a connection object and reading the response data.
         /// </summary>
-        /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-        /// <param name="type">The type of the SQL statement.</param>
-        /// <exception cref="ArgumentNullException">The parameter "type" is null.</exception>
-        public TResponse ExecuteReader<TResponse>(Type type)
+        /// <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
+        /// <typeparam name="TResponse">The data type describing the output data.</typeparam>
+        public TResponse ExecuteReader<TDirector, TResponse>()
+            where TDirector : ISqlStatementDirector<TCollection, TReader, object, TResponse>
         {
-            return ExecuteReader<object, TResponse>(type, null);
+            return ExecuteReader<TDirector, object, TResponse>(null);
         }
         /// <summary>
-        /// Executes SQL statements and reading the result data.
+        /// Executes a SQL statement against a connection object and reading the response data.
         /// </summary>
+        /// <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
         /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-        /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-        /// <param name="type">The type of the SQL statement.</param>
+        /// <typeparam name="TResponse">The data type describing the output data.</typeparam>
         /// <param name="request">The request data.</param>
-        /// <exception cref="ArgumentNullException">The parameter "type" is null.</exception>
-        public TResponse ExecuteReader<TRequest, TResponse>(Type type, TRequest request)
+        public TResponse ExecuteReader<TDirector, TRequest, TResponse>(TRequest request)
+            where TDirector : ISqlStatementDirector<TCollection, TReader, TRequest, TResponse>
         {
-            if (type == null)
-                throw new ArgumentNullException(nameof(type));
-
             // Get SQL statement
-            var statement = GetSqlStatement<TRequest, TResponse>(type);
+            var statement = GetSqlStatement<TRequest, TResponse>(typeof(TDirector));
             // Checks the SQL statement is fully configured
             if (statement.Reader == null)
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.SqlStatementInvalidState, nameof(statement.Reader)));
-
             // Response value
             TResponse response = default;
             // Create and configured command
@@ -145,43 +139,38 @@ namespace System.Data.Common
                 // Execute reader
                 using (var reader = command.ExecuteReader())
                 {
-                    response = statement.Reader(reader as TReader);
+                    response = statement.Reader.Invoke(reader as TReader);
                 };
             }
             return response;
         }
         /// <summary>
-        /// Asynchronously executes SQL statements and reading the result data.
+        /// Asynchronously executes a SQL statement against a connection object and reading the response data.
         /// </summary>
-        /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-        /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-        /// <param name="type">The type of the SQL statement.</param>
+        /// <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
+        /// <typeparam name="TResponse">The data type describing the output data.</typeparam>
         /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
-        /// <exception cref="ArgumentNullException">The parameter "type" is null.</exception>
-        public Task<TResponse> ExecuteReaderAsync<TRequest, TResponse>(Type type, CancellationToken cancellationToken = default)
+        public Task<TResponse> ExecuteReaderAsync<TDirector, TResponse>(CancellationToken cancellationToken)
+            where TDirector : ISqlStatementDirector<TCollection, TReader, object, TResponse>
         {
-            return ExecuteReaderAsync<object, TResponse>(type, null, cancellationToken);
+            return ExecuteReaderAsync<TDirector, object, TResponse>(null, cancellationToken);
         }
         /// <summary>
-        /// Asynchronously executes SQL statements and reading the result data.
+        /// Asynchronously executes a SQL statement against a connection object and reading the response data.
         /// </summary>
+        /// <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
         /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-        /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-        /// <param name="type">The type of the SQL statement.</param>
+        /// <typeparam name="TResponse">The data type describing the output data.</typeparam>
         /// <param name="request">The request data.</param>
         /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
-        /// <exception cref="ArgumentNullException">The parameter "type" is null.</exception>
-        public async Task<TResponse> ExecuteReaderAsync<TRequest, TResponse>(Type type, TRequest request, CancellationToken cancellationToken = default)
+        public async Task<TResponse> ExecuteReaderAsync<TDirector, TRequest, TResponse>(TRequest request, CancellationToken cancellationToken)
+            where TDirector : ISqlStatementDirector<TCollection, TReader, TRequest, TResponse>
         {
-            if (type == null)
-                throw new ArgumentNullException(nameof(type));
-
             // Get SQL statement
-            var statement = GetSqlStatement<TRequest, TResponse>(type);
+            var statement = GetSqlStatement<TRequest, TResponse>(typeof(TDirector));
             // Checks the SQL statement is fully configured
             if (statement.ReaderAsync == null)
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.SqlStatementInvalidState, nameof(statement.ReaderAsync)));
-
             // Response value
             TResponse response = default;
             // Create and configured command
@@ -190,7 +179,7 @@ namespace System.Data.Common
                 // Execute reader
                 using (var reader = await command.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    response = await statement.ReaderAsync(reader as TReader, cancellationToken).ConfigureAwait(false);
+                    response = await statement.ReaderAsync.Invoke(reader as TReader, cancellationToken).ConfigureAwait(false);
                 };
             }
             return response;
@@ -207,28 +196,30 @@ namespace System.Data.Common
                 if (disposing)
                 {
                     Connection?.Dispose();
+                    ((IDisposable)_provider).Dispose();
                 }
                 _disposedValue = true;
             }
         }
         /// <summary>
-        /// The registration of <see cref="ISqlStatement{TCollection, TReader, TRequest, TResponse}"/>.
+        /// The registration of <see cref="ISqlStatementDirector{TCollection, TReader, TRequest, TResponse}"/>.
         /// </summary>
         /// <param name="builder">The SQL package builder.</param>
-        protected abstract void OnInitializeSqlStatements(ISqlPackageBuilder builder);
+        protected abstract void OnInitialize(ISqlPackageBuilder builder);
 
         /// <summary>
         /// Gets the SQL statement.
         /// </summary>
-        /// <param name="type">The type.</param>
+        /// <param name="serviceType">The type.</param>
         /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-        /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-        /// <exception cref="KeyNotFoundException">The key is not found in dictionary which contains collects of SQL statements.</exception>
-        private ISqlStatement<TCollection, TReader, TRequest, TResponse> GetSqlStatement<TRequest, TResponse>(Type type)
+        /// <typeparam name="TResponse">The data type describing the output data.</typeparam>
+        /// <exception cref="InvalidOperationException">There is no service of type serviceType.</exception>
+        private ISqlStatement<TCollection, TReader, TRequest, TResponse> GetSqlStatement<TRequest, TResponse>(Type serviceType)
         {
-            if (!(_statements[type] is ISqlStatement<TCollection, TReader, TRequest, TResponse> statement))
-                throw new KeyNotFoundException(string.Format(CultureInfo.InvariantCulture, Properties.Resources.KeyNotFoundException, type.FullName));
-
+            var director = _provider.GetRequiredService(serviceType) as ISqlStatementDirector<TCollection, TReader, TRequest, TResponse>;
+            var builder = director.CreateBuilder();
+            director.Configure(builder);
+            var statement = builder.CreateInstance();
             return statement;
         }
     }

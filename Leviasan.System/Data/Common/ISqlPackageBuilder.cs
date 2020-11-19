@@ -6,17 +6,14 @@
     public interface ISqlPackageBuilder
     {
         /// <summary>
-        /// Applies configuration that is defined in an <see cref="ISqlStatementDirector{TCollection, TReader, TBuilder, TRequest, TResponse}"/> instance.
+        /// Applies configuration that is defined in an <see cref="ISqlStatementDirector{TCollection, TReader, TRequest, TResponse}"/>.
         /// </summary>
-        /// <param name="configuration">The configuration for an SQL statement.</param>
-        /// <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
-        /// <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
-        /// <typeparam name="TBuilder">The type of SQL statement builder.</typeparam>
-        /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-        /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-        ISqlPackageBuilder ApplyConfiguration<TCollection, TReader, TBuilder, TRequest, TResponse>(ISqlStatementDirector<TCollection, TReader, TBuilder, TRequest, TResponse> configuration)
-            where TCollection : DbParameterCollection
-            where TReader : DbDataReader
-            where TBuilder : ISqlStatementBuilder<TCollection, TReader, TRequest, TResponse>, new();
+        /// <param name="serviceType">The type that implement the <see cref="ISqlStatementDirector{TCollection, TReader, TRequest, TResponse}"/> interface.</param>
+        ISqlPackageBuilder ApplyConfiguration(Type serviceType);
+        /// <summary>
+        /// Applies configuration that is defined in an <see cref="ISqlStatementDirector{TCollection, TReader, TRequest, TResponse}"/>.
+        /// </summary>
+        /// <typeparam name="TDirector">The type that implement the <see cref="ISqlStatementDirector{TCollection, TReader, TRequest, TResponse}"/> interface.</typeparam>
+        ISqlPackageBuilder ApplyConfiguration<TDirector>() where TDirector : new();
     }
 }

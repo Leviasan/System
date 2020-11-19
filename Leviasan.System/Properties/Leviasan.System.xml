@@ -81,78 +81,79 @@
         </member>
         <member name="T:System.Data.Common.ISqlPackage`2">
             <summary>
-            Represents an SQL package.
+            Represents an SQL package that contains <see cref="T:System.Data.Common.ISqlStatementDirector`4"/> and can execute them.
             </summary>
             <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
             <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
         </member>
         <member name="P:System.Data.Common.ISqlPackage`2.Connection">
             <summary>
-            The database connection.
+            Gets the database connection.
             </summary>
         </member>
-        <member name="M:System.Data.Common.ISqlPackage`2.Execute(System.Type)">
+        <member name="M:System.Data.Common.ISqlPackage`2.Execute``1">
             <summary>
-            Executes SQL statements.
+            Executes a SQL statement against a connection object.
             </summary>
-            <param name="type">The type of the SQL statement.</param>
+            <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
+            <returns>The number of rows affected.</returns>
         </member>
-        <member name="M:System.Data.Common.ISqlPackage`2.Execute``1(System.Type,``0)">
+        <member name="M:System.Data.Common.ISqlPackage`2.Execute``2(``1)">
             <summary>
-            Executes SQL statements.
+            Executes a SQL statement against a connection object.
             </summary>
+            <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <param name="type">The type of the SQL statement.</param>
             <param name="request">The request data.</param>
+            <returns>The number of rows affected.</returns>
         </member>
-        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteAsync(System.Type,System.Threading.CancellationToken)">
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteAsync``1(System.Threading.CancellationToken)">
             <summary>
-            Asynchronously executes SQL statements.
+            Asynchronously executes a SQL statement against a connection object.
             </summary>
-            <param name="type">The type of the SQL statement.</param>
+            <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         </member>
-        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteAsync``1(System.Type,``0,System.Threading.CancellationToken)">
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteAsync``2(``1,System.Threading.CancellationToken)">
             <summary>
-            Asynchronously executes SQL statements.
+            Asynchronously executes a SQL statement against a connection object.
             </summary>
+            <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <param name="type">The type of the SQL statement.</param>
             <param name="request">The request data.</param>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         </member>
-        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReader``1(System.Type)">
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReader``2">
             <summary>
-            Executes SQL statements and reading the result data.
+            Executes a SQL statement against a connection object and reading the response data.
             </summary>
-            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <param name="type">The type of the SQL statement.</param>
+            <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
+            <typeparam name="TResponse">The data type describing the output data.</typeparam>
         </member>
-        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReader``2(System.Type,``0)">
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReader``3(``1)">
             <summary>
-            Executes SQL statements and reading the result data.
+            Executes a SQL statement against a connection object and reading the response data.
             </summary>
+            <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <param name="type">The type of the SQL statement.</param>
+            <typeparam name="TResponse">The data type describing the output data.</typeparam>
             <param name="request">The request data.</param>
         </member>
-        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReaderAsync``2(System.Type,System.Threading.CancellationToken)">
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReaderAsync``2(System.Threading.CancellationToken)">
             <summary>
-            Asynchronously executes SQL statements and reading the result data.
+            Asynchronously executes a SQL statement against a connection object and reading the response data.
             </summary>
-            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <param name="type">The type of the SQL statement.</param>
+            <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
+            <typeparam name="TResponse">The data type describing the output data.</typeparam>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         </member>
-        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReaderAsync``2(System.Type,``0,System.Threading.CancellationToken)">
+        <member name="M:System.Data.Common.ISqlPackage`2.ExecuteReaderAsync``3(``1,System.Threading.CancellationToken)">
             <summary>
-            Asynchronously executes SQL statements and reading the result data.
+            Asynchronously executes a SQL statement against a connection object and reading the response data.
             </summary>
+            <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <param name="type">The type of the SQL statement.</param>
+            <typeparam name="TResponse">The data type describing the output data.</typeparam>
             <param name="request">The request data.</param>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         </member>
@@ -161,16 +162,17 @@
             Represents an SQL package builder.
             </summary>
         </member>
-        <member name="M:System.Data.Common.ISqlPackageBuilder.ApplyConfiguration``5(System.Data.Common.ISqlStatementDirector{``0,``1,``2,``3,``4})">
+        <member name="M:System.Data.Common.ISqlPackageBuilder.ApplyConfiguration(System.Type)">
             <summary>
-            Applies configuration that is defined in an <see cref="T:System.Data.Common.ISqlStatementDirector`5"/> instance.
+            Applies configuration that is defined in an <see cref="T:System.Data.Common.ISqlStatementDirector`4"/>.
             </summary>
-            <param name="configuration">The configuration for an SQL statement.</param>
-            <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
-            <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
-            <typeparam name="TBuilder">The type of SQL statement builder.</typeparam>
-            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+            <param name="serviceType">The type that implement the <see cref="T:System.Data.Common.ISqlStatementDirector`4"/> interface.</param>
+        </member>
+        <member name="M:System.Data.Common.ISqlPackageBuilder.ApplyConfiguration``1">
+            <summary>
+            Applies configuration that is defined in an <see cref="T:System.Data.Common.ISqlStatementDirector`4"/>.
+            </summary>
+            <typeparam name="TDirector">The type that implement the <see cref="T:System.Data.Common.ISqlStatementDirector`4"/> interface.</typeparam>
         </member>
         <member name="T:System.Data.Common.ISqlStatement`4">
             <summary>
@@ -179,7 +181,7 @@
             <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
             <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+            <typeparam name="TResponse">The data type describing the output data.</typeparam>
         </member>
         <member name="P:System.Data.Common.ISqlStatement`4.CommandText">
             <summary>
@@ -220,7 +222,7 @@
             <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
             <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+            <typeparam name="TResponse">The data type describing the output data.</typeparam>
         </member>
         <member name="M:System.Data.Common.ISqlStatementBuilder`4.AddParameters(System.Action{`0,`2})">
             <summary>
@@ -240,11 +242,6 @@
             </summary>
             <param name="reader">The delegate to asynchronously reading the data from result.</param>
         </member>
-        <member name="M:System.Data.Common.ISqlStatementBuilder`4.Build">
-            <summary>
-            Returns the SQL statement.
-            </summary>
-        </member>
         <member name="M:System.Data.Common.ISqlStatementBuilder`4.SetCommandText(System.String)">
             <summary>
             Sets the command string.
@@ -256,26 +253,31 @@
             </summary>
             <param name="commandType">Specifies how a command string is interpreted.</param>
         </member>
-        <member name="T:System.Data.Common.ISqlStatementDirector`5">
+        <member name="T:System.Data.Common.ISqlStatementDirector`4">
             <summary>
             Allows configuration for an SQL statement to be factored into a separate class.
-            Implement this interface, applying configuration for the SQL statement in the <see cref="M:System.Data.Common.ISqlStatementDirector`5.Configure(`2)"/> method,
-            and then apply the configuration using <see cref="M:System.Data.Common.ISqlPackageBuilder.ApplyConfiguration``5(System.Data.Common.ISqlStatementDirector{``0,``1,``2,``3,``4})"/>.
+            Implement this interface, applying configuration for the SQL statement in the <see cref="M:System.Data.Common.ISqlStatementDirector`4.Configure(System.Data.Common.ISqlStatementBuilder{`0,`1,`2,`3})"/> method,
+            and then apply the configuration using <see cref="M:System.Data.Common.ISqlPackageBuilder.ApplyConfiguration(System.Type)"/> or <see cref="M:System.Data.Common.ISqlPackageBuilder.ApplyConfiguration``1"/>.
             </summary>
             <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
             <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
-            <typeparam name="TBuilder">The type of SQL statement builder.</typeparam>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+            <typeparam name="TResponse">The data type describing the output data.</typeparam>
         </member>
-        <member name="M:System.Data.Common.ISqlStatementDirector`5.Configure(`2)">
+        <member name="M:System.Data.Common.ISqlStatementDirector`4.Configure(System.Data.Common.ISqlStatementBuilder{`0,`1,`2,`3})">
             <summary>
             Configures a SQL statement.
+            </summary>
+            <param name="builder">The SQL statement builder.</param>
+        </member>
+        <member name="M:System.Data.Common.ISqlStatementDirector`4.CreateBuilder">
+            <summary>
+            Creates the SQL statement builder that can create SQL statements.
             </summary>
         </member>
         <member name="T:System.Data.Common.SqlPackage`2">
             <summary>
-            Represents an SQL package.
+            Represents an SQL package that contains <see cref="T:System.Data.Common.ISqlStatementDirector`4"/> and can execute them.
             </summary>
             <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
             <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
@@ -285,14 +287,14 @@
             To detect redundant calls <see cref="M:System.Data.Common.SqlPackage`2.Dispose"/> method.
             </summary>
         </member>
-        <member name="F:System.Data.Common.SqlPackage`2._statements">
+        <member name="F:System.Data.Common.SqlPackage`2._provider">
             <summary>
-            Dictionary in which contains registered SQL statements.
+            The service provider.
             </summary>
         </member>
-        <member name="E:System.Data.Common.SqlPackage`2.InitializeSqlStatements">
+        <member name="E:System.Data.Common.SqlPackage`2.InitializeSqlStatementDirectors">
             <summary>
-            The event reports that registration of SQL statements has begun.
+            The event reports that the registration of SQL statement directors has begun.
             </summary>
         </member>
         <member name="M:System.Data.Common.SqlPackage`2.#ctor">
@@ -302,86 +304,78 @@
         </member>
         <member name="P:System.Data.Common.SqlPackage`2.Connection">
             <summary>
-            The database connection.
+            Gets the database connection.
             </summary>
         </member>
         <member name="M:System.Data.Common.SqlPackage`2.Dispose">
             <summary>
-            Releases the unmanaged resources and releases the managed resources.
+            Dispose database connection.
             </summary>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.Execute(System.Type)">
+        <member name="M:System.Data.Common.SqlPackage`2.Execute``1">
             <summary>
-            Executes SQL statements.
+            Executes a SQL statement against a connection object.
             </summary>
-            <param name="type">The type of the SQL statement.</param>
-            <exception cref="T:System.ArgumentNullException">The parameter "type" is null.</exception>
+            <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
+            <returns>The number of rows affected.</returns>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.Execute``1(System.Type,``0)">
+        <member name="M:System.Data.Common.SqlPackage`2.Execute``2(``1)">
             <summary>
-            Executes SQL statements.
+            Executes a SQL statement against a connection object.
             </summary>
+            <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <param name="type">The type of the SQL statement.</param>
-            <param name="request">The request data.</param>
-            <exception cref="T:System.ArgumentNullException">The parameter "type" is null.</exception>
+            <returns>The number of rows affected.</returns>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.ExecuteAsync(System.Type,System.Threading.CancellationToken)">
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteAsync``1(System.Threading.CancellationToken)">
             <summary>
-            Asynchronously executes SQL statements.
+            Asynchronously executes a SQL statement against a connection object.
             </summary>
-            <param name="type">The type of the SQL statement.</param>
+            <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
-            <exception cref="T:System.ArgumentNullException">The parameter "type" is null.</exception>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.ExecuteAsync``1(System.Type,``0,System.Threading.CancellationToken)">
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteAsync``2(``1,System.Threading.CancellationToken)">
             <summary>
-            Asynchronously executes SQL statements.
+            Asynchronously executes a SQL statement against a connection object.
             </summary>
+            <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <param name="type">The type of the SQL statement.</param>
             <param name="request">The request data.</param>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
-            <exception cref="T:System.ArgumentNullException">The parameter "type" is null.</exception>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReader``1(System.Type)">
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReader``2">
             <summary>
-            Executes SQL statements and reading the result data.
+            Executes a SQL statement against a connection object and reading the response data.
             </summary>
-            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <param name="type">The type of the SQL statement.</param>
-            <exception cref="T:System.ArgumentNullException">The parameter "type" is null.</exception>
+            <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
+            <typeparam name="TResponse">The data type describing the output data.</typeparam>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReader``2(System.Type,``0)">
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReader``3(``1)">
             <summary>
-            Executes SQL statements and reading the result data.
+            Executes a SQL statement against a connection object and reading the response data.
             </summary>
+            <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <param name="type">The type of the SQL statement.</param>
+            <typeparam name="TResponse">The data type describing the output data.</typeparam>
             <param name="request">The request data.</param>
-            <exception cref="T:System.ArgumentNullException">The parameter "type" is null.</exception>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReaderAsync``2(System.Type,System.Threading.CancellationToken)">
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReaderAsync``2(System.Threading.CancellationToken)">
             <summary>
-            Asynchronously executes SQL statements and reading the result data.
+            Asynchronously executes a SQL statement against a connection object and reading the response data.
             </summary>
-            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <param name="type">The type of the SQL statement.</param>
+            <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
+            <typeparam name="TResponse">The data type describing the output data.</typeparam>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
-            <exception cref="T:System.ArgumentNullException">The parameter "type" is null.</exception>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReaderAsync``2(System.Type,``0,System.Threading.CancellationToken)">
+        <member name="M:System.Data.Common.SqlPackage`2.ExecuteReaderAsync``3(``1,System.Threading.CancellationToken)">
             <summary>
-            Asynchronously executes SQL statements and reading the result data.
+            Asynchronously executes a SQL statement against a connection object and reading the response data.
             </summary>
+            <typeparam name="TDirector">The type that represents the configuration of the SQL statement.</typeparam>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <param name="type">The type of the SQL statement.</param>
+            <typeparam name="TResponse">The data type describing the output data.</typeparam>
             <param name="request">The request data.</param>
             <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
-            <exception cref="T:System.ArgumentNullException">The parameter "type" is null.</exception>
         </member>
         <member name="M:System.Data.Common.SqlPackage`2.Dispose(System.Boolean)">
             <summary>
@@ -389,9 +383,9 @@
             </summary>
             <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
         </member>
-        <member name="M:System.Data.Common.SqlPackage`2.OnInitializeSqlStatements(System.Data.Common.ISqlPackageBuilder)">
+        <member name="M:System.Data.Common.SqlPackage`2.OnInitialize(System.Data.Common.ISqlPackageBuilder)">
             <summary>
-            The registration of <see cref="T:System.Data.Common.ISqlStatement`4"/>.
+            The registration of <see cref="T:System.Data.Common.ISqlStatementDirector`4"/>.
             </summary>
             <param name="builder">The SQL package builder.</param>
         </member>
@@ -399,40 +393,41 @@
             <summary>
             Gets the SQL statement.
             </summary>
-            <param name="type">The type.</param>
+            <param name="serviceType">The type.</param>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <exception cref="T:System.Collections.Generic.KeyNotFoundException">The key is not found in dictionary which contains collects of SQL statements.</exception>
+            <typeparam name="TResponse">The data type describing the output data.</typeparam>
+            <exception cref="T:System.InvalidOperationException">There is no service of type serviceType.</exception>
         </member>
         <member name="T:System.Data.Common.SqlPackageBuilder">
             <summary>
             Represents an SQL package builder.
             </summary>
         </member>
-        <member name="F:System.Data.Common.SqlPackageBuilder._statements">
+        <member name="F:System.Data.Common.SqlPackageBuilder._services">
             <summary>
-            Dictionary in which contains registered SQL statements.
+            The service collection.
             </summary>
         </member>
-        <member name="M:System.Data.Common.SqlPackageBuilder.#ctor(System.Collections.Generic.IDictionary{System.Type,System.Object})">
+        <member name="M:System.Data.Common.SqlPackageBuilder.#ctor(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Initializes a new <see cref="T:System.Data.Common.SqlPackageBuilder"/> with a specified dictionary in which registered SQL statements will be placed.
+            Initializes a new <see cref="T:System.Data.Common.SqlPackageBuilder"/> with a specified service collection in which registered SQL statement directors will be placed.
             </summary>
-            <param name="statements">Dictionary in which contains registered SQL statements.</param>
-            <exception cref="T:System.ArgumentNullException">Dictionary is null.</exception>
+            <param name="statements">The service collection in which contains registered SQL statement directors.</param>
+            <exception cref="T:System.ArgumentNullException">The service collection is null.</exception>
         </member>
-        <member name="M:System.Data.Common.SqlPackageBuilder.ApplyConfiguration``5(System.Data.Common.ISqlStatementDirector{``0,``1,``2,``3,``4})">
+        <member name="M:System.Data.Common.SqlPackageBuilder.ApplyConfiguration(System.Type)">
             <summary>
-            Applies configuration that is defined in an <see cref="T:System.Data.Common.ISqlStatementDirector`5"/> instance.
+            Applies configuration that is defined in an <see cref="T:System.Data.Common.ISqlStatementDirector`4"/>.
             </summary>
-            <param name="configuration">The configuration for an SQL statement.</param>
-            <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
-            <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
-            <typeparam name="TBuilder">The type of SQL statement builder.</typeparam>
-            <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-            <exception cref="T:System.ArgumentNullException">The configuration is null.</exception>
-            <exception cref="T:System.Collections.Generic.KeyNotFoundException">The key of SQL statement configuration is null, empty, or consists only of white-space characters.</exception>
+            <param name="serviceType">The type that implement the <see cref="T:System.Data.Common.ISqlStatementDirector`4"/> interface.</param>
+            <exception cref="T:System.InvalidCastException">The specified type does not implement the interface <see cref="T:System.Data.Common.ISqlStatementDirector`4"/>.</exception>
+        </member>
+        <member name="M:System.Data.Common.SqlPackageBuilder.ApplyConfiguration``1">
+            <summary>
+            Applies configuration that is defined in an <see cref="T:System.Data.Common.ISqlStatementDirector`4"/>.
+            </summary>
+            <typeparam name="TDirector">The type that implement the <see cref="T:System.Data.Common.ISqlStatementDirector`4"/> interface.</typeparam>
+            <exception cref="T:System.InvalidCastException">The specified type does not implement the interface <see cref="T:System.Data.Common.ISqlStatementDirector`4"/>.</exception>
         </member>
         <member name="T:System.Data.Common.SqlStatement`4">
             <summary>
@@ -441,7 +436,7 @@
             <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
             <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-            <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+            <typeparam name="TResponse">The data type describing the output data.</typeparam>
         </member>
         <member name="P:System.Data.Common.SqlStatement`4.CommandText">
             <summary>
@@ -474,6 +469,8 @@
             </summary>
             <param name="connection">The specified connection.</param>
             <param name="request">The request data.</param>
+            <exception cref="T:System.ArgumentNullException">The connection is null.</exception>
+            <exception cref="T:System.InvalidOperationException">The command text is not defined or if the request is not null and parameters is not configured.</exception>
         </member>
         <member name="T:System.Data.Common.SqlStatementBuilder`4">
             <summary>
@@ -484,14 +481,9 @@
             <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
             <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
         </member>
-        <member name="F:System.Data.Common.SqlStatementBuilder`4._statement">
+        <member name="P:System.Data.Common.SqlStatementBuilder`4.Dictionary">
             <summary>
-            Object to construction.
-            </summary>
-        </member>
-        <member name="M:System.Data.Common.SqlStatementBuilder`4.#ctor">
-            <summary>
-            Initializes a new instance of <see cref="T:System.Data.Common.SqlStatementBuilder`4"/> class.
+            Gets the property value collection of the future SQL statement.
             </summary>
         </member>
         <member name="M:System.Data.Common.SqlStatementBuilder`4.AddParameters(System.Action{`0,`2})">
@@ -515,12 +507,6 @@
             <param name="reader">The delegate to asynchronously reading the data from result.</param>
             <exception cref="T:System.ArgumentNullException">Delegate is null.</exception>
         </member>
-        <member name="M:System.Data.Common.SqlStatementBuilder`4.Build">
-            <summary>
-            Returns the SQL statement.
-            </summary>
-            <exception cref="T:System.InvalidOperationException">One of the next methods is not called: <see cref="M:System.Data.Common.SqlStatementBuilder`4.SetCommandText(System.String)"/>.</exception>
-        </member>
         <member name="M:System.Data.Common.SqlStatementBuilder`4.SetCommandText(System.String)">
             <summary>
             Sets the command string.
@@ -532,6 +518,11 @@
             Sets how a command string is interpreted. By default is <see cref="F:System.Data.CommandType.Text"/>
             </summary>
             <param name="commandType">Specifies how a command string is interpreted.</param>
+        </member>
+        <member name="M:System.Data.Common.SqlStatementBuilder`4.CreateInstance">
+            <summary>
+            Creates the instance of the SQL statement.
+            </summary>
         </member>
         <member name="T:System.Properties.Resources">
             <summary>
@@ -549,14 +540,9 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
-        <member name="P:System.Properties.Resources.BuilderException">
+        <member name="P:System.Properties.Resources.DoesNotImplementInterface">
             <summary>
-              Looks up a localized string similar to One of the next required methods is not called: {0}.
-            </summary>
-        </member>
-        <member name="P:System.Properties.Resources.KeyNotFoundException">
-            <summary>
-              Looks up a localized string similar to Key: {0} is not found..
+              Looks up a localized string similar to The specified type: {0} does not implement the interface {1}..
             </summary>
         </member>
         <member name="P:System.Properties.Resources.SqlNullValueException">

@@ -61,20 +61,11 @@ namespace System.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to One of the next required methods is not called: {0}.
+        ///   Looks up a localized string similar to The specified type: {0} does not implement the interface {1}..
         /// </summary>
-        internal static string BuilderException {
+        internal static string DoesNotImplementInterface {
             get {
-                return ResourceManager.GetString("BuilderException", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Key: {0} is not found..
-        /// </summary>
-        internal static string KeyNotFoundException {
-            get {
-                return ResourceManager.GetString("KeyNotFoundException", resourceCulture);
+                return ResourceManager.GetString("DoesNotImplementInterface", resourceCulture);
             }
         }
         

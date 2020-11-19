@@ -9,8 +9,8 @@ namespace System.Data.Common
     /// <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
     /// <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
     /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-    /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-    public class SqlStatement<TCollection, TReader, TRequest, TResponse> : ISqlStatement<TCollection, TReader, TRequest, TResponse>
+    /// <typeparam name="TResponse">The data type describing the output data.</typeparam>
+    public abstract class SqlStatement<TCollection, TReader, TRequest, TResponse> : ISqlStatement<TCollection, TReader, TRequest, TResponse>
         where TCollection : DbParameterCollection
         where TReader : DbDataReader
     {
@@ -40,6 +40,8 @@ namespace System.Data.Common
         /// </summary>
         /// <param name="connection">The specified connection.</param>
         /// <param name="request">The request data.</param>
+        /// <exception cref="ArgumentNullException">The connection is null.</exception>
+        /// <exception cref="InvalidOperationException">The command text is not defined or if the request is not null and parameters is not configured.</exception>
         [Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "Using a parameterized command string")]
         public virtual DbCommand CreateDbCommand(DbConnection connection, TRequest request)
         {
@@ -47,6 +49,8 @@ namespace System.Data.Common
                 throw new ArgumentNullException(nameof(connection));
             if (request != null && Parameters == null)
                 throw new InvalidOperationException(string.Format(null, Properties.Resources.SqlStatementInvalidState, nameof(Parameters)));
+            if (string.IsNullOrWhiteSpace(CommandText))
+                throw new InvalidOperationException(string.Format(null, Properties.Resources.SqlStatementInvalidState, nameof(CommandText)));
 
             // Open connection
             if (connection.State == ConnectionState.Closed)

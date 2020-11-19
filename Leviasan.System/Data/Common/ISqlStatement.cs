@@ -9,7 +9,7 @@ namespace System.Data.Common
     /// <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
     /// <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
     /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-    /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
+    /// <typeparam name="TResponse">The data type describing the output data.</typeparam>
     public interface ISqlStatement<TCollection, TReader, TRequest, TResponse>
         where TCollection : DbParameterCollection
         where TReader : DbDataReader

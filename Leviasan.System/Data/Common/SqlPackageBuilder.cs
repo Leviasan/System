@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace System.Data.Common
 {
@@ -8,45 +9,41 @@ namespace System.Data.Common
     internal sealed class SqlPackageBuilder : ISqlPackageBuilder
     {
         /// <summary>
-        /// Dictionary in which contains registered SQL statements.
+        /// The service collection.
         /// </summary>
-        private readonly IDictionary<Type, object> _statements;
+        private readonly IServiceCollection _services;
 
         /// <summary>
-        /// Initializes a new <see cref="SqlPackageBuilder"/> with a specified dictionary in which registered SQL statements will be placed.
+        /// Initializes a new <see cref="SqlPackageBuilder"/> with a specified service collection in which registered SQL statement directors will be placed.
         /// </summary>
-        /// <param name="statements">Dictionary in which contains registered SQL statements.</param>
-        /// <exception cref="ArgumentNullException">Dictionary is null.</exception>
-        public SqlPackageBuilder(IDictionary<Type, object> statements)
+        /// <param name="statements">The service collection in which contains registered SQL statement directors.</param>
+        /// <exception cref="ArgumentNullException">The service collection is null.</exception>
+        public SqlPackageBuilder(IServiceCollection statements)
         {
-            _statements = statements ?? throw new ArgumentNullException(nameof(statements));
+            _services = statements ?? throw new ArgumentNullException(nameof(statements));
         }
 
         /// <summary>
-        /// Applies configuration that is defined in an <see cref="ISqlStatementDirector{TCollection, TReader, TBuilder, TRequest, TResponse}"/> instance.
+        /// Applies configuration that is defined in an <see cref="ISqlStatementDirector{TCollection, TReader, TRequest, TResponse}"/>.
         /// </summary>
-        /// <param name="configuration">The configuration for an SQL statement.</param>
-        /// <typeparam name="TCollection">Collects all parameters relevant to a Command object.</typeparam>
-        /// <typeparam name="TReader">Provides a means of reading one or more forward-only streams of result sets obtained by executing a command at a data source.</typeparam>
-        /// <typeparam name="TBuilder">The type of SQL statement builder.</typeparam>
-        /// <typeparam name="TRequest">The data type describing the input parameters.</typeparam>
-        /// <typeparam name="TResponse">The type of the result returned SQL statement.</typeparam>
-        /// <exception cref="ArgumentNullException">The configuration is null.</exception>
-        /// <exception cref="KeyNotFoundException">The key of SQL statement configuration is null, empty, or consists only of white-space characters.</exception>
-        public ISqlPackageBuilder ApplyConfiguration<TCollection, TReader, TBuilder, TRequest, TResponse>(ISqlStatementDirector<TCollection, TReader, TBuilder, TRequest, TResponse> configuration)
-            where TCollection : DbParameterCollection
-            where TReader : DbDataReader
-            where TBuilder : ISqlStatementBuilder<TCollection, TReader, TRequest, TResponse>, new()
+        /// <param name="serviceType">The type that implement the <see cref="ISqlStatementDirector{TCollection, TReader, TRequest, TResponse}"/> interface.</param>
+        /// <exception cref="InvalidCastException">The specified type does not implement the interface <see cref="ISqlStatementDirector{TCollection, TReader, TRequest, TResponse}"/>.</exception>
+        public ISqlPackageBuilder ApplyConfiguration(Type serviceType)
         {
-            if (configuration == null)
-                throw new ArgumentNullException(nameof(configuration));
+            if (serviceType.GetInterface(typeof(ISqlStatementDirector<,,,>).Name) == null)
+                throw new InvalidCastException(string.Format(null, Properties.Resources.DoesNotImplementInterface, serviceType, typeof(ISqlStatementDirector<,,,>).Name));
 
-            var builder = Activator.CreateInstance<TBuilder>();
-            configuration.Configure(builder);
-            var statement = builder.Build();
-            _statements.Add(configuration.GetType(), statement);
-
+            _services.TryAddTransient(serviceType, serviceType);
             return this;
+        }
+        /// <summary>
+        /// Applies configuration that is defined in an <see cref="ISqlStatementDirector{TCollection, TReader, TRequest, TResponse}"/>.
+        /// </summary>
+        /// <typeparam name="TDirector">The type that implement the <see cref="ISqlStatementDirector{TCollection, TReader, TRequest, TResponse}"/> interface.</typeparam>
+        /// <exception cref="InvalidCastException">The specified type does not implement the interface <see cref="ISqlStatementDirector{TCollection, TReader, TRequest, TResponse}"/>.</exception>
+        public ISqlPackageBuilder ApplyConfiguration<TDirector>() where TDirector : new()
+        {
+            return ApplyConfiguration(typeof(TDirector));
         }
     }
 }
