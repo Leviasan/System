@@ -24,8 +24,7 @@ namespace System.Data.Common
         /// <exception cref="OverflowException">When converting to Enum: value is outside the range of the underlying type of enumType.</exception>
         /// <exception cref="SqlNullValueException">Thrown exception if response value is <see cref="DBNull"/>.</exception>
         /// <typeparam name="TReceive">Type of data received.</typeparam>
-        public static TReceive GetFieldValue<TReceive>(this DbDataReader reader, string name, TReceive defaultValue = default, bool throwDbNull = false, IFormatProvider provider = default)
-            where TReceive : IConvertible
+        public static TReceive GetFieldValue<TReceive>(this DbDataReader reader, string name, TReceive defaultValue, bool throwDbNull = false, IFormatProvider provider = default)
         {
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
@@ -48,8 +47,7 @@ namespace System.Data.Common
         /// <exception cref="OverflowException">When converting to Enum: value is outside the range of the underlying type of enumType.</exception>
         /// <exception cref="SqlNullValueException">Thrown exception if response value is <see cref="DBNull"/>.</exception>
         /// <typeparam name="TReceive">Type of data received.</typeparam>
-        public static TReceive GetFieldValue<TReceive>(this DbDataReader reader, int ordinal, TReceive defaultValue = default, bool throwDbNull = false, IFormatProvider provider = default)
-            where TReceive : IConvertible
+        public static TReceive GetFieldValue<TReceive>(this DbDataReader reader, int ordinal, TReceive defaultValue, bool throwDbNull = false, IFormatProvider provider = default)
         {
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
@@ -59,7 +57,7 @@ namespace System.Data.Common
             var isDbNull = reader.IsDBNull(ordinal);
             if (isDbNull && throwDbNull)
                 throw new SqlNullValueException(string.Format(provider, Properties.Resources.SqlNullValueException, reader.GetName(ordinal)));
-
+            
             return isDbNull
                 ? defaultValue
                 : typeof(TReceive).IsEnum
@@ -82,8 +80,7 @@ namespace System.Data.Common
         /// <exception cref="OverflowException">When converting to Enum: value is outside the range of the underlying type of enumType.</exception>
         /// <exception cref="SqlNullValueException">Thrown exception if response value is <see cref="DBNull"/>.</exception>
         /// <typeparam name="TReceive">Type of data received.</typeparam>
-        public static Task<TReceive> GetFieldValueAsync<TReceive>(this DbDataReader reader, string name, TReceive defaultValue = default, bool throwDbNull = false, IFormatProvider provider = default, CancellationToken cancellationToken = default)
-            where TReceive : IConvertible
+        public static Task<TReceive> GetFieldValueAsync<TReceive>(this DbDataReader reader, string name, TReceive defaultValue, bool throwDbNull = false, IFormatProvider provider = default, CancellationToken cancellationToken = default)
         {
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
@@ -107,8 +104,7 @@ namespace System.Data.Common
         /// <exception cref="OverflowException">When converting to Enum: value is outside the range of the underlying type of enumType.</exception>
         /// <exception cref="SqlNullValueException">Thrown exception if response value is <see cref="DBNull"/>.</exception>
         /// <typeparam name="TReceive">Type of data received.</typeparam>
-        public static async Task<TReceive> GetFieldValueAsync<TReceive>(this DbDataReader reader, int ordinal, TReceive defaultValue = default, bool throwDbNull = false, IFormatProvider provider = default, CancellationToken cancellationToken = default)
-            where TReceive : IConvertible
+        public static async Task<TReceive> GetFieldValueAsync<TReceive>(this DbDataReader reader, int ordinal, TReceive defaultValue, bool throwDbNull = false, IFormatProvider provider = default, CancellationToken cancellationToken = default)
         {
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));

@@ -12,7 +12,7 @@
     <RepositoryType>github</RepositoryType>
     <RepositoryUrl>https://github.com/Leviasan/System</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Leviasan/System</PackageProjectUrl>
-    <Version>1.2.1</Version>
+    <Version>1.2.2</Version>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 
