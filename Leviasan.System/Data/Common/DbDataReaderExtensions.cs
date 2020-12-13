@@ -60,7 +60,7 @@ namespace System.Data.Common
             if (isDbNull && throwDbNull)
                 throw new SqlNullValueException(string.Format(provider, Properties.Resources.SqlNullValueException, reader.GetName(ordinal)));
 
-            return reader.IsDBNull(ordinal)
+            return isDbNull
                 ? defaultValue
                 : typeof(TReceive).IsEnum
                     ? (TReceive)Enum.Parse(typeof(TReceive), value.ToString())
