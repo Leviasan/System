@@ -57,12 +57,14 @@ namespace System.Data.Common
             var isDbNull = reader.IsDBNull(ordinal);
             if (isDbNull && throwDbNull)
                 throw new SqlNullValueException(string.Format(provider, Properties.Resources.SqlNullValueException, reader.GetName(ordinal)));
-            
+
             return isDbNull
                 ? defaultValue
                 : typeof(TReceive).IsEnum
                     ? (TReceive)Enum.Parse(typeof(TReceive), value.ToString())
-                    : (TReceive)Convert.ChangeType(value, typeof(TReceive), provider);
+                    : typeof(IConvertible).IsAssignableFrom(typeof(TReceive))
+                        ? (TReceive)Convert.ChangeType(value, typeof(TReceive), provider)
+                        : default;
         }
         /// <summary>
         /// Asynchronously gets the value of the specified column as the requested type.
@@ -119,7 +121,9 @@ namespace System.Data.Common
                 ? defaultValue
                 : typeof(TReceive).IsEnum
                     ? (TReceive)Enum.Parse(typeof(TReceive), value.ToString())
-                    : (TReceive)Convert.ChangeType(value, typeof(TReceive), provider);
+                    : typeof(IConvertible).IsAssignableFrom(typeof(TReceive))
+                        ? (TReceive)Convert.ChangeType(value, typeof(TReceive), provider)
+                        : default;
         }
     }
 }
