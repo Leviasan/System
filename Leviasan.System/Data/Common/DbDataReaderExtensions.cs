@@ -58,13 +58,15 @@ namespace System.Data.Common
             if (isDbNull && throwDbNull)
                 throw new SqlNullValueException(string.Format(provider, Properties.Resources.SqlNullValueException, reader.GetName(ordinal)));
 
-            return isDbNull
+            var result = isDbNull
                 ? defaultValue
                 : typeof(TReceive).IsEnum
                     ? (TReceive)Enum.Parse(typeof(TReceive), value.ToString())
-                    : typeof(IConvertible).IsAssignableFrom(typeof(TReceive))
+                    : Nullable.GetUnderlyingType(typeof(TReceive)) == null
                         ? (TReceive)Convert.ChangeType(value, typeof(TReceive), provider)
-                        : default;
+                        : (TReceive)Activator.CreateInstance(typeof(TReceive), value);
+
+            return result;
         }
         /// <summary>
         /// Asynchronously gets the value of the specified column as the requested type.
@@ -117,13 +119,15 @@ namespace System.Data.Common
             if (isDbNull && throwDbNull)
                 throw new SqlNullValueException(string.Format(provider, Properties.Resources.SqlNullValueException, reader.GetName(ordinal)));
 
-            return isDbNull
+            var result = isDbNull
                 ? defaultValue
                 : typeof(TReceive).IsEnum
                     ? (TReceive)Enum.Parse(typeof(TReceive), value.ToString())
-                    : typeof(IConvertible).IsAssignableFrom(typeof(TReceive))
+                    : Nullable.GetUnderlyingType(typeof(TReceive)) == null
                         ? (TReceive)Convert.ChangeType(value, typeof(TReceive), provider)
-                        : default;
+                        : (TReceive)Activator.CreateInstance(typeof(TReceive), value);
+
+            return result;
         }
     }
 }
