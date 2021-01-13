@@ -30,7 +30,7 @@ namespace System.Data.Common
         /// <summary>
         /// Initializes a new  instance <see cref="SqlPackage{TCollection, TReader}"/> class.
         /// </summary>
-        public SqlPackage()
+        protected SqlPackage()
         {
             var services = new ServiceCollection();
             InitializeSqlStatementDirectors += OnInitialize;
