@@ -4,61 +4,6 @@
         <name>Leviasan.System</name>
     </assembly>
     <members>
-        <member name="T:System.ComponentModel.NotifyProperty`1">
-            <summary>
-            Represents the notify property.
-            </summary>
-            <typeparam name="T">The property type.</typeparam>
-        </member>
-        <member name="F:System.ComponentModel.NotifyProperty`1._value">
-            <summary>
-            The property value.
-            </summary>
-        </member>
-        <member name="M:System.ComponentModel.NotifyProperty`1.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:System.ComponentModel.NotifyProperty`1"/> class.
-            </summary>
-        </member>
-        <member name="M:System.ComponentModel.NotifyProperty`1.#ctor(`0)">
-            <summary>
-            Initializes a new instance of the <see cref="T:System.ComponentModel.NotifyProperty`1"/> class with specified value.
-            </summary>
-            <param name="value"></param>
-        </member>
-        <member name="E:System.ComponentModel.NotifyProperty`1.PropertyChanging">
-            <summary>
-            Occurs when a property value is changing.
-            </summary>
-        </member>
-        <member name="E:System.ComponentModel.NotifyProperty`1.PropertyChanged">
-            <summary>
-            Occurs when a property value changes.
-            </summary>
-        </member>
-        <member name="P:System.ComponentModel.NotifyProperty`1.Value">
-            <summary>
-            Gets or sets the property value.
-            </summary>
-        </member>
-        <member name="M:System.ComponentModel.NotifyProperty`1.ToString">
-            <summary>
-            Returns a string that represents the current object.
-            </summary>
-            <returns>A string that represents the current object.</returns>
-        </member>
-        <member name="M:System.ComponentModel.NotifyProperty`1.OnPropertyChanging(System.String)">
-            <summary>
-            PropertyChanging event handler.
-            </summary>
-            <param name="name"></param>
-        </member>
-        <member name="M:System.ComponentModel.NotifyProperty`1.OnPropertyChanged(System.String)">
-            <summary>
-            PropertyChanged event handler.
-            </summary>
-            <param name="name"></param>
-        </member>
         <member name="T:System.Data.Common.DbDataReaderExtensions">
             <summary>
             The database data reader extensions.
