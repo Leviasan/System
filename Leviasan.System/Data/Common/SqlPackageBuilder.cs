@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+﻿using System.Collections.Generic;
 
 namespace System.Data.Common
 {
@@ -11,14 +10,14 @@ namespace System.Data.Common
         /// <summary>
         /// The service collection.
         /// </summary>
-        private readonly IServiceCollection _services;
+        private readonly IDictionary<Type, Type> _services;
 
         /// <summary>
         /// Initializes a new <see cref="SqlPackageBuilder"/> with a specified service collection in which registered SQL statement directors will be placed.
         /// </summary>
         /// <param name="statements">The service collection in which contains registered SQL statement directors.</param>
         /// <exception cref="ArgumentNullException">The service collection is null.</exception>
-        public SqlPackageBuilder(IServiceCollection statements)
+        public SqlPackageBuilder(IDictionary<Type, Type> statements)
         {
             _services = statements ?? throw new ArgumentNullException(nameof(statements));
         }
@@ -33,7 +32,7 @@ namespace System.Data.Common
             if (serviceType.GetInterface(typeof(ISqlStatementDirector<,,,>).Name) == null)
                 throw new InvalidCastException(string.Format(null, Properties.Resources.DoesNotImplementInterface, serviceType, typeof(ISqlStatementDirector<,,,>).Name));
 
-            _services.TryAddTransient(serviceType, serviceType);
+            _services.Add(serviceType, serviceType);
             return this;
         }
         /// <summary>

@@ -4,6 +4,61 @@
         <name>Leviasan.System</name>
     </assembly>
     <members>
+        <member name="T:System.ComponentModel.NotifyProperty`1">
+            <summary>
+            Represents the notify property.
+            </summary>
+            <typeparam name="T">The property type.</typeparam>
+        </member>
+        <member name="F:System.ComponentModel.NotifyProperty`1._value">
+            <summary>
+            The property value.
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.NotifyProperty`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.ComponentModel.NotifyProperty`1"/> class.
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.NotifyProperty`1.#ctor(`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.ComponentModel.NotifyProperty`1"/> class with specified value.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="E:System.ComponentModel.NotifyProperty`1.PropertyChanging">
+            <summary>
+            Occurs when a property value is changing.
+            </summary>
+        </member>
+        <member name="E:System.ComponentModel.NotifyProperty`1.PropertyChanged">
+            <summary>
+            Occurs when a property value changes.
+            </summary>
+        </member>
+        <member name="P:System.ComponentModel.NotifyProperty`1.Value">
+            <summary>
+            Gets or sets the property value.
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.NotifyProperty`1.ToString">
+            <summary>
+            Returns a string that represents the current object.
+            </summary>
+            <returns>A string that represents the current object.</returns>
+        </member>
+        <member name="M:System.ComponentModel.NotifyProperty`1.OnPropertyChanging(System.String)">
+            <summary>
+            PropertyChanging event handler.
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="M:System.ComponentModel.NotifyProperty`1.OnPropertyChanged(System.String)">
+            <summary>
+            PropertyChanged event handler.
+            </summary>
+            <param name="name"></param>
+        </member>
         <member name="T:System.Data.Common.DbDataReaderExtensions">
             <summary>
             The database data reader extensions.
@@ -287,7 +342,7 @@
             To detect redundant calls <see cref="M:System.Data.Common.SqlPackage`2.Dispose"/> method.
             </summary>
         </member>
-        <member name="F:System.Data.Common.SqlPackage`2._provider">
+        <member name="F:System.Data.Common.SqlPackage`2._services">
             <summary>
             The service provider.
             </summary>
@@ -408,7 +463,7 @@
             The service collection.
             </summary>
         </member>
-        <member name="M:System.Data.Common.SqlPackageBuilder.#ctor(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:System.Data.Common.SqlPackageBuilder.#ctor(System.Collections.Generic.IDictionary{System.Type,System.Type})">
             <summary>
             Initializes a new <see cref="T:System.Data.Common.SqlPackageBuilder"/> with a specified service collection in which registered SQL statement directors will be placed.
             </summary>
@@ -558,6 +613,532 @@
         <member name="P:System.Properties.Resources.StringIsMissing">
             <summary>
               Looks up a localized string similar to The specified string can not be null, empty, or consists only of white-space characters..
+            </summary>
+        </member>
+        <member name="T:System.Runtime.InteropServices.ILibraryLoader">
+            <summary>
+            Provides a mechanism for management of an unmanaged library.
+            </summary>
+        </member>
+        <member name="P:System.Runtime.InteropServices.ILibraryLoader.ThrowIfError">
+            <summary>
+            If the function succeeds, the return value is the function return value, otherwise thrown exception.
+            </summary>
+        </member>
+        <member name="M:System.Runtime.InteropServices.ILibraryLoader.FreeLibrary(System.IntPtr)">
+            <summary>
+            Frees the loaded dynamic-link library module and, if necessary, decrements its reference count.
+            </summary>
+            <param name="hModule">A handle to the loaded library module.</param>
+            <returns>If releasing is successful return true, otherwise is false.</returns>
+        </member>
+        <member name="M:System.Runtime.InteropServices.ILibraryLoader.GetProcAddress(System.IntPtr,System.String)">
+            <summary>
+            Retrieves the address of an exported function or variable from the specified dynamic-link library.
+            </summary>
+            <param name="hModule">A handle to the loaded library module.</param>
+            <param name="methodName">The function or variable name.</param>
+            <returns>If successful the return value is the address of the exported function or variable, otherwise the return value is zero.</returns>
+        </member>
+        <member name="M:System.Runtime.InteropServices.ILibraryLoader.LoadLibrary(System.String)">
+            <summary>
+            Loads the specified module into the address space of the calling process.
+            </summary>
+            <param name="fileName">The path to the module.</param>
+            <returns>If successful the return value is a handle to the module, otherwise the return value is zero.</returns>
+        </member>
+        <member name="T:System.Runtime.InteropServices.LinuxLibraryLoader">
+            <summary>
+            Represents the management of a Unix unmanaged library.
+            </summary>
+        </member>
+        <member name="P:System.Runtime.InteropServices.LinuxLibraryLoader.ThrowIfError">
+            <summary>
+            If the function succeeds, the return value is the function return value, otherwise thrown exception.
+            </summary>
+        </member>
+        <member name="M:System.Runtime.InteropServices.LinuxLibraryLoader.FreeLibrary(System.IntPtr)">
+            <summary>
+            Frees the loaded dynamic-link library module and, if necessary, decrements its reference count.
+            </summary>
+            <param name="hModule">A handle to the loaded library module.</param>
+            <returns>If releasing is successful return true, otherwise is false.</returns>
+            <exception cref="T:System.InvalidOperationException">If operation is failed and allowed throwing exception return value is exception.</exception>
+        </member>
+        <member name="M:System.Runtime.InteropServices.LinuxLibraryLoader.GetProcAddress(System.IntPtr,System.String)">
+            <summary>
+            Retrieves the address of an exported function or variable from the specified dynamic-link library.
+            </summary>
+            <param name="hModule">A handle to the loaded library module.</param>
+            <param name="methodName">The function or variable name.</param>
+            <returns>If successful the return value is the address of the exported function or variable, otherwise the return value is zero.</returns>
+            <exception cref="T:System.InvalidOperationException">If operation is failed and allowed throwing exception return value is exception.</exception>
+        </member>
+        <member name="M:System.Runtime.InteropServices.LinuxLibraryLoader.LoadLibrary(System.String)">
+            <summary>
+            Loads the specified module into the address space of the calling process.
+            </summary>
+            <param name="fileName">The path to the module.</param>
+            <returns>If successful the return value is a handle to the module, otherwise the return value is zero.</returns>
+            <exception cref="T:System.InvalidOperationException">If operation is failed and allowed throwing exception return value is exception.</exception>
+        </member>
+        <member name="T:System.Runtime.InteropServices.Linux.LibdlNative">
+            <summary>
+            The Unix API.
+            </summary>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Linux.LibdlNative.dlopen(System.String,System.Runtime.InteropServices.Linux.LibdlNative.RTLD)">
+            <summary>
+            Gains access to an executable object file.
+            </summary>
+            <param name="fileName">The path to the module.</param>
+            <param name="flags">The flag.</param>
+            <returns>
+            If successful the return value is a handle to the module.
+            Otherwise if file cannot be found, cannot be opened for reading, is not of an appropriate object format for processing, or if an error occurs during the process of loading file or relocating its symbolic references return zero.
+            </returns>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Linux.LibdlNative.dlsym(System.IntPtr,System.String)">
+            <summary>
+            Obtains the address of a symbol from a dlopen object.
+            </summary>
+            <param name="handle">A handle to the loaded module that contains the function or variable.</param>
+            <param name="symbol">The function or variable name.</param>
+            <returns>
+            If successful the return value is the address of the exported function or variable. 
+            Otherwise if handle does not refer to a valid object opened by dlopen, or if the named symbol cannot be found within any of the objects associated with handle returned zero.
+            </returns>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Linux.LibdlNative.dlclose(System.IntPtr)">
+            <summary>
+            Informs the system that the object referenced by the handle returned from the previous call to dlopen is no longer needed by the application.
+            </summary>
+            <param name="handle">A handle to the module that will be closed.</param>
+            <returns>If the specified object was successfully closed returns 0. If the object cannot be closed, or if the handle is not related to an open object, returns nonzero.</returns>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Linux.LibdlNative.dlerror">
+            <summary>
+            Gets the diagnostic information.
+            </summary>
+            <returns>If successful return a null-terminated character string; otherwise, null.</returns>
+        </member>
+        <member name="T:System.Runtime.InteropServices.Linux.LibdlNative.RTLD">
+            <summary>
+            dlopen flags.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Linux.LibdlNative.RTLD.LOCAL">
+            <summary>
+            All symbols are not made available for relocation processing by other modules.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Linux.LibdlNative.RTLD.LAZY">
+            <summary>
+            Relocations are performed at an implementation-defined time.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Linux.LibdlNative.RTLD.NOW">
+            <summary>
+            Relocations are performed when the object is loaded.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Linux.LibdlNative.RTLD.GLOBAL">
+            <summary>
+            All symbols are available for relocation processing of other modules.
+            </summary>
+        </member>
+        <member name="T:System.Runtime.InteropServices.WindowsLibraryLoader">
+            <summary>
+            Represents the management of a Windows unmanaged library.
+            </summary>
+        </member>
+        <member name="P:System.Runtime.InteropServices.WindowsLibraryLoader.ThrowIfError">
+            <summary>
+            If the function succeeds, the return value is the function return value, otherwise thrown exception.
+            </summary>
+        </member>
+        <member name="M:System.Runtime.InteropServices.WindowsLibraryLoader.FreeLibrary(System.IntPtr)">
+            <summary>
+            Frees the loaded dynamic-link library module and, if necessary, decrements its reference count.
+            </summary>
+            <param name="hModule">A handle to the loaded library module.</param>
+            <returns>If releasing is successful return true, otherwise return false.</returns>
+            <exception cref="T:System.ComponentModel.Win32Exception">If operation is failed and allowed throwing exception return value is exception.</exception>
+        </member>
+        <member name="M:System.Runtime.InteropServices.WindowsLibraryLoader.GetProcAddress(System.IntPtr,System.String)">
+            <summary>
+            Retrieves the address of an exported function or variable from the specified dynamic-link library.
+            </summary>
+            <param name="hModule">A handle to the loaded library module.</param>
+            <param name="methodName">The function or variable name.</param>
+            <returns>If successful the return value is the address of the exported function or variable, otherwise the return value is zero.</returns>
+            <exception cref="T:System.ComponentModel.Win32Exception">If operation is failed and allowed throwing exception return value is exception.</exception>
+        </member>
+        <member name="M:System.Runtime.InteropServices.WindowsLibraryLoader.LoadLibrary(System.String)">
+            <summary>
+            Loads the specified module into the address space of the calling process.
+            </summary>
+            <param name="fileName">The path to the module.</param>
+            <returns>If successful the return value is a handle to the module, otherwise the return value is zero.</returns>
+            <exception cref="T:System.ComponentModel.Win32Exception">If operation is failed and allowed throwing exception return value is exception.</exception>
+        </member>
+        <member name="T:System.Runtime.InteropServices.Windows.Kernel32Native">
+            <summary>
+            WINAPI. Library: kernel32.dll.
+            </summary>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Windows.Kernel32Native.LoadLibrary(System.String)">
+            <summary>
+            Loads the specified module into the address space of the calling process.
+            </summary>
+            <param name="fileName">
+            The name of the module. This can be either a library module or an executable module. 
+            If the string specifies a full path, the function searches only that path for the module.</param>
+            <returns>If the function succeeds, the return value is a handle to the module. If the function fails, the return value is NULL.</returns>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Windows.Kernel32Native.GetProcAddress(System.IntPtr,System.String)">
+            <summary>
+            Retrieves the address of an exported function or variable from the specified dynamic-link library (DLL).
+            </summary>
+            <param name="hModule">A handle to the DLL module that contains the function or variable.</param>
+            <param name="procName">The function or variable name, or the function's ordinal value. If this parameter is an ordinal value, it must be in the low-order word; the high-order word must be zero.</param>
+            <returns>If the function succeeds, the return value is the address of the exported function or variable. If the function fails, the return value is NULL.</returns>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Windows.Kernel32Native.FreeLibrary(System.IntPtr)">
+            <summary>
+            Frees the loaded dynamic-link library (DLL) module and, if necessary, decrements its reference count.
+            When the reference count reaches zero, the module is unloaded from the address space of the calling process and the handle is no longer valid.
+            </summary>
+            <param name="hModule">A handle to the loaded library module.</param>
+            <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero.</returns>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Windows.Kernel32Native.GetConsoleWindow">
+            <summary>
+            Gets the handle to the window used by the console associated with the calling process or <see cref="F:System.IntPtr.Zero"/> if there is no such associated console.
+            </summary>
+            <returns>A handle to the window used by the console associated with the calling process or <see cref="F:System.IntPtr.Zero"/> if there is no such associated console.</returns>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Windows.Kernel32Native.GlobalAlloc(System.Runtime.InteropServices.Windows.Kernel32Native.GMEM,System.Int32)">
+            <summary>
+            Allocates the specified number of bytes from the heap.
+            </summary>
+            <param name="uFlags">The memory allocation attributes.</param>
+            <param name="dwBytes">The number of bytes to allocate. If this parameter is zero and the uFlags parameter specifies GMEM.MOVEABLE, the function returns a handle to a memory object that is marked as discarded.</param>
+            <returns>If the function succeeds, the return value is a handle to the newly allocated memory object. If the function fails, the return value is zero.</returns>
+            <remarks>Memory allocated with this function is guaranteed to be aligned on an 8-byte boundary. To free the memory, use the GlobalFree function.</remarks>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Windows.Kernel32Native.GlobalLock(System.IntPtr)">
+            <summary>
+            Locks a global memory object and returns a pointer to the first byte of the object's memory block.
+            </summary>
+            <param name="hMem">A handle to the global memory object. This handle is returned by either the GlobalAlloc or GlobalReAlloc function.</param>
+            <returns>If the function succeeds, the return value is a pointer to the first byte of the memory block. If the function fails, the return value is zero.</returns>
+            <remarks>
+            The internal data structures for each memory object include a lock count that is initially zero. For movable memory objects, GlobalLock increments the count by one, and the GlobalUnlock function decrements the count by one. 
+            Each successful call that a process makes to GlobalLock for an object must be matched by a corresponding call to GlobalUnlock. 
+            Locked memory will not be moved or discarded, unless the memory object is reallocated by using the GlobalReAlloc function. 
+            The memory block of a locked memory object remains locked until its lock count is decremented to zero, at which time it can be moved or discarded.
+            Memory objects allocated with GMEM_FIXED always have a lock count of zero.For these objects, the value of the returned pointer is equal to the value of the specified handle.
+            If the specified memory block has been discarded or if the memory block has a zero-byte size, this function returns zero.
+            Discarded objects always have a lock count of zero.
+            </remarks>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Windows.Kernel32Native.GlobalUnlock(System.IntPtr)">
+            <summary>
+            Decrements the lock count associated with a memory object that was allocated with GMEM_MOVEABLE. This function has no effect on memory objects allocated with <see cref="F:System.Runtime.InteropServices.Windows.Kernel32Native.GMEM.FIXED"/>.
+            </summary>
+            <param name="hMem">A handle to the global memory object. This handle is returned by either the GlobalAlloc or GlobalReAlloc function.</param>
+            <returns>
+            If the memory object is still locked after decrementing the lock count, the return value is a nonzero value.
+            If the memory object is unlocked after decrementing the lock count, the function returns zero and GetLastError returns zero.
+            If the function fails, the return value is zero and GetLastError returns a value other than zero.
+            </returns>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Windows.Kernel32Native.GlobalFree(System.IntPtr)">
+            <summary>
+            Frees the specified global memory object and invalidates its handle.
+            </summary>
+            <param name="hMem">A handle to the global memory object. This handle is returned by either the GlobalAlloc or GlobalReAlloc function.</param>
+            <returns>
+            If the function succeeds, the return value is zero.
+            If the function fails, the return value is equal to a handle to the global memory object.
+            </returns>
+        </member>
+        <member name="T:System.Runtime.InteropServices.Windows.Kernel32Native.GMEM">
+            <summary>
+            Global memory flags.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.Kernel32Native.GMEM.FIXED">
+            <summary>
+            Allocates fixed memory.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.Kernel32Native.GMEM.MOVEABLE">
+            <summary>
+            Allocates movable memory. Memory blocks are never moved in physical memory, but they can be moved within the default heap.
+            The return value is a handle to the memory object. To translate the handle into a pointer, use the GlobalLock function.
+            This value cannot be combined with <see cref="F:System.Runtime.InteropServices.Windows.Kernel32Native.GMEM.FIXED"/>.
+            </summary>
+            <remarks>The movable-memory flags add unnecessary overhead and require locking to be used safely. They should be avoided unless documentation specifically states that they should be used.</remarks>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.Kernel32Native.GMEM.ZEROINIT">
+            <summary>
+            Initializes memory contents to zero.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.Kernel32Native.GMEM.GHND">
+            <summary>
+            Combines <see cref="F:System.Runtime.InteropServices.Windows.Kernel32Native.GMEM.MOVEABLE"/> and <see cref="F:System.Runtime.InteropServices.Windows.Kernel32Native.GMEM.ZEROINIT"/>.
+            </summary>
+            <remarks>The movable-memory flags add unnecessary overhead and require locking to be used safely. They should be avoided unless documentation specifically states that they should be used.</remarks>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.Kernel32Native.GMEM.GPTR">
+            <summary>
+            Combines <see cref="F:System.Runtime.InteropServices.Windows.Kernel32Native.GMEM.FIXED"/> and <see cref="F:System.Runtime.InteropServices.Windows.Kernel32Native.GMEM.ZEROINIT"/>.
+            </summary>
+        </member>
+        <member name="T:System.Runtime.InteropServices.Windows.User32Native">
+            <summary>
+            WINAPI. Library: user32.dll.
+            </summary>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Windows.User32Native.GetMessage(System.Runtime.InteropServices.Windows.User32Native.MSG@,System.IntPtr,System.UInt32,System.UInt32)">
+            <summary>
+            Retrieves a message from the calling thread's message queue. The function dispatches incoming sent messages until a posted message is available for retrieval.
+            </summary>
+            <param name="lpMsg">A pointer to an MSG structure that receives message information from the thread's message queue.</param>
+            <param name="hWnd">A handle to the window whose messages are to be retrieved. The window must belong to the current thread.</param>
+            <param name="wMsgFilterMin">The integer value of the lowest message value to be retrieved.</param>
+            <param name="wMsgFilterMax">The integer value of the highest message value to be retrieved.</param>
+            <returns>
+            If the function retrieves a message other than WM_QUIT, the return value is nonzero.
+            If the function retrieves the WM_QUIT message, the return value is zero.
+            If there is an error, the return value is -1.
+            </returns>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Windows.User32Native.PeekMessage(System.Runtime.InteropServices.Windows.User32Native.MSG@,System.IntPtr,System.UInt32,System.UInt32,System.Runtime.InteropServices.Windows.User32Native.PM)">
+            <summary>
+            Dispatches incoming sent messages, checks the thread message queue for a posted message, and retrieves the message (if any exist).
+            </summary>
+            <param name="lpMsg">A pointer to an MSG structure that receives message information.</param>
+            <param name="hWnd">A handle to the window whose messages are to be retrieved. The window must belong to the current thread.</param>
+            <param name="wMsgFilterMin">The value of the first message in the range of messages to be examined.</param>
+            <param name="wMsgFilterMax">The value of the last message in the range of messages to be examined.</param>
+            <param name="wRemoveMsg">Specifies how messages are to be handled.</param>
+            <returns>
+            If a message is available, the return value is nonzero.
+            If no messages are available, the return value is zero.
+            </returns>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Windows.User32Native.TranslateMessage(System.Runtime.InteropServices.Windows.User32Native.MSG@)">
+            <summary>
+            Translates virtual-key messages into character messages. The character messages are posted to the calling thread's message queue, to be read the next time the thread calls the GetMessage or PeekMessage function.
+            </summary>
+            <param name="lpMsg">A pointer to an MSG structure that contains message information retrieved from the calling thread's message queue by using the GetMessage or PeekMessage function.</param>
+            <returns>
+            If the message is translated (that is, a character message is posted to the thread's message queue), the return value is nonzero.
+            If the message is WM_KEYDOWN, WM_KEYUP, WM_SYSKEYDOWN, or WM_SYSKEYUP, the return value is nonzero, regardless of the translation.
+            If the message is not translated (that is, a character message is not posted to the thread's message queue), the return value is zero.
+            </returns>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Windows.User32Native.DispatchMessage(System.Runtime.InteropServices.Windows.User32Native.MSG@)">
+            <summary>
+            Dispatches a message to a window procedure. It is typically used to dispatch a message retrieved by the GetMessage function.
+            </summary>
+            <param name="lpMsg">A pointer to a structure that contains the message.</param>
+            <returns>The return value specifies the value returned by the window procedure. Although its meaning depends on the message being dispatched, the return value generally is ignored.</returns>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Windows.User32Native.PostQuitMessage(System.Int32)">
+            <summary>
+            Indicates to the system that a thread has made a request to terminate (quit). It is typically used in response to a WM_DESTROY message.
+            </summary>
+            <param name="nExitCode">The application exit code. This value is used as the wParam parameter of the WM_QUIT message.</param>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Windows.User32Native.IsDialogMessage(System.IntPtr,System.Runtime.InteropServices.Windows.User32Native.MSG@)">
+            <summary>
+            Determines whether a message is intended for the specified dialog box and, if it is, processes the message.
+            </summary>
+            <param name="hDlg">A handle to the dialog box.</param>
+            <param name="lpMsg">A pointer to an MSG structure that contains the message to be checked.</param>
+            <returns>
+            If the message has been processed, the return value is nonzero.
+            If the message has not been processed, the return value is zero.
+            </returns>
+        </member>
+        <member name="M:System.Runtime.InteropServices.Windows.User32Native.GetQueueStatus(System.Runtime.InteropServices.Windows.User32Native.QS)">
+            <summary>
+            Retrieves the type of messages found in the calling thread's message queue.
+            </summary>
+            <param name="flags">The types of messages for which to check.</param>
+            <returns>
+            The high-order word of the return value indicates the types of messages currently in the queue. 
+            The low-order word indicates the types of messages that have been added to the queue and that are still in the queue since the last call to the GetQueueStatus, GetMessage, or PeekMessage function.
+            </returns>
+        </member>
+        <member name="T:System.Runtime.InteropServices.Windows.User32Native.MSG">
+            <summary>
+            Contains message information from a thread's message queue.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.MSG.hwnd">
+            <summary>
+            A handle to the window whose window procedure receives the message. This member is NULL when the message is a thread message.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.MSG.message">
+            <summary>
+            The message identifier. Applications can only use the low word; the high word is reserved by the system.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.MSG.wParam">
+            <summary>
+            Additional information about the message. The exact meaning depends on the value of the message member.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.MSG.lParam">
+            <summary>
+            Additional information about the message. The exact meaning depends on the value of the message member.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.MSG.time">
+            <summary>
+            The time at which the message was posted.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.MSG.pt">
+            <summary>
+            The cursor position, in screen coordinates, when the message was posted.
+            </summary>
+        </member>
+        <member name="T:System.Runtime.InteropServices.Windows.User32Native.POINT">
+            <summary>
+            The POINT structure defines the x- and y- coordinates of a point.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.POINT.x">
+            <summary>
+            The x-coordinate of the point.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.POINT.y">
+            <summary>
+            The y-coordinate of the point.
+            </summary>
+        </member>
+        <member name="T:System.Runtime.InteropServices.Windows.User32Native.QS">
+            <summary>
+            The flags in GetQueueStatus function.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.QS.KEY">
+            <summary>
+            A WM_KEYUP, WM_KEYDOWN, WM_SYSKEYUP, or WM_SYSKEYDOWN message is in the queue.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.QS.MOUSEMOVE">
+            <summary>
+            A WM_MOUSEMOVE message is in the queue.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.QS.MOUSEBUTTON">
+            <summary>
+            A mouse-button message (WM_LBUTTONUP, WM_RBUTTONDOWN, and so on).
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.QS.MOUSE">
+            <summary>
+            A WM_MOUSEMOVE message or mouse-button message (WM_LBUTTONUP, WM_RBUTTONDOWN, and so on).
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.QS.POSTMESSAGE">
+            <summary>
+            A posted message (other than those listed here) is in the queue.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.QS.TIMER">
+            <summary>
+            A WM_TIMER message is in the queue.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.QS.PAINT">
+            <summary>
+            A WM_PAINT message is in the queue.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.QS.SENDMESSAGE">
+            <summary>
+            A message sent by another thread or application is in the queue.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.QS.HOTKEY">
+            <summary>
+            A WM_HOTKEY message is in the queue.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.QS.ALLPOSTMESSAGE">
+            <summary>
+            A posted message (other than those listed here) is in the queue.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.QS.RAWINPUT">
+            <summary>
+            A raw input message is in the queue. For more information, see Raw Input. Windows 2000: This flag is not supported.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.QS.INPUT">
+            <summary>
+            An input message is in the queue.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.QS.ALLEVENTS">
+            <summary>
+            An input, WM_TIMER, WM_PAINT, WM_HOTKEY, or posted message is in the queue.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.QS.ALLINPUT">
+            <summary>
+            Any message is in the queue.
+            </summary>
+        </member>
+        <member name="T:System.Runtime.InteropServices.Windows.User32Native.PM">
+            <summary>
+            Specifies how messages are to be handled.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.PM.NOREMOVE">
+            <summary>
+            Messages are not removed from the queue after processing by PeekMessage.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.PM.REMOVE">
+            <summary>
+            Messages are removed from the queue after processing by PeekMessage.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.PM.NOYIELD">
+            <summary>
+            Prevents the system from releasing any thread that is waiting for the caller to go idle. Combine this value with either NOREMOVE or REMOVE.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.PM.QS_INPUT">
+            <summary>
+            Process mouse and keyboard messages.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.PM.QS_PAINT">
+            <summary>
+            Process paint messages.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.PM.QS_POSTMESSAGE">
+            <summary>
+            Process all posted messages, including timers and hotkeys.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.Windows.User32Native.PM.QS_SENDMESSAGE">
+            <summary>
+            Process all sent messages.
             </summary>
         </member>
     </members>

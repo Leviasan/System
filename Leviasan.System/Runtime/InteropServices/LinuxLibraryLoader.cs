@@ -1,12 +1,11 @@
-﻿using System.ComponentModel;
-using System.Runtime.InteropServices.Windows;
+﻿using System.Runtime.InteropServices.Linux;
 
 namespace System.Runtime.InteropServices
 {
     /// <summary>
-    /// Represents the management of a Windows unmanaged library.
+    /// Represents the management of a Unix unmanaged library.
     /// </summary>
-    public sealed class WindowsLibraryLoader : ILibraryLoader
+    public sealed class LinuxLibraryLoader : ILibraryLoader
     {
         /// <summary>
         /// If the function succeeds, the return value is the function return value, otherwise thrown exception.
@@ -17,17 +16,16 @@ namespace System.Runtime.InteropServices
         /// Frees the loaded dynamic-link library module and, if necessary, decrements its reference count.
         /// </summary>
         /// <param name="hModule">A handle to the loaded library module.</param>
-        /// <returns>If releasing is successful return true, otherwise return false.</returns>
-        /// <exception cref="Win32Exception">If operation is failed and allowed throwing exception return value is exception.</exception>
+        /// <returns>If releasing is successful return true, otherwise is false.</returns>
+        /// <exception cref="InvalidOperationException">If operation is failed and allowed throwing exception return value is exception.</exception>
         public bool FreeLibrary(IntPtr hModule)
         {
-            var isFree = Kernel32Native.FreeLibrary(hModule);
-            if (!isFree && ThrowIfError)
-            {
-                var error = Marshal.GetLastWin32Error();
-                throw new Win32Exception(error);
-            }
-            return isFree;
+            var dlclose = LibdlNative.dlclose(hModule);
+            var result = !Convert.ToBoolean(dlclose);
+            if (result && ThrowIfError)
+                throw new InvalidOperationException(Marshal.PtrToStringAnsi(LibdlNative.dlerror()));
+
+            return result;
         }
         /// <summary>
         /// Retrieves the address of an exported function or variable from the specified dynamic-link library.
@@ -35,15 +33,13 @@ namespace System.Runtime.InteropServices
         /// <param name="hModule">A handle to the loaded library module.</param>
         /// <param name="methodName">The function or variable name.</param>
         /// <returns>If successful the return value is the address of the exported function or variable, otherwise the return value is zero.</returns>
-        /// <exception cref="Win32Exception">If operation is failed and allowed throwing exception return value is exception.</exception>
+        /// <exception cref="InvalidOperationException">If operation is failed and allowed throwing exception return value is exception.</exception>
         public IntPtr GetProcAddress(IntPtr hModule, string methodName)
         {
-            var ptr = Kernel32Native.GetProcAddress(hModule, methodName);
+            var ptr = LibdlNative.dlsym(hModule, methodName);
             if (ptr == IntPtr.Zero && ThrowIfError)
-            {
-                var error = Marshal.GetLastWin32Error();
-                throw new Win32Exception(error);
-            }
+                throw new InvalidOperationException(Marshal.PtrToStringAnsi(LibdlNative.dlerror()));
+
             return ptr;
         }
         /// <summary>
@@ -51,15 +47,13 @@ namespace System.Runtime.InteropServices
         /// </summary>
         /// <param name="fileName">The path to the module.</param>
         /// <returns>If successful the return value is a handle to the module, otherwise the return value is zero.</returns>
-        /// <exception cref="Win32Exception">If operation is failed and allowed throwing exception return value is exception.</exception>
+        /// <exception cref="InvalidOperationException">If operation is failed and allowed throwing exception return value is exception.</exception>
         public IntPtr LoadLibrary(string fileName)
         {
-            var ptr = Kernel32Native.LoadLibrary(fileName);
+            var ptr = LibdlNative.dlopen(fileName, LibdlNative.RTLD.NOW);
             if (ptr == IntPtr.Zero && ThrowIfError)
-            {
-                var error = Marshal.GetLastWin32Error();
-                throw new Win32Exception(error);
-            }
+                throw new InvalidOperationException(Marshal.PtrToStringAnsi(LibdlNative.dlerror()));
+
             return ptr;
         }
     }

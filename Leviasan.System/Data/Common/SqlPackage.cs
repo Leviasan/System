@@ -1,7 +1,7 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace System.Data.Common
 {
@@ -21,7 +21,7 @@ namespace System.Data.Common
         /// <summary>
         /// The service provider.
         /// </summary>
-        private readonly IServiceProvider _provider;
+        private readonly IDictionary<Type, Type> _services;
         /// <summary>
         /// The event reports that the registration of SQL statement directors has begun.
         /// </summary>
@@ -32,12 +32,9 @@ namespace System.Data.Common
         /// </summary>
         protected SqlPackage()
         {
-            var services = new ServiceCollection();
+            _services = new Dictionary<Type, Type>();
             InitializeSqlStatementDirectors += OnInitialize;
-            InitializeSqlStatementDirectors.Invoke(new SqlPackageBuilder(services));
-            var options = new ServiceProviderOptions() { ValidateScopes = true, ValidateOnBuild = true };
-            var builder = new DefaultServiceProviderFactory(options);
-            _provider = builder.CreateServiceProvider(services);
+            InitializeSqlStatementDirectors.Invoke(new SqlPackageBuilder(_services));
         }
 
         /// <summary>
@@ -196,7 +193,6 @@ namespace System.Data.Common
                 if (disposing)
                 {
                     Connection?.Dispose();
-                    ((IDisposable)_provider).Dispose();
                 }
                 _disposedValue = true;
             }
@@ -216,7 +212,8 @@ namespace System.Data.Common
         /// <exception cref="InvalidOperationException">There is no service of type serviceType.</exception>
         private ISqlStatement<TCollection, TReader, TRequest, TResponse> GetSqlStatement<TRequest, TResponse>(Type serviceType)
         {
-            var director = _provider.GetRequiredService(serviceType) as ISqlStatementDirector<TCollection, TReader, TRequest, TResponse>;
+            var type = _services[serviceType];
+            var director = Activator.CreateInstance(type) as ISqlStatementDirector<TCollection, TReader, TRequest, TResponse>;
             var builder = director.CreateBuilder();
             director.Configure(builder);
             var statement = builder.CreateInstance();
